@@ -1,21 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import onBoardImg from "../assets/images/onBoard.png"
+import appIcon from "../assets/images/appIcon.png"
 import CustomTouchableButton from '../components/customButtons/customTouchableButton';
 
 export default function App() {
 
   const onPress = () => {
-      router.push("/")
+      router.push("/login")
   }
 
   return (
         <SafeAreaView  style={styles.safeArea}>
             <ScrollView contentContainerStyle={styles.scrollVw}>
                <View style={styles.container}>
-                   <Text style={styles.header}>W&W</Text>
+                 <View style={styles.headerWrapper}>
+                    <Image source={appIcon} style={styles.headerIcon} />
+                    <Text style={styles.header}>W&W</Text>
+                 </View>
                    <Image source={onBoardImg} style={styles.onBoardImg} />
                    <Text style={styles.subTitle}>Find beauty in every journey with W&W.</Text>
                    <Text style={styles.desc}>Witness & Wander is a travel guide that helps you discover the beauty around you, find inspiring places and create unforgettable memories.</Text>
@@ -43,11 +46,21 @@ const styles = StyleSheet.create({
        paddingHorizontal:10,
        paddingTop:20,
                 },
+    headerWrapper : {
+         flexDirection:"row",
+         alignItems:"center"
+    },            
     header:     {
        textAlign:"center",
        fontSize:32,
-       fontWeight:'800'
+       fontWeight:'800',
+       alignItems:"center"
                 } ,    
+    headerIcon : {
+            resizeMode:"cover",
+            width:60,
+            height:60,
+    }  ,         
     onBoardImg : {
        width:"100%",
        height:"360",
