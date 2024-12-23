@@ -7,8 +7,8 @@ import com.gezerkengor.model.dtoModel.dtoUser.DtoRegisterModel;
 
 public interface IAuthController {
      
-    public ResponseEntity<?> login(DtoLoginModel dtoLoginUser);
+    public ResponseEntity<?> login(DtoLoginModel dtoLoginUser)  throws Exception ;
 
-    public ResponseEntity<?> register(DtoRegisterModel DTORegisterUser);
+    public ResponseEntity<?> register(DtoRegisterModel DTORegisterUser)  throws Exception ;
 
 }
