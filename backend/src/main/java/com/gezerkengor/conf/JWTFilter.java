@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
-    private final JWTService JWTServie;
+    private final JWTService jwtServie;
     private final UserDetailsService userDetailsService; 
 
     @Override
@@ -43,11 +43,11 @@ public class JWTFilter extends OncePerRequestFilter {
                 return; 
             }
             String token  = headerAuthorizationParts[1];
-            String email  = JWTServie.extractEmail(token);
+            String email  = jwtServie.extractEmail(token);
             if(email != null && SecurityContextHolder.getContext().getAuthentication() == null)
             {
                 UserDetails user = userDetailsService.loadUserByUsername(email);
-                if(JWTServie.isValid(token, email))
+                if(jwtServie.isValid(token, email))
                 {
                      UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user,null);
                                                          authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

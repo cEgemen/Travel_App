@@ -23,15 +23,15 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConf {
     
      private final CORSConf corsConf;
-     private final JWTFilter JWTFilter;
-     private UserDetailService userDetailService;
+     private final JWTFilter jwtFilter;
+     private final UserDetailService userDetailService;
      
      private PasswordEncoder passwordEncoder(){
             return new BCryptPasswordEncoder();
      }
      
      @Bean
-     private AuthenticationProvider authProvider(){
+     public  AuthenticationProvider authProvider(){
             DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
                                       provider.setUserDetailsService(userDetailService);
                                       provider.setPasswordEncoder(passwordEncoder());
@@ -39,7 +39,7 @@ public class SecurityConf {
      }
      
      @Bean 
-     private AuthenticationManager authManager(AuthenticationConfiguration authConf) throws Exception{
+     public AuthenticationManager authManager(AuthenticationConfiguration authConf) throws Exception{
                 return authConf.getAuthenticationManager();                    
      } 
  
@@ -54,7 +54,7 @@ public class SecurityConf {
                            crs.configurationSource(corsConf);
                         })
                         .authenticationProvider(authProvider())
-                        .addFilterBefore(JWTFilter,UsernamePasswordAuthenticationFilter.class)
+                        .addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class)
                         .build();
            
      }

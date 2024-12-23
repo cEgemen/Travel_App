@@ -13,6 +13,6 @@ public class DtoRegisterModel {
 
     private String email;
 
-    private String passwprd;
+    private String password;
 
 }
