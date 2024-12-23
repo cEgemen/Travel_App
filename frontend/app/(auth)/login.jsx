@@ -11,7 +11,22 @@ const Login = () => {
 const [formState , setFormState ] = useState({email:"",password:""});
 
  const onSubmit = () => {
-
+   fetch("http://192.168.1.107:8080/api/auth/login",{
+      method:"POST",
+      headers:{
+         "Content-Type":"application/json"
+      },
+      body:JSON.stringify({email:formState.email,password:formState.password})
+    })
+    .then(result => {
+        return result.json();
+    })
+    .then(data => {
+        console.log("data : ",data)
+    })
+    .catch(err => {
+        console.log("err : ",err)
+    })
  } 
 
   return (
