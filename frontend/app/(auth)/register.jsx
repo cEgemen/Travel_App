@@ -12,7 +12,22 @@ const Register = () => {
 const [formState , setFormState ] = useState({userName:"",email:"",password:""});
 
  const onSubmit = () => {
-
+          fetch("http://192.168.1.107:8080/api/auth/register",{
+            method:"POST",
+            headers:{
+               "Content-Type":"application/json"
+            },
+            body:JSON.stringify({userName:formState.userName,email:formState.email,password:formState.password})
+          })
+          .then(result => {
+              return result.json();
+          })
+          .then(data => {
+              console.log("data : ",data)
+          })
+          .catch(err => {
+              console.log("err : ",err)
+          })
  } 
 
   return (
@@ -31,7 +46,7 @@ const [formState , setFormState ] = useState({userName:"",email:"",password:""})
                          return {...oldState,password:value}
                       })}} containerStyle={{marginTop:10,marginBottom:10}} />  
                      <Text style={styles.infoText}>Already Have a Accound ? <Link href={"/login"} style={{color:"orange"}}>Login</Link></Text> 
-                      <CustomTouchableButton text="Login" onPress={onSubmit} buttonStyle={{marginTop:40}}/>
+                      <CustomTouchableButton text="Register" onPress={onSubmit} buttonStyle={{marginTop:40}}/>
                 </View>
           </ScrollView>
     </SafeAreaView>
