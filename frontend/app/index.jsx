@@ -4,10 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import onBoardImg from "../assets/images/onBoard.png"
 import appIcon from "../assets/images/appIcon.png"
 import CustomTouchableButton from '../components/customButtons/customTouchableButton';
-import { initialState } from '../managments/initialManagment';
+import { useContext } from 'react';
+import { InitialContext } from '../managments/initialManagment';
+
 
 export default function App() {
-  const {isReady,token,isFirst} = initialState;
+   const {isReady,token,isFirst} = useContext(InitialContext) ;
 
   
   const onPress = () => {
