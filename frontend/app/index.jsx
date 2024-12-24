@@ -1,12 +1,15 @@
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, SplashScreen } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import onBoardImg from "../assets/images/onBoard.png"
 import appIcon from "../assets/images/appIcon.png"
 import CustomTouchableButton from '../components/customButtons/customTouchableButton';
+import { initialState } from '../managments/initialManagment';
 
 export default function App() {
+  const {isReady,token,isFirst} = initialState;
 
+  
   const onPress = () => {
       router.push("/login")
   }

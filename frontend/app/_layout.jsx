@@ -1,15 +1,15 @@
 
 import { Stack } from "expo-router";
-import { StatusBar } from 'expo-status-bar';
+import InitialContextWrapper from "../managments/initialManagment";
 
 const RootLayout = () => {
   return (
-    <>
+    <InitialContextWrapper>
         <Stack >
              <Stack.Screen name="index" options={{headerShown:false}}/>
              <Stack.Screen name="(auth)" options={{headerShown:false}} />
         </Stack>
-    </>
+    </InitialContextWrapper>
   )
 }
 
