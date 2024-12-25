@@ -1,22 +1,29 @@
 
-
-import { View, Text } from 'react-native'
-import { Tabs,Redirect } from 'expo-router'
+import { Tabs } from 'expo-router'
+import { colors } from '../../constands/appConstand'
 
 const TabLayout = () => {
   return (
     <>
-       <Tabs>
+       <Tabs screenOption={{
+               tabBarHideOnKeyboard:true
+       }}>
            <Tabs.Screen 
            name='home'
            options={{
-               title:"Home"
+               title:"Home",
+               headerShown:false,
+               tabBarShowLabel:false,
+               tabBarActiveTintColor:colors.secondary,
+               tabBarInactiveTintColor:colors.text,
+               tabBarIcon : ({focused,color}) => { }
            }}
             />
              <Tabs.Screen 
            name='profile'
            options={{
-               title:"Profile"
+               title:"Profile",
+               headerShown:false
            }}
             />
        </Tabs>   

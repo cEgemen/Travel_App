@@ -4,7 +4,8 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
 import FormField from '../../components/customForm/formField'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { colors, fonts, spaces } from '../../constands/appConstand'
 
 const Login = () => {
  
@@ -23,6 +24,7 @@ const [formState , setFormState ] = useState({email:"",password:""});
     })
     .then(data => {
         console.log("data : ",data)
+        router.replace("/home")
     })
     .catch(err => {
         console.log("err : ",err)
@@ -37,12 +39,12 @@ const [formState , setFormState ] = useState({email:"",password:""});
                       <Text style={styles.subTitle}>Sign in to access your account.</Text>
                       <FormField value={formState.email} labelText='E-mail' keyboardType="email-address" placeholder={"E-mail"} onChange={value => {setFormState(oldState => {
                          return {...oldState,email:value}
-                      })}} containerStyle={{marginTop:10,marginBottom:20}} />
+                      })}} containerStyle={styles.formContainerStyle} textInputStyle={styles.formLabelStyle} focusColor={colors.secondary}  />
                       <FormField value={formState.password} labelText='Password' keyboardType="numeric" placeholder={"Password"} onChange={value => {setFormState(oldState => {
                          return {...oldState,password:value}
-                      })}} containerStyle={{marginTop:10,marginBottom:10}} />  
-                     <Text style={styles.infoText}>Don't Have an Account ? <Link href={"/register"} style={{color:"orange"}}>Register</Link></Text> 
-                      <CustomTouchableButton text="Login" onPress={onSubmit} buttonStyle={{marginTop:40}}/>
+                      })}}  containerStyle={styles.formContainerStyle} textInputStyle={styles.formLabelStyle} focusColor={colors.secondary}  />  
+                     <Text style={styles.infoText}>Don't Have an Account ? <Link href={"/register"} style={{color:colors.secondary}}>Register</Link></Text> 
+                      <CustomTouchableButton text="Login" onPress={onSubmit} buttonStyle={styles.btnStyle} textStyle={styles.btnTextStyle} />
                 </View>
           </ScrollView>
     </SafeAreaView>
@@ -54,34 +56,50 @@ const styles = StyleSheet.create({
             minHeight : "100%"
         },
         scrollVw:{
-             height:"100%"
+             height:"100%",
+             backgroundColor:colors.background,
+             paddingVertical:spaces.high,
+             paddingHorizontal:spaces.middle
         }, 
         content : {
             height:"100%",
-            paddingTop:50,
-            paddingHorizontal:10,
             alignItems:"center",
-            backgroundColor:"pink"
         },
         header: {
-           textAlign:"center",
-           fontSize : 32,
-           fontWeight:"800",
-           marginVertical:20
+           width:"100%",
+           fontSize : fonts.highFontSize,
+           fontWeight:fonts.highFontWeight,
+           color:colors.text,
+           marginBottom:spaces.small
         },
         subTitle: {
-           textAlign:"center",
-           fontSize:20,
-           fontWeight:"400",
-           marginBottom:10 
+           width:"100%",
+           fontSize:fonts.smallMidFontSize,
+           fontWeight:fonts.middleFontWeight,
+           color:colors.text,
+           marginBottom:spaces.high 
+        },
+        formContainerStyle:{
+            marginBottom:spaces.high
+        },
+        formLabelStyle:{
+             color:colors.text
         },
         infoText:{
            textAlign:"right",
            width:"100%",
-           fontSize:14,
-           fontWeight:"400",
-           marginBottom:20, 
-           marginTop:10
+           color:colors.text,
+           fontSize:fonts.smallFontSize,
+           fontWeight:fonts.smallFontWeight,
+           marginTop:spaces.high,
+           marginBottom:spaces.high 
+        },
+        btnStyle:{
+           backgroundColor:colors.secondary,
+           marginTop:spaces.high
+        },
+        btnTextStyle:{
+           color:colors.text
         }
 })
 

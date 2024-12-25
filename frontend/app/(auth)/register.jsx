@@ -1,11 +1,11 @@
-
-
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
 import FormField from '../../components/customForm/formField'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { colors, fonts, spaces } from '../../constands/appConstand'
+
 
 const Register = () => {
  
@@ -24,6 +24,7 @@ const [formState , setFormState ] = useState({userName:"",email:"",password:""})
           })
           .then(data => {
               console.log("data : ",data)
+              router.replace("/login")
           })
           .catch(err => {
               console.log("err : ",err)
@@ -36,17 +37,17 @@ const [formState , setFormState ] = useState({userName:"",email:"",password:""})
                 <View style={styles.content}>
                       <Text style={styles.header}>Join Us</Text>
                       <Text style={styles.subTitle}>Create an account to get started.</Text>
-                      <FormField labelText='UserName' placeholder={"UserName"} onChange={value => {setFormState(oldState => {
-                         return {...oldState,userName:value}
-                      })}} containerStyle={{marginTop:10,marginBottom:10}} />
-                      <FormField labelText='E-mail' keyboardType="email-address" placeholder={"E-mail"} onChange={value => {setFormState(oldState => {
+                      <FormField value={formState.userName} labelText='UserName'  placeholder={"UserName"} onChange={value => {setFormState(oldState => {
                          return {...oldState,email:value}
-                      })}} containerStyle={{marginTop:10,marginBottom:10}} />
-                      <FormField labelText='Password' keyboardType="numeric" placeholder={"Password"} onChange={value => {setFormState(oldState => {
+                      })}} containerStyle={styles.formContainerStyle} textInputStyle={styles.formLabelStyle} focusColor={colors.secondary}  />
+                      <FormField value={formState.email} labelText='E-mail' keyboardType="email-address" placeholder={"E-mail"} onChange={value => {setFormState(oldState => {
+                         return {...oldState,email:value}
+                      })}} containerStyle={styles.formContainerStyle} textInputStyle={styles.formLabelStyle} focusColor={colors.secondary}  />
+                      <FormField value={formState.password} labelText='Password' keyboardType="numeric" placeholder={"Password"} onChange={value => {setFormState(oldState => {
                          return {...oldState,password:value}
-                      })}} containerStyle={{marginTop:10,marginBottom:10}} />  
-                     <Text style={styles.infoText}>Already Have a Accound ? <Link href={"/login"} style={{color:"orange"}}>Login</Link></Text> 
-                      <CustomTouchableButton text="Register" onPress={onSubmit} buttonStyle={{marginTop:40}}/>
+                      })}}  containerStyle={styles.formContainerStyle} textInputStyle={styles.formLabelStyle} focusColor={colors.secondary}  />  
+                     <Text style={styles.infoText}>Don't Have an Account ? <Link href={"/login"} style={{color:colors.secondary}}>Register</Link></Text> 
+                      <CustomTouchableButton text="Register" onPress={onSubmit} buttonStyle={styles.btnStyle} textStyle={styles.btnTextStyle} />
                 </View>
           </ScrollView>
     </SafeAreaView>
@@ -58,34 +59,50 @@ const styles = StyleSheet.create({
             minHeight : "100%"
         },
         scrollVw:{
-             height:"100%"
+             height:"100%",
+             backgroundColor:colors.background,
+             paddingVertical:spaces.high,
+             paddingHorizontal:spaces.middle
         }, 
         content : {
             height:"100%",
-            paddingTop:30,
-            paddingHorizontal:10,
             alignItems:"center",
-            backgroundColor:"pink"
         },
         header: {
-           textAlign:"center",
-           fontSize : 32,
-           fontWeight:"800",
-           marginVertical:20
+           width:"100%",
+           fontSize : fonts.highFontSize,
+           fontWeight:fonts.highFontWeight,
+           color:colors.text,
+           marginBottom:spaces.small
         },
         subTitle: {
-           textAlign:"center",
-           fontSize:20,
-           fontWeight:"400",
-           marginBottom:10 
+           width:"100%",
+           fontSize:fonts.smallMidFontSize,
+           fontWeight:fonts.middleFontWeight,
+           color:colors.text,
+           marginBottom:spaces.high 
+        },
+        formContainerStyle:{
+            marginBottom:spaces.high
+        },
+        formLabelStyle:{
+             color:colors.text
         },
         infoText:{
            textAlign:"right",
            width:"100%",
-           fontSize:14,
-           fontWeight:"400",
-           marginBottom:10, 
-           marginTop:10
+           color:colors.text,
+           fontSize:fonts.smallFontSize,
+           fontWeight:fonts.smallFontWeight,
+           marginTop:spaces.high,
+           marginBottom:spaces.high 
+        },
+        btnStyle:{
+           backgroundColor:colors.secondary,
+           marginTop:spaces.high
+        },
+        btnTextStyle:{
+           color:colors.text
         }
 })
 
