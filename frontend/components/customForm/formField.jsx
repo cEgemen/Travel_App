@@ -3,9 +3,10 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'reac
 import React, { useState } from 'react'
 import openEye from "../../assets/icons/openEye.png"
 import closeEye from "../../assets/icons/closeEye.png"
+import { borderRadius, spaces } from '../../constands/appConstand'
 
 
-const FormField = ({value,labelText="",placeholder,keyboardType,onChange,containerStyle,textInputStyle}) => {
+const FormField = ({value,labelText="",focusColor,placeholder,keyboardType,onChange,containerStyle,inputStyle,textInputStyle}) => {
   const [isFocus,setIsFocus] = useState(false)
   const [isPasswordOpen , setIsPasswordOpen] = useState(false)
   const onPasswordChangeType = () => {
@@ -15,8 +16,8 @@ const FormField = ({value,labelText="",placeholder,keyboardType,onChange,contain
   }
   return (
     <View style={{...style.container,...containerStyle}}>
-     <Text style={style.labelStyle}>{labelText}</Text>
-     <View style={{...style.wrapper,...{borderColor:isFocus ? "orange" : "transparent"},...textInputStyle}}>
+     <Text style={{...style.labelStyle,...textInputStyle}}>{labelText}</Text>
+     <View style={{...style.wrapper,...{borderColor:isFocus ? focusColor : "transparent"},...inputStyle}}>
       <TextInput style={{...style.input}} 
       value={value}
       placeholder={placeholder} 
@@ -44,16 +45,16 @@ const style = StyleSheet.create({
         position:"relative"
       },
       labelStyle:{
-         color:"rgb(2, 2, 2)",
-         width:"100%"
+         color:"rgba(0,0,0,.8)",
+         width:"100%",
+         marginBottom:spaces.small
       }, 
       wrapper : {
            width:"100%",
            height:50,
-           backgroundColor:"rgb(215, 206, 206)", 
-           borderRadius:8,
+           backgroundColor:"rgb(202, 208, 226)", 
+           borderRadius:borderRadius.middleRadius,
            borderWidth:2,
-           marginBottom:10
                 },
        passwordIconWrapperStyle:{
              position:"absolute",
@@ -63,7 +64,8 @@ const style = StyleSheet.create({
        passwordIconStyle : {
               width:25,
               height:25,
-              resizeMode:"contain"
+              resizeMode:"contain",
+              tintColor:"rgba(0,0,0,.8)"
        },         
       input : {
           height:"100%",
