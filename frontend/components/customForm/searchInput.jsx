@@ -1,55 +1,37 @@
-
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useState } from 'react'
-import openEye from "../../assets/icons/openEye.png"
-import closeEye from "../../assets/icons/closeEye.png"
+import search from "../../assets/icons/search.png"
 import { borderRadius, spaces } from '../../constands/appConstand'
 
 
-const FormField = ({value,labelText="",focusColor,placeholder,keyboardType,onChange,containerStyle,inputStyle,textInputStyle}) => {
+const SearchInput = ({initialValue="",focusColor,placeholder,onClick=(value) => {},inputStyle}) => {
   const [isFocus,setIsFocus] = useState(false)
-  const [isPasswordOpen , setIsPasswordOpen] = useState(true)
+  const [value , setValue] = useState(initialValue)
   const onPasswordChangeType = () => {
-       setIsPasswordOpen(oldState => {
-              return !oldState
-       })
+        onClick(value)
   }
   return (
-    <View style={{...style.container,...containerStyle}}>
-     <Text style={{...style.labelStyle,...textInputStyle}}>{labelText}</Text>
      <View style={{...style.wrapper,...{borderColor:isFocus ? focusColor : "transparent"},...inputStyle}}>
       <TextInput style={{...style.input}} 
       value={value}
       placeholder={placeholder} 
       placeholderTextColor={"rgba(0, 0, 0,.3)"} 
-      keyboardType={keyboardType}
-      secureTextEntry = {labelText.toUpperCase() === "PASSWORD" ? isPasswordOpen : false}
-      onChangeText={e => onChange(e)}
+      secureTextEntry = {false}
+      onChangeText={e => {setValue(e)}}
       onFocus={e => {setIsFocus(oldState => {return true})}}
       onBlur={e => setIsFocus(oldState => {return false})}      
        />
 
-    {labelText.toUpperCase() === "PASSWORD" && <TouchableOpacity style={style.passwordIconWrapperStyle} onPress={onPasswordChangeType}>
-        <Image style={style.passwordIconStyle} source={isPasswordOpen ? openEye : closeEye} />
-      </TouchableOpacity> }
-       
+      <TouchableOpacity style={style.passwordIconWrapperStyle} onPress={onPasswordChangeType}>
+        <Image style={style.passwordIconStyle} source={search} />
+      </TouchableOpacity>   
     </View> 
-    </View>
-    
   )
 }
 
 const style = StyleSheet.create({
-      container : {
-        width:"100%",
-        position:"relative"
-      },
-      labelStyle:{
-         color:"rgba(0,0,0,.8)",
-         width:"100%",
-         marginBottom:spaces.small
-      }, 
       wrapper : {
+           position:"relative",
            width:"100%",
            height:50,
            backgroundColor:"rgb(202, 208, 226)", 
@@ -73,5 +55,4 @@ const style = StyleSheet.create({
       }          
 
 })
-
-export default FormField
+export default SearchInput

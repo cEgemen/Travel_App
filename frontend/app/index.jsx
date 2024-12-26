@@ -16,7 +16,8 @@ export default function App() {
 
   
   const onPress = () => {
-      router.push("/login")
+     // router.push("/login")
+        router.push("/home")
   }
 
   return (
@@ -30,11 +31,11 @@ export default function App() {
                      <Text style={styles.desc}> Witness & Wander is a travel guide.</Text>
                    </View>
                    <View style={styles.descWrapper}>
-                     <Image style={styles.descIcon} source={travelWorld} />
+                     <Image style={styles.descIcon} source={map} />
                      <Text style={styles.desc}> Helps you discover the beauty around you.</Text>
                    </View>
                    <View style={styles.descWrapper}>
-                     <Image style={styles.descIcon} source={lib} />
+                     <Image style={styles.descIcon} source={travelWorld} />
                      <Text style={styles.desc}> Find inspiring places and create unforgettable memories.</Text>
                    </View>
                    <CustomTouchableButton text={"Start"} onPress={onPress} buttonStyle={styles.btnWrapperStyle} textStyle={styles.btnTextStyle} />

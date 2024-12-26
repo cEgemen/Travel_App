@@ -37,5 +37,6 @@ export const borderRadius = {
 export const spaces = {
      small : 5,
      middle:10,
-     high : 20
+     high : 20,
+     highx2 : 40
 }
