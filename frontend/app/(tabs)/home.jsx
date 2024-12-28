@@ -1,12 +1,29 @@
 
 import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import appIcon from "../../assets/images/appIcon.png"
 import { colors, fonts, spaces } from '../../constands/appConstand'
-import SearchInput from '../../components/customForm/searchInput'
+import 'react-native-get-random-values';
+import {MY_API_KEY} from "@env"
+import GoogleAutoSearch from '../../components/customForm/googleAutoSearch'
+import { LocationManagment } from '../../managments/locationManagment'
+import { useRouter } from 'expo-router'
 
 const Home = () => {
+  const {setLocationState} = useContext(LocationManagment)
+  const route = useRouter()
+  const onSearchPress = (data,details=null) => {
+          setLocationState(oldState => {
+                const description = data.description;
+                const location = details === null ? null : details.geometry.location;
+                const photoRef = (details===null || details.photos[0] === null) ? null : details.photos[0].photo_reference ;
+                const url = details === null ? null : details.url;
+                return {...oldState,description,location,photoRef,url}
+          })
+          route.push("/guide/selectDate")
+  }
+
   return (
       <SafeAreaView style={styles.safeViewStyle}>
         <View style={styles.container}>
@@ -17,7 +34,7 @@ const Home = () => {
                 </View>
                 <Image style={styles.headerIconStyle} source={appIcon} />
           </View>  
-          <SearchInput focusColor={colors.secondary} placeholder={"Search Visit City"} inputStyle={styles.searchInputStyle} />
+          <GoogleAutoSearch API_KEY={MY_API_KEY} fetchDetails={true} onPress={onSearchPress} />
         </View>  
       </SafeAreaView>
   )
@@ -55,6 +72,7 @@ const styles = StyleSheet.create({
          width:50,height:50,resizeMode:"cover"
        },
        searchInputStyle : {
+           height:150,
            marginBottom : spaces.high
        } 
 })

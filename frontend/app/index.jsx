@@ -24,7 +24,7 @@ export default function App() {
         <SafeAreaView  style={styles.safeArea}>
             <ScrollView contentContainerStyle={styles.scrollVw}>
                <View style={styles.container}>
-                   <Image source={onBoardImg} style={styles.onBoardImg} />
+                   <Image source={onBoardImg} style={styles.onBoardImg} />    
                    <Text style={styles.subTitle}>Find beauty in every journey.</Text>
                    <View style={styles.descWrapper}>
                      <Image style={styles.descIcon} source={lib} />
