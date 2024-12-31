@@ -19,7 +19,7 @@ const Home = () => {
                 const location = details === null ? null : details.geometry.location;
                 const photoRef = (details===null || details.photos[0] === null) ? null : details.photos[0].photo_reference ;
                 const url = details === null ? null : details.url;
-                return {...oldState,description,location,photoRef,url}
+                return {...oldState,description,location,photoRef,url};
           })
           route.push("/guide/selectDate")
   }
@@ -34,7 +34,7 @@ const Home = () => {
                 </View>
                 <Image style={styles.headerIconStyle} source={appIcon} />
           </View>  
-          <GoogleAutoSearch API_KEY={MY_API_KEY} fetchDetails={true} onPress={onSearchPress} />
+          <GoogleAutoSearch API_KEY={MY_API_KEY} fetchDetails={true} onPress={onSearchPress} language='en' />
         </View>  
       </SafeAreaView>
   )
