@@ -1,4 +1,4 @@
-package com.gezerkengor.service.security;
+package com.gezerkengor.services.security;
 
 import java.util.Date;
 import java.util.HashMap;

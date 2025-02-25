@@ -14,7 +14,7 @@ public class CORSConf implements CorsConfigurationSource {
 
     @Override
     @Nullable
-    public CorsConfiguration getCorsConfiguration(@SuppressWarnings("null") HttpServletRequest request) {
+    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
         CorsConfiguration cors = new CorsConfiguration();
                           cors.setAllowedMethods(List.of("OPTIONS","GET","POST","DELETE","POST"));;
                           cors.setAllowedHeaders(List.of("Content-Type","Authorization"));

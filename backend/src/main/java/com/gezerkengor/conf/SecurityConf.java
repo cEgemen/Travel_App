@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.gezerkengor.service.security.UserDetailService;
+import com.gezerkengor.services.security.UserDetailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +31,7 @@ public class SecurityConf {
      }
      
      @Bean
-     public  AuthenticationProvider authProvider(){
+     AuthenticationProvider authProvider(){
             DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
                                       provider.setUserDetailsService(userDetailService);
                                       provider.setPasswordEncoder(passwordEncoder());
@@ -39,13 +39,13 @@ public class SecurityConf {
      }
      
      @Bean 
-     public AuthenticationManager authManager(AuthenticationConfiguration authConf) throws Exception{
+     AuthenticationManager authManager(AuthenticationConfiguration authConf) throws Exception{
                 return authConf.getAuthenticationManager();                    
      } 
  
      
      @Bean
-     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
              return http.csrf(c -> {c.disable();})
                         .authorizeHttpRequests(auth -> {
                              auth.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated();

@@ -1,6 +1,7 @@
 package com.gezerkengor.base.baseResponse;
 
 import lombok.Data;
+
 @Data
 public class BaseResponse<T> {
      
@@ -22,5 +23,6 @@ public class BaseResponse<T> {
     public static <T> BaseResponse<T> badResponse(T errorData){
            return new BaseResponse<T>(null, errorData, false);
     }
+
 
 }

@@ -1,14 +1,14 @@
-package com.gezerkengor.model.dtoModel.dtoUser;
+package com.gezerkengor.models.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class DtoLoginModel {
-          
+@AllArgsConstructor
+public class LoginUser {
+    
       private String email;
 
       private String password;

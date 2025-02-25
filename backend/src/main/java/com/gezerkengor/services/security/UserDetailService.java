@@ -1,14 +1,14 @@
-package com.gezerkengor.service.security;
+package com.gezerkengor.services.security;
 
 import java.util.Optional;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.gezerkengor.model.entityModel.User;
-import com.gezerkengor.repositor.UserRepository;
+import com.gezerkengor.models.user.entity.User;
+import com.gezerkengor.models.user.entity.UserPrincipal;
+import com.gezerkengor.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,9 @@ public class UserDetailService implements UserDetailsService {
                {
                   throw new UsernameNotFoundException("User Not Found");
                }
-               return optionalResult.get();
+               return new UserPrincipal(optionalResult.get());
+
+               
     }
     
 }

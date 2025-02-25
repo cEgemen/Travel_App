@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.gezerkengor.service.security.JWTService;
+import com.gezerkengor.services.security.JWTService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -49,7 +49,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 UserDetails user = userDetailsService.loadUserByUsername(email);
                 if(jwtServie.isValid(token, email))
                 {
-                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user,null);
+                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
                                                          authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                      SecurityContextHolder.getContext().setAuthentication(authToken);
                      filterChain.doFilter(request, response);
