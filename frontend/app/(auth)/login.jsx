@@ -1,30 +1,43 @@
 
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
 import FormField from '../../components/customForm/formField'
 import { Link, router } from 'expo-router'
 import { colors, fonts, spaces } from '../../constands/appConstand'
+import { BASE_URL } from '../../secret'
+import useUserStore from '../../managments/userStore'
+import Input from '../../components/form/Input'
+
 
 const Login = () => {
+ const [formState , setFormState ] = useState({email:"",password:""});
+ const setUser = useUserStore(state => state.setUser)
  
-const [formState , setFormState ] = useState({email:"",password:""});
-
  const onSubmit = () => {
-   fetch("http://192.168.1.107:8080/api/auth/login",{
+   fetch(BASE_URL+"auth/login",{
       method:"POST",
       headers:{
          "Content-Type":"application/json"
       },
-      body:JSON.stringify({email:formState.email,password:formState.password})
+      body:JSON.stringify({...formState})
     })
     .then(result => {
         return result.json();
     })
     .then(data => {
-        console.log("data : ",data)
-        router.replace("/home")
+        const {ok_data,isSucces} = data;
+        if(!isSucces)
+        {
+           ToastAndroid.showWithGravity("Registration process fails.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
+        }
+        else
+        {
+          const {username , token,email,password,role} = ok_data;
+          setUser({username,token,email,password,role})
+          router.replace("/home")
+        }
     })
     .catch(err => {
         console.log("err : ",err)
@@ -37,12 +50,12 @@ const [formState , setFormState ] = useState({email:"",password:""});
                 <View style={styles.content}>
                       <Text style={styles.header}>Welcome Back</Text>
                       <Text style={styles.subTitle}>Sign in to access your account.</Text>
-                      <FormField value={formState.email} labelText='E-mail' keyboardType="email-address" placeholder={"E-mail"} onChange={value => {setFormState(oldState => {
+                      <Input value={formState.email} label='E-mail' keyboardType="email-address" placeholder="E-mail" onChange={value => {setFormState(oldState => {
                          return {...oldState,email:value}
-                      })}} containerStyle={styles.formContainerStyle} textInputStyle={styles.formLabelStyle} focusColor={colors.secondary}  />
-                      <FormField value={formState.password} labelText='Password' keyboardType="numeric" placeholder={"Password"} onChange={value => {setFormState(oldState => {
+                      })}} />
+                      <Input value={formState.password} label='Password' keyboardType="numeric" placeholder="Password" secureTextEntry={true} onChange={value => {setFormState(oldState => {
                          return {...oldState,password:value}
-                      })}}  containerStyle={styles.formContainerStyle} textInputStyle={styles.formLabelStyle} focusColor={colors.secondary}  />  
+                      })}}/>  
                      <Text style={styles.infoText}>Don't Have an Account ? <Link href={"/register"} style={{color:colors.secondary}}>Register</Link></Text> 
                       <CustomTouchableButton text="Login" onPress={onSubmit} buttonStyle={styles.btnStyle} textStyle={styles.btnTextStyle} />
                 </View>

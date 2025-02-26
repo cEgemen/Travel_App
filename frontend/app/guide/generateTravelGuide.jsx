@@ -4,14 +4,14 @@ import {Image, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors, fonts, spaces } from '../../constands/appConstand'
-import LottieView from "lottie-react-native"
+/* import LottieView from "lottie-react-native"
 import { LocationManagment } from '../../managments/locationManagment'
 import { AI_PROMT } from '../../constands/appConstand'
 import { chatSession } from '../../confs/geminiAIConf'
-import { router } from 'expo-router'
+import { router } from 'expo-router' */
 
 const GenerateTravelGuide = () => {
-  const {locationState,setLocationState} = useContext(LocationManagment)
+ /*  const {locationState,setLocationState} = useContext(LocationManagment)
   
   const generateTravelGuide = async () => {
       const replacePromt = AI_PROMT.replace("{location}",locationState.description)
@@ -26,18 +26,18 @@ const GenerateTravelGuide = () => {
   
   useEffect(() => {
           generateTravelGuide()
-  },[])
+  },[]) */
 
   return (
     <SafeAreaView style={styles.safeView}>
-        <View style={styles.container}>
+     {/*    <View style={styles.container}>
            <View>
              <Text  style={styles.headerTitle}>Please Wait ...</Text>
              <Text style={styles.headerDesc} >We are working to generate your guide.</Text>
            </View> 
         <LottieView style={styles.gif} source={require('../../assets/lottie/generation.json')} autoPlay loop />   
         <Text style={styles.bottomText} > Wait for here </Text>
-       </View>
+       </View> */}
     </SafeAreaView>
     
   )

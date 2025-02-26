@@ -3,14 +3,14 @@ import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 're
 import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
-import { LocationManagment } from '../../managments/locationManagment'
+/* import { LocationManagment } from '../../managments/locationManagment'
 import HotelContainer from '../../components/customPageComps/guideDetails/hotelContainer'
 import DaysScroll from '../../components/customPageComps/guideDetails/daysScroll'
 import ActivityContainer from '../../components/customPageComps/guideDetails/activityContainer'
-import { GetPlaceImg } from '../../confs/googleAPIService'
+import { GetPlaceImg } from '../../confs/googleAPIService' */
 
 const GuideDetails = () => {
-  const {locationState,setLocationState} = useContext(LocationManagment);
+/*   const {locationState,setLocationState} = useContext(LocationManagment);
   const [daysState,setDaysState] = useState({currentIndex:0})  
   const locationPromt =  JSON.parse(locationState.locationPromt)
  
@@ -19,11 +19,11 @@ const GuideDetails = () => {
            return {currentIndex:index}
       })
   }
-
+ */
 
   return (
       <SafeAreaView style={styles.safeView}>
-             <ScrollView showsVerticalScrollIndicator={false}>
+             {/* <ScrollView showsVerticalScrollIndicator={false}>
                        <GetPlaceImg imgRef={locationState.photoRef} style={styles.locationImage}  />
                        
                         <View style = {styles.detailsContainer}>
@@ -38,12 +38,12 @@ const GuideDetails = () => {
                         
                         <Text style={styles.headerSubTitle}>🎯 Activitys </Text>
 
-{/*                         <DaysScroll dayCount={locationPromt.dailyPlan.length} onPress={onClick} />
- */}
+                        <DaysScroll dayCount={locationPromt.dailyPlan.length} onPress={onClick} />
+
                         <ActivityContainer activities={locationPromt.dailyPlan} />
 
                    </View>
-             </ScrollView>
+             </ScrollView> */}
       </SafeAreaView>
   )
 }

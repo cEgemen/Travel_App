@@ -10,17 +10,18 @@ const TabLayout = () => {
                headerShown:false,
                tabBarShowLabel:false,
                tabBarHideOnKeyboard:true,
-               tabBarActiveTintColor:colors.background,
+               tabBarActiveTintColor:colors.dark,
                tabBarInactiveTintColor:"rgba(0,0,0,.2)", 
                tabBarIconStyle: {
                    width:"100%",
                    height:"100%"
-               }
+               },
+              
   }
 
   return (
     <>
-       <Tabs>
+       <Tabs >
            <Tabs.Screen 
            name='home'
            options={{

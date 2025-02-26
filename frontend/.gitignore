@@ -18,7 +18,7 @@ expo-env.d.ts
 *.mobileprovision
 
 #
-   confs/
+
 #
 
 # Metro
@@ -33,8 +33,7 @@ yarn-error.*
 .DS_Store
 *.pem
 
-
-.env
+secret.js
 
 # typescript
 *.tsbuildinfo

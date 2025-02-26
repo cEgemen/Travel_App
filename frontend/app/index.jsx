@@ -1,100 +1,126 @@
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router} from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import onBoardImg from "../assets/images/onBoard.png"
-import CustomTouchableButton from '../components/customButtons/customTouchableButton';
-import { useContext } from 'react';
-import { InitialContext } from '../managments/initialManagment';
+import onBoardImg1 from "../assets/images/onBoard1.png"
+import onBoardImg2 from "../assets/images/onBoard2.png"
+import onBoardImg3 from "../assets/images/onBoard3.png"
+import onBoardImg4 from "../assets/images/onBoard4.png"
+import { useContext, useEffect, useState } from 'react';
 import { colors, fonts, spaces } from '../constands/appConstand';
-import travelWorld from "../assets/icons/travelWorld.png";
-import map from "../assets/icons/map.png";
-import lib from "../assets/icons/lib.png";
+import CardSlider from '../components/sliders/CardSlider';
+import DoteSlider from '../components/sliders/DoteSlider';
+
 
 
 export default function App() {
-   const {isReady,token,isFirst} = useContext(InitialContext) ;
+   
+   const onJump = () => router.replace("/login")
+   const onStep = (size,mod,currentIndex) => {
+        onHandleIndexState(size,mod,currentIndex)
+   }
 
-  
-  const onPress = () => {
-     // router.push("/login")
-        router.push("/home")
+   const data = [
+    {image:onBoardImg1,description:"Discover undiscovered routes around the world! Easily create travel plans and thrown into new adventures.",color:"rgb(189, 111, 146)"},
+    {image:onBoardImg2,description:"Discover the best restaurants, hidden paradise and popular tourist places. All the information you need on your journey is in one place!",color:"rgb(111, 189, 136)"},
+    {image:onBoardImg3,description:"Draw your own route, take a break where you want, continue without interrupting the discovery! Car rental and travel tips here.",color:"rgb(189, 142, 111)"},
+    {image:onBoardImg4,description:"Organize your entire trip from the city transportation guide to daily plans!",color:"rgb(111, 160, 189)"}
+               ]
+
+  const [indexState,setIndexState] = useState({left:{index:0,label:"Skip",onPress:onJump},current:{index:0,label:"current",onPress:()=>{}},right:{index:2,label:"Next",onPress:()=>{onStep(data.length,1,0)}}})
+
+  const onHandleIndexState = (size,mod,currentIndex) => {
+       let left = {};
+       let current = {};
+       let right = {};
+
+       if(mod === 1)
+       {
+            if(size-1 === currentIndex)
+              {
+                current = {index:0,label:"current",onPress:()=>{}}
+                left = {index:currentIndex,label:"Previous",onPress:()=>{onStep(size,-1,current.index)}}
+                right = {index:1,label:"Done",onPress:()=>{onJump()}}
+                setIndexState(oldSTate => {
+                    return {current,left,right};
+                })
+              } 
+            else if(size-1 === currentIndex + 1)
+              {
+                current = {index:size-1,label:"current",onPress:()=>{}}
+                left = {index:currentIndex,label:"Previous",onPress:()=>{onStep(size,-1,current.index)}}
+                right = {index:0,label:"Done",onPress:()=>{onJump()}}
+                setIndexState(oldSTate => {
+                    return {current,left,right};
+                })
+              }
+            else if (size - 1 > currentIndex -1 )
+              {
+                current = {index:currentIndex+1,label:"current",onPress:()=>{}}
+                left = {index:currentIndex,label:"Previous",onPress:()=>{onStep(size,-1,current.index)}}
+                right = {index:currentIndex+2,label:"Next",onPress:()=>{onStep(size,1,current.index)}}
+                setIndexState(oldSTate => {
+                    return {current,left,right};
+                })
+              } 
+            else if (currentIndex === 0)
+              {
+                 current = {index:currentIndex+1,label:"current",onPress:()=>{}}
+                 left =    {index:currentIndex,label:"Skip",onPress:()=>{onJump()}}
+                 right =   {index:currentIndex+2,label:"Next",onPress:()=>{onStep(size,1,current.index)}}
+                 setIndexState(oldSTate => {
+                     return {current,left,right};
+                 })
+              }     
+       }
+       else 
+       {
+        if(0 === currentIndex)
+          {
+            current = {index:size-1,label:"Done",onPress:()=>{onJump()}}
+            left = {index:size-2,label:"Previous",onPress:()=>{onStep(size,-1,current.index)}}
+            right = {index:0,label:"Next",onPress:()=>{onStep(size,1,current.index)}}
+            setIndexState(oldSTate => {
+                return {current,left,right};
+            })
+          } 
+        else if(0 === currentIndex - 1)
+          {
+            current = {index:0,label:"current",onPress:()=>{}}
+            left = {index:size-1,label:"Skip",onPress:()=>{onJump()}}
+            right = {index:1,label:"Next",onPress:()=>{onStep(size,1,current.index)}}
+            setIndexState(oldSTate => {
+                return {current,left,right};
+            })
+          }
+        else if (0 < currentIndex - 1 )
+          {
+            current = {index:currentIndex-1,label:"current",onPress:()=>{}}
+            left = {index:currentIndex-2,label:"Previous",onPress:()=>{onStep(size,-1,current.index)}}
+            right = {index:currentIndex,label:"Next",onPress:()=>{onStep(size,1,current.index)}}
+            setIndexState(oldSTate => {
+                return {current,left,right};
+            })
+          } 
+       }
   }
 
-  return (
-        <SafeAreaView  style={styles.safeArea}>
-            <ScrollView contentContainerStyle={styles.scrollVw}>
-               <View style={styles.container}>
-                   <Image source={onBoardImg} style={styles.onBoardImg} />    
-                   <Text style={styles.subTitle}>Find beauty in every journey.</Text>
-                   <View style={styles.descWrapper}>
-                     <Image style={styles.descIcon} source={lib} />
-                     <Text style={styles.desc}> Witness & Wander is a travel guide.</Text>
-                   </View>
-                   <View style={styles.descWrapper}>
-                     <Image style={styles.descIcon} source={map} />
-                     <Text style={styles.desc}> Helps you discover the beauty around you.</Text>
-                   </View>
-                   <View style={styles.descWrapper}>
-                     <Image style={styles.descIcon} source={travelWorld} />
-                     <Text style={styles.desc}> Find inspiring places and create unforgettable memories.</Text>
-                   </View>
-                   <CustomTouchableButton text={"Start"} onPress={onPress} buttonStyle={styles.btnWrapperStyle} textStyle={styles.btnTextStyle} />
-               </View>  
-            </ScrollView>
-        </SafeAreaView>
-  );
+  return <>
+              <SafeAreaView style={[styles.safeArea,{backgroundColor:data[indexState.current.index].color}]}>
+                      <CardSlider cardData={data} indexState={indexState} />
+                      <View style={styles.bottomSliderWrapper}>
+                        <DoteSlider doteSize={data.length} indexState={indexState} />
+                      </View>
+              </SafeAreaView>
+         </>
 }
 
 const styles = StyleSheet.create({
     safeArea :  {
-       minHeight:"100%",
-                },
-    scrollVw :  {
-       height : "100%",
-       backgroundColor:colors.background  ,
-       paddingVertical:spaces.high,
-       paddingHorizontal:spaces.middle,
-                },            
-    container : {
-       width:"100%",
-       height:"100%",
-       alignItems:"center",
-                },                
-    onBoardImg : {
-       width:"100%",
-       height:360,
-       resizeMode :'cover',
-       marginBottom:spaces.middle
-                 } ,
-    subTitle :   {
-          textAlign:"center",
-          color:colors.text,
-          fontSize:fonts.middleFontSize,
-          fontWeight:fonts.middleFontWeight,
-          marginBottom:spaces.high, 
-                } ,
-    descWrapper :{
-        width:"100%",
-        flexDirection:"row",
-        marginBottom:spaces.small,
-    },            
-    descIcon : {
-        tintColor:colors.text,
-        width:25,height:25,resizeMode:"cover"
-    },
-    desc :      {
-            color:colors.text,
-            fontSize:fonts.smallMidFontSize,
-            fontWeight:fonts.smallFontWeight,
-                } ,
-    btnWrapperStyle : {
-         marginVertical:"auto",
-         backgroundColor:colors.secondary
-    } ,
-    btnTextStyle : {
-         marginVertical:"auto",
-         color:colors.text,
-         fontSize:fonts.smallMidFontSize,
-         fontWeight:fonts.smallFontWeight
-    }                                                             
+                  flex:1,justifyContent:"center",paddingBottom:64
+                },  
+     bottomSliderWrapper : {
+               position:"absolute",bottom:0,width:"100%",height:64,justifyContent:"center",paddingHorizontal:spaces.middle,backgroundColor:"rgba(255,255,255,.15)"
+     }                   
+                                                    
 });

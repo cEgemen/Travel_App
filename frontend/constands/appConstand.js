@@ -1,11 +1,19 @@
 
 export const colors = {
-    secondary:"rgb(135, 162, 255)" ,
-    primary : "rgb(247, 219, 240)",
-    background: "hsl(258, 47.30%, 78.40%)",
-    text: "rgb(249, 249, 249)",
-    light:"rgb(255,255,255)",
-    dark:"rgb(0,0,0)"
+  primary: 'rgb(0, 0, 0)',
+  secondary: 'rgb(255, 255, 255)',
+  lightGray: 'rgb(207, 204, 204)', 
+  gray: 'rgb(177, 175, 175)', 
+  darkGray: 'rgb(101, 100, 100)', 
+  background: 'rgb(255, 255, 255)', 
+  backgroundDark: 'rgb(18, 18, 18)',
+  textPrimary: 'rgb(0, 0, 0)', 
+  textSecondary: 'rgb(255, 255, 255)', 
+  textMuted: 'rgb(128, 128, 128)', 
+  error: 'rgb(255, 0, 0)', 
+  warning: 'rgb(255, 165, 0)', 
+  success: 'rgb(0, 128, 0)', 
+  border: 'rgb(200, 200, 200)', 
 }
 
 export const fonts = {
@@ -20,7 +28,7 @@ export const fonts = {
      highFontWeight:800
 }
 
-export const shadows = {
+export const elevation = {
        smallShadow : 2,
        middleShhadow:4,
        highShadow: 8

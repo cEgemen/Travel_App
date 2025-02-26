@@ -2,17 +2,17 @@
 import { StyleSheet,View,Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, fonts, spaces } from '../../constands/appConstand';
-import CustomCalenderPicker from '../../components/customPicker/calenderPicker';
+/* import CustomCalenderPicker from '../../components/customPicker/calenderPicker';
 import { useContext, useState } from 'react';
 import moment from 'moment';
 import CustomTouchableButton from '../../components/customButtons/customTouchableButton';
 import { router } from 'expo-router';
-import { LocationManagment } from '../../managments/locationManagment';
+import { LocationManagment } from '../../managments/locationManagment'; */
 
 
 
 const SelectDate = () => {
-    const [dateState , setDateState] = useState({startDate:null,endDate:null,dayCount:0}); 
+   /*  const [dateState , setDateState] = useState({startDate:null,endDate:null,dayCount:0}); 
     const {locationState,setLocationState} = useContext(LocationManagment)
 
   const format =  'DD/MM/YYYY'
@@ -28,8 +28,8 @@ const SelectDate = () => {
     const diffInDays = end.diff(start, 'days');
     return diffInDays
   }
-
-  const onPick = (date,type) => {
+ */
+  /* const onPick = (date,type) => {
         if(type === "START_DATE")
         {
             setDateState(oldState => {
@@ -52,11 +52,11 @@ const SelectDate = () => {
                return {...oldState,startDate:dateState.startDate,endDate:dateState.endDate,daysCount:dateState.dayCount,nightsCount:dateState.dayCount - 1}
           })
           router.push("/guide/generateTravelGuide")
-  }
+  } */
 
     return (
     <SafeAreaView style={styles.safeAreaStyle} >
-     <View style={styles.container}>
+    {/*  <View style={styles.container}>
         <View style={styles.headerContainer}>
                <Text style={styles.headerTitle}>
                     Select Date
@@ -67,7 +67,7 @@ const SelectDate = () => {
         </View>
         <CustomCalenderPicker onPick={onPick}  />
         <CustomTouchableButton text={"Continue"} onPress={onClick} textStyle={styles.btnTextStyle} buttonStyle={styles.btnStyle} />
-     </View>
+     </View> */}
     </SafeAreaView>
       
 
