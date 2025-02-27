@@ -1,22 +1,47 @@
 
-import { View, Text, ScrollView, StyleSheet, ToastAndroid } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
-import FormField from '../../components/customForm/formField'
-import { Link, router } from 'expo-router'
+import { View, Text, StyleSheet, ToastAndroid, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Keyboard } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { router } from 'expo-router'
 import { colors, fonts, spaces } from '../../constands/appConstand'
 import { BASE_URL } from '../../secret'
 import useUserStore from '../../managments/userStore'
-import Input from '../../components/form/Input'
-
+import Animated, {FadeIn,FadeInDown,FadeInUp,} from "react-native-reanimated";
+import authBack1 from "../../assets/images/authBack1.png"
+import authBack2 from "../../assets/images/authBack2.png"
+import InputWithLabel from '../../components/forms/InputWithLabel'
+import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
+import { emailValid, passwordValid } from '../../utils/validations'
+ 
 
 const Login = () => {
  const [formState , setFormState ] = useState({email:"",password:""});
+ const [errorState,setErrorState] = useState({email:[],password:[],isReady:false})
+ const [keyboardState,setKeyboardState] = useState(false)
  const setUser = useUserStore(state => state.setUser)
+
+ const goToRegister = () => {
+     router.push("/register")
+ }
+
+ useEffect(() => {
+   const open =  Keyboard.addListener("keyboardDidShow",() => {
+      setKeyboardState(true)
+   })
+   
+   const close = Keyboard.addListener("keyboardDidHide",() => {
+       setKeyboardState(false)
+   })
+
+   return () => {
+       open.remove()
+       close.remove()
+   }
+
+ })
  
  const onSubmit = () => {
-   fetch(BASE_URL+"auth/login",{
+  if(errorState.isReady)
+  { fetch(BASE_URL+"auth/login",{
       method:"POST",
       headers:{
          "Content-Type":"application/json"
@@ -41,79 +66,110 @@ const Login = () => {
     })
     .catch(err => {
         console.log("err : ",err)
-    })
+    })}
  } 
 
+ const inputValidate = (mod,value) => {
+          if(mod === 1)
+          {
+                const andData = errorState.password.length === 0
+                const result = emailValid(value)
+                const email = result.isValidated ?  {email:[],isReady:andData && true} : {email:Array.of(result.message),isReady:false}  
+                   setErrorState(oldState => {
+                       return {...oldState,...email}
+                   })
+          }
+          else if(mod === 2)
+          {   
+                const andData = errorState.email.length === 0
+                const result = passwordValid(value)
+                const password = result.isValidated ?  {password:[],isReady:andData && true} : {password:Array.of(result.message),isReady:false}  
+                   setErrorState(oldState => {
+                       return {...oldState,...password}
+                   })
+          }  
+ }
+
   return (
-    <SafeAreaView style={styles.safeArea}>
-          <ScrollView contentContainerStyle={styles.scrollVw}>
-                <View style={styles.content}>
-                      <Text style={styles.header}>Welcome Back</Text>
-                      <Text style={styles.subTitle}>Sign in to access your account.</Text>
-                      <Input value={formState.email} label='E-mail' keyboardType="email-address" placeholder="E-mail" onChange={value => {setFormState(oldState => {
-                         return {...oldState,email:value}
-                      })}} />
-                      <Input value={formState.password} label='Password' keyboardType="numeric" placeholder="Password" secureTextEntry={true} onChange={value => {setFormState(oldState => {
-                         return {...oldState,password:value}
-                      })}}/>  
-                     <Text style={styles.infoText}>Don't Have an Account ? <Link href={"/register"} style={{color:colors.secondary}}>Register</Link></Text> 
-                      <CustomTouchableButton text="Login" onPress={onSubmit} buttonStyle={styles.btnStyle} textStyle={styles.btnTextStyle} />
-                </View>
-          </ScrollView>
-    </SafeAreaView>
+   <ScrollView style={styles.safeArea} contentContainerStyle={{flex:1}}>
+   <Image style={[styles.topBackImg,{height:!keyboardState ? "85%" : "55%"}]} source={authBack1}/>
+ { !keyboardState ? <View style={styles.topBack2ImgWrapper}>
+     <Animated.Image
+        entering={FadeInUp.delay(200).duration(1000).springify()}
+       style={{width:90,height:220}}
+       source={authBack2}
+     />
+     <Animated.Image
+       entering={FadeInUp.delay(400).duration(1000).springify()}
+       style={{width:65,height:160}}
+       source={authBack2}
+     />
+   </View> :  null 
+   }
+
+   <View style={styles.contentWrapper}>
+    <View style={{alignItems:"center"}}>
+       <Animated.Text
+         entering={FadeInUp.duration(1000).springify()}
+         style={{color:colors.background,fontSize:fonts.highFontSize,fontWeight:fonts.highFontWeight}}
+       >
+         Login
+       </Animated.Text>  
+     </View> 
+
+     <View style={styles.formContainerStyle}>
+       <Animated.View
+         entering={FadeInDown.duration(1000).springify()}
+         style={{width:"100%"}}
+       >
+        <InputWithLabel keyboardType='email-addres' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(1,formState.email)}} inputContainerStyle={{marginBottom:spaces.middle}}/>
+       </Animated.View>
+       <Animated.View
+         entering={FadeInDown.delay(200).duration(1000).springify()}
+         style={{width:"100%"}}
+       >
+         <InputWithLabel keyboardType='numeric' label='Password' placeholder='Your Password ...' onChange={(text) => setFormState(oldState => ({...oldState,password:text}))} value={formState.password} secureTextEntry={true} errors={errorState.password} onEndEditing={() => {inputValidate(2,formState.password)}} inputContainerStyle={{marginVertical:spaces.middle}} />
+       </Animated.View>
+       <Animated.View
+         entering={FadeInDown.delay(400).duration(1000).springify()}
+         style={{width:"100%"}}
+       >
+        <CustomTouchableButton disabled={!errorState.isReady} text={"Login"} onPress={onSubmit} buttonStyle={styles.btnStyle} />
+       </Animated.View>
+       <Animated.View
+         entering={FadeInDown.delay(600).duration(1000).springify()}
+         style={{flexDirection:"row",justifyContent:"center"}}
+       >
+         <Text> Don't have an account? </Text>
+         <TouchableOpacity onPress={goToRegister}>
+           <Text style={{color:"rgb(121, 149, 206)"}}>Sign Up</Text>
+         </TouchableOpacity>
+       </Animated.View>
+     </View>
+   </View>
+ </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
         safeArea : {
-            minHeight : "100%"
+            flex:1
         },
-        scrollVw:{
-             height:"100%",
-             backgroundColor:colors.background,
-             paddingVertical:spaces.high,
-             paddingHorizontal:spaces.middle
-        }, 
-        content : {
-            height:"100%",
-            alignItems:"center",
+        topBackImg:{
+            width:"100%",position:"absolute"
+                  }, 
+        topBack2ImgWrapper : {
+          flexDirection:"row",position:"absolute",width:"100%",justifyContent:"space-around"
         },
-        header: {
-           width:"100%",
-           fontSize : fonts.highFontSize,
-           fontWeight:fonts.highFontWeight,
-           color:colors.text,
-           marginBottom:spaces.small
-        },
-        subTitle: {
-           width:"100%",
-           fontSize:fonts.smallMidFontSize,
-           fontWeight:fonts.middleFontWeight,
-           color:colors.text,
-           marginBottom:spaces.high 
+        contentWrapper : {
+          height:"100%",width:"100%",justifyContent:"space-around"
         },
         formContainerStyle:{
-            marginBottom:spaces.high
-        },
-        formLabelStyle:{
-             color:colors.text
-        },
-        infoText:{
-           textAlign:"right",
-           width:"100%",
-           color:colors.text,
-           fontSize:fonts.smallFontSize,
-           fontWeight:fonts.smallFontWeight,
-           marginTop:spaces.high,
-           marginBottom:spaces.high 
+            alignItems:"center",margin:spaces.small
         },
         btnStyle:{
-           backgroundColor:colors.secondary,
-           marginTop:spaces.high
+          backgroundColor:"rgb(121, 149, 206)",marginTop:spaces.highx2,marginBottom:spaces.high
         },
-        btnTextStyle:{
-           color:colors.text
-        }
 })
 
 export default Login

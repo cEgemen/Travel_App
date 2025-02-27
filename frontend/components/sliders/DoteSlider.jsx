@@ -4,6 +4,7 @@ import React, { useRef } from 'react'
 import { borderRadius, colors, spaces } from '../../constands/appConstand';
 
 const DoteSlider = ({doteSize=0,indexState={}}) => {
+     
   const dotes = new Array(doteSize < 5 ? doteSize : 5 );
 
   const DoteSliderButton = ({label,onPress}) => <>
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
          justifyContent:"space-between",flexDirection:"row",gap:spaces.small
     },
     doteButton : {
-         width:60,height:30,borderRadius:borderRadius.middleRadius,justifyContent:"center",alignItems:"center",backgroundColor:colors.gray,borderWidth:1
+         width:60,height:30,borderRadius:borderRadius.middleRadius,justifyContent:"center",alignItems:"center",backgroundColor:colors.lightGray,borderWidth:1
     },
     flatListContainerStyle : {
          flex:1,alignItems:"center",justifyContent:"center",gap:spaces.middle
