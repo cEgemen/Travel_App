@@ -134,7 +134,7 @@ const Login = () => {
          entering={FadeInDown.duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <InputWithLabel keyboardType='email-addres' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(1,formState.email)}} inputContainerStyle={{marginBottom:spaces.middle}} editable={!isLoading} icon={emailIcon}  />
+        <InputWithLabel keyboardType='email-address' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(1,formState.email)}} inputContainerStyle={{marginBottom:spaces.middle}} editable={!isLoading} icon={emailIcon}  />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(200).duration(1000).springify()}
@@ -154,7 +154,7 @@ const Login = () => {
        >
          <Text> Don't have an account? </Text>
          <TouchableOpacity onPress={goToRegister}>
-           <Text style={{color:"rgb(121, 149, 206)"}}>Sign Up</Text>
+           <Text style={{color:colors.primary}}>Sign Up</Text>
          </TouchableOpacity>
        </Animated.View>
      </View>
@@ -177,10 +177,10 @@ const styles = StyleSheet.create({
           height:"100%",width:"100%",justifyContent:"space-around"
         },
         formContainerStyle:{
-            alignItems:"center",margin:spaces.small
+            alignItems:"center",margin:spaces.middle
         },
         btnStyle:{
-          backgroundColor:"rgb(121, 149, 206)",marginTop:spaces.highx2,marginBottom:spaces.high
+          backgroundColor:colors.primary,marginTop:spaces.highx2,marginBottom:spaces.high
         },
 })
 

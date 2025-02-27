@@ -1,22 +1,18 @@
 
 import { Tabs } from 'expo-router'
 import { colors } from '../../constands/appConstand'
-import CustomTab from '../../components/customTabBar/customTab' 
+import CustomTab from "../../components/navigations/CustomTab"
 import homeIcon from "../../assets/icons/home.png"
 import userIcon from "../../assets/icons/user.png"
 
 const TabLayout = () => {
   const commonOptions = {
-               headerShown:false,
-               tabBarShowLabel:false,
                tabBarHideOnKeyboard:true,
-               tabBarActiveTintColor:colors.dark,
-               tabBarInactiveTintColor:"rgba(0,0,0,.2)", 
+               tabBarLabel:"",
                tabBarIconStyle: {
                    width:"100%",
-                   height:"100%"
-               },
-              
+                   height:"100%",
+               }   
   }
 
   return (
@@ -25,17 +21,15 @@ const TabLayout = () => {
            <Tabs.Screen 
            name='home'
            options={{
-               title:"Home",
                ...commonOptions,
-               tabBarIcon : ({focused,color}) => (<CustomTab color={color} focused={focused} icon={homeIcon} text={"Home"} />)
+               tabBarIcon : ({focused,color}) => (<CustomTab  focused={focused} icon={homeIcon} text={"Home"} />)
            }}
             />
              <Tabs.Screen 
            name='profile'
            options={{
-               title:"Profile",
                ...commonOptions,
-               tabBarIcon : ({focused,color}) => ( <CustomTab color={color} focused={focused} icon={userIcon} text={"User"} /> )
+               tabBarIcon : ({focused,color}) => ( <CustomTab  focused={focused} icon={userIcon} text={"User"} /> )
            }}
             />
        </Tabs>   

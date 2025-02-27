@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         width:"100%",gap:spaces.small
            },
      input : {
-      backgroundColor:colors.secondary,borderRadius:borderRadius.highRadius,paddingHorizontal:spaces.middle
+      backgroundColor:colors.background,borderRadius:borderRadius.highRadius,paddingRight:spaces.high*1.5
      },
      error : {
         fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight,color:colors.error,paddingHorizontal:spaces.small
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,paddingHorizontal:spaces.small
      },
      iconWrapper : {
-      position:"absolute",right:spaces.small,top:spaces.high*1.5
+      position:"absolute",right:spaces.small,top:spaces.high*1.62
      },
      icon:{
       width:30,height:30,tintColor:colors.lightGray

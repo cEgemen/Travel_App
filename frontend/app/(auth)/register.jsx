@@ -144,7 +144,7 @@ const goToRegister = () => {
          entering={FadeInDown.duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <InputWithLabel keyboardType='email-addres' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(2,formState.email)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}} icon={emailIcon} editable={!isLoading} />
+        <InputWithLabel keyboardType='email-address' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(2,formState.email)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}} icon={emailIcon} editable={!isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(200).duration(1000).springify()}
@@ -156,7 +156,7 @@ const goToRegister = () => {
          entering={FadeInDown.delay(400).duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <CustomTouchableButton disabled={!errorState.isReady} text={"Login"} onPress={onSubmit} 
+        <CustomTouchableButton disabled={!errorState.isReady} text={"Register"} onPress={onSubmit} 
         buttonStyle={{...styles.btnStyle,...{marginTop:keyboardState ? spaces.high : spaces.highx2,marginBottom:!keyboardState ? spaces.high :  spaces.middle}}} isLoading={isLoading} />
        </Animated.View>
        <Animated.View
@@ -165,7 +165,7 @@ const goToRegister = () => {
        >
          <Text> Already have an account? </Text>
          <TouchableOpacity onPress={goToRegister}>
-           <Text style={{color:"rgb(121, 149, 206)"}}>Login</Text>
+           <Text style={{color:colors.primary}}>Login</Text>
          </TouchableOpacity>
        </Animated.View>
      </View>
@@ -188,10 +188,10 @@ contentWrapper : {
   height:"100%",width:"100%",justifyContent:"space-around"
 },
 formContainerStyle:{
-    alignItems:"center",margin:spaces.small
+    alignItems:"center",margin:spaces.middle
 },
 btnStyle:{
-  backgroundColor:"rgb(121, 149, 206)"
+  backgroundColor:colors.primary
 },
 })
 

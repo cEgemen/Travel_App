@@ -5,7 +5,7 @@ const passwordRegex=/^\d{6}$/
 export const userNameValid = (username) => { 
      
      const result = usernameRegex.test(username);
-     if(username.length < 3 || username.length)
+     if(username.length < 3 || username.length > 20)
      {
           return {message:"The user name must be between 3 and 20 characters.",isValidated:false}
      }

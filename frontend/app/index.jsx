@@ -1,13 +1,12 @@
-import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { router} from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import onBoardImg from "../assets/images/onBoard.png"
 import onBoardImg1 from "../assets/images/onBoard1.png"
 import onBoardImg2 from "../assets/images/onBoard2.png"
 import onBoardImg3 from "../assets/images/onBoard3.png"
 import onBoardImg4 from "../assets/images/onBoard4.png"
-import { useContext, useEffect, useState } from 'react';
-import { colors, fonts, spaces } from '../constands/appConstand';
+import { useState } from 'react';
+import {spaces } from '../constands/appConstand';
 import CardSlider from '../components/sliders/CardSlider';
 import DoteSlider from '../components/sliders/DoteSlider';
 
@@ -15,7 +14,7 @@ import DoteSlider from '../components/sliders/DoteSlider';
 
 export default function App() {
    
-   const onJump = () => router.replace("/login")
+   const onJump = () => router.replace("/home")
    const onStep = (size,mod,currentIndex) => {
         onHandleIndexState(size,mod,currentIndex)
    }

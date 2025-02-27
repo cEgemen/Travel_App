@@ -1,7 +1,7 @@
 
 export const colors = {
-  primary: 'rgb(0, 0, 0)',
-  secondary: 'rgb(255, 255, 255)',
+  primary: 'rgb(121, 149, 206)',
+  secondary: 'rgb(144, 225, 174)',
   lightGray: 'rgb(207, 204, 204)', 
   gray: 'rgb(177, 175, 175)', 
   darkGray: 'rgb(101, 100, 100)', 
