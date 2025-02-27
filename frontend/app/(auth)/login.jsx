@@ -8,19 +8,25 @@ import useUserStore from '../../managments/userStore'
 import Animated, {FadeIn,FadeInDown,FadeInUp,} from "react-native-reanimated";
 import authBack1 from "../../assets/images/authBack1.png"
 import authBack2 from "../../assets/images/authBack2.png"
+import emailIcon from "../../assets/icons/email.png"
 import InputWithLabel from '../../components/forms/InputWithLabel'
 import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
 import { emailValid, passwordValid } from '../../utils/validations'
+import PasswordInputLabel from '../../components/forms/PasswordInputLabel'
  
 
 const Login = () => {
+ const [isLoading,setLoading] = useState(false)
  const [formState , setFormState ] = useState({email:"",password:""});
  const [errorState,setErrorState] = useState({email:[],password:[],isReady:false})
  const [keyboardState,setKeyboardState] = useState(false)
  const setUser = useUserStore(state => state.setUser)
 
  const goToRegister = () => {
-     router.push("/register")
+    if(!isLoading)
+     {
+      router.push("/register")
+     }
  }
 
  useEffect(() => {
@@ -41,7 +47,9 @@ const Login = () => {
  
  const onSubmit = () => {
   if(errorState.isReady)
-  { fetch(BASE_URL+"auth/login",{
+  { 
+    setLoading(true)
+    fetch(BASE_URL+"auth/login",{
       method:"POST",
       headers:{
          "Content-Type":"application/json"
@@ -66,7 +74,11 @@ const Login = () => {
     })
     .catch(err => {
         console.log("err : ",err)
-    })}
+    })
+    .finally(() => {
+        setLoading(false)
+    })
+   }
  } 
 
  const inputValidate = (mod,value) => {
@@ -122,19 +134,19 @@ const Login = () => {
          entering={FadeInDown.duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <InputWithLabel keyboardType='email-addres' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(1,formState.email)}} inputContainerStyle={{marginBottom:spaces.middle}}/>
+        <InputWithLabel keyboardType='email-addres' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(1,formState.email)}} inputContainerStyle={{marginBottom:spaces.middle}} editable={!isLoading} icon={emailIcon}  />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(200).duration(1000).springify()}
          style={{width:"100%"}}
        >
-         <InputWithLabel keyboardType='numeric' label='Password' placeholder='Your Password ...' onChange={(text) => setFormState(oldState => ({...oldState,password:text}))} value={formState.password} secureTextEntry={true} errors={errorState.password} onEndEditing={() => {inputValidate(2,formState.password)}} inputContainerStyle={{marginVertical:spaces.middle}} />
+         <PasswordInputLabel label='Password' placeholder='Your Password ...' onChange={(text) => setFormState(oldState => ({...oldState,password:text}))} value={formState.password} errors={errorState.password} onEndEditing={() => {inputValidate(2,formState.password)}} inputContainerStyle={{marginVertical:spaces.middle}} editable={!isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(400).duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <CustomTouchableButton disabled={!errorState.isReady} text={"Login"} onPress={onSubmit} buttonStyle={styles.btnStyle} />
+        <CustomTouchableButton disabled={!errorState.isReady} text={"Login"} onPress={onSubmit} buttonStyle={styles.btnStyle} isLoading={isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(600).duration(1000).springify()}

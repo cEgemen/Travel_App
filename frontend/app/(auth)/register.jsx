@@ -6,22 +6,31 @@ import { BASE_URL } from '../../secret'
 import Animated, {FadeIn,FadeInDown,FadeInUp,} from "react-native-reanimated";
 import authBack1 from "../../assets/images/authBack1.png"
 import authBack2 from "../../assets/images/authBack2.png"
+import userIcon from "../../assets/icons/user.png"
+import emailIcon from "../../assets/icons/email.png"
 import InputWithLabel from '../../components/forms/InputWithLabel'
 import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
 import { emailValid, passwordValid, userNameValid } from '../../utils/validations'
+import PasswordInputLabel from '../../components/forms/PasswordInputLabel'
 
 const Register = () => {
+const [isLoading,setLoading] = useState(false)  
 const [formState , setFormState ] = useState({username:"",email:"",password:""});
 const [errorState,setErrorState] = useState({username:[],email:[],password:[],isReady:false})
 const [keyboardState,setKeyboardState] = useState(false)
 
 const goToRegister = () => {
-    router.replace("/login")
+  if(!isLoading)
+  {
+   router.replace("/login") 
+  } 
 }
 
  const onSubmit = () => {
     if(errorState.isReady)    
-    {fetch(BASE_URL+"auth/register",{
+    {
+      setLoading(true)
+      fetch(BASE_URL+"auth/register",{
             method:"POST",
             headers:{
                "Content-Type":"application/json"
@@ -39,12 +48,16 @@ const goToRegister = () => {
               }
               else
               {
-                 router.back()
+                 router.replace("/login")
               }
           })
           .catch(err => {
               console.log("err : ",err)
-          })}
+          })
+          .finally(() => {
+                setLoading(false)
+          })
+        }
  } 
 
   useEffect(() => {
@@ -125,26 +138,26 @@ const goToRegister = () => {
          entering={FadeInDown.duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <InputWithLabel  label='UserName' placeholder='Your User Name ...' onChange={(text) => setFormState(oldState => ({...oldState,username:text}))} value={formState.username} errors={errorState.username} onEndEditing={() => {inputValidate(1,formState.username)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}}/>
+        <InputWithLabel  label='UserName' placeholder='Your User Name ...' onChange={(text) => setFormState(oldState => ({...oldState,username:text}))} value={formState.username} errors={errorState.username} onEndEditing={() => {inputValidate(1,formState.username)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}} icon={userIcon} editable={!isLoading}/>
        </Animated.View>
        <Animated.View
          entering={FadeInDown.duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <InputWithLabel keyboardType='email-addres' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(2,formState.email)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}}/>
+        <InputWithLabel keyboardType='email-addres' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(2,formState.email)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}} icon={emailIcon} editable={!isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(200).duration(1000).springify()}
          style={{width:"100%"}}
        >
-         <InputWithLabel keyboardType='numeric' label='Password' placeholder='Your Password ...' onChange={(text) => setFormState(oldState => ({...oldState,password:text}))} value={formState.password} secureTextEntry={true} errors={errorState.password} onEndEditing={() => {inputValidate(3,formState.password)}} inputContainerStyle={{marginTop:!keyboardState? spaces.middle :  spaces.small}} />
+         <PasswordInputLabel  label='Password' placeholder='Your Password ...' onChange={(text) => setFormState(oldState => ({...oldState,password:text}))} value={formState.password} errors={errorState.password} onEndEditing={() => {inputValidate(3,formState.password)}} inputContainerStyle={{marginTop:!keyboardState? spaces.middle :  spaces.small}} editable={!isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(400).duration(1000).springify()}
          style={{width:"100%"}}
        >
         <CustomTouchableButton disabled={!errorState.isReady} text={"Login"} onPress={onSubmit} 
-        buttonStyle={{...styles.btnStyle,...{marginTop:keyboardState ? spaces.high : spaces.highx2,marginBottom:!keyboardState ? spaces.high :  spaces.middle}}} />
+        buttonStyle={{...styles.btnStyle,...{marginTop:keyboardState ? spaces.high : spaces.highx2,marginBottom:!keyboardState ? spaces.high :  spaces.middle}}} isLoading={isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(600).duration(1000).springify()}
