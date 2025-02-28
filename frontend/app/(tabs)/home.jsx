@@ -8,6 +8,8 @@ import logOutIcon from "../../assets/icons/logout.png"
 import chatRobotIcon from "../../assets/icons/chatRobot.png"
 import useUserStore from '../../managments/userStore'
 import SearchInput from '../../components/forms/SearchInput'
+import SuggesContainer from '../../components/customPageComps/home/SuggesContainer'
+
 
 
 const Home = () => {
@@ -15,6 +17,9 @@ const Home = () => {
   const logOut = () => {
       router.replace("/login")
   }
+ 
+ 
+ 
   return (
      <SafeAreaView style={styles.safeArea}>
        <Stack.Screen options={{headerShadowVisible:false,headerTitle:"",
@@ -37,9 +42,7 @@ const Home = () => {
            <Text style={styles.contentHeaderBottomText}>Discover new places, plan your trips, and create unforgettable memories!</Text>
           </View>
           <SearchInput focusColor={colors.primary} placeholder='Enter Location ...' />
-          <View style={styles.suggesContainer}>
-             <Text style={styles.suggesText}>👀 We create suggestions for places to visit for you ...</Text>
-          </View>
+          <SuggesContainer />
        </ScrollView>
      </SafeAreaView>
   )
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
        },
        chatIconWrapper : {
           width:50,aspectRatio:1,borderRadius:borderRadius.circleRadius(60),
-          backgroundColor:colors.primary,elevation:elevation.middleShhadow,position:"absolute",bottom:spaces.highx2,right:spaces.middle
+          backgroundColor:colors.primary,elevation:elevation.middleShhadow,position:"absolute",zIndex:2,bottom:spaces.highx2,right:spaces.middle
        },
        chatIcon : {
              tintColor:colors.background
@@ -77,12 +80,7 @@ const styles = StyleSheet.create({
        contentHeaderBottomText:{
          fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.textPrimary,color:colors.lightGray
        },
-       suggesContainer:{
-          width:"100%",marginVertical:"auto",gap:spaces.middle
-       },
-       suggesText:{
-          fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.gray
-                  }
+      
 })
 
 export default Home

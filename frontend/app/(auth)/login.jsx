@@ -10,7 +10,7 @@ import authBack1 from "../../assets/images/authBack1.png"
 import authBack2 from "../../assets/images/authBack2.png"
 import emailIcon from "../../assets/icons/email.png"
 import InputWithLabel from '../../components/forms/InputWithLabel'
-import CustomTouchableButton from '../../components/customButtons/customTouchableButton'
+import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton'
 import { emailValid, passwordValid } from '../../utils/validations'
 import PasswordInputLabel from '../../components/forms/PasswordInputLabel'
  
