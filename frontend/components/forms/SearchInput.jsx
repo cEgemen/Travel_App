@@ -4,26 +4,30 @@ import search from "../../assets/icons/search.png"
 import { borderRadius, colors, elevation, spaces } from '../../constands/appConstand'
 
 
-const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onClick=(value) => {},inputStyle}) => {
+const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onClick=(value) => {},onChangeCallback=(text)=>{},onEndEditing=(value)=>{},inputStyle}) => {
   const [isFocus,setIsFocus] = useState(false)
   const [value , setValue] = useState(initialValue)
-  const onPasswordChangeType = () => {
+  const onSearch = () => {
         onClick(value)
   }
   return (
      <View style={{...style.wrapper,...{borderColor:isFocus ? focusColor : colors.lightGray},...inputStyle}}>
       <TextInput style={{...style.input}} 
+      onEndEditing={() => onEndEditing(value)}
       value={value}
       placeholder={placeholder} 
       placeholderTextColor={colors.lightGray} 
       secureTextEntry = {false}
       numberOfLines={1}
-      onChangeText={text => {setValue(text)}}
+      onChangeText={text => {
+        setValue(text)
+        onChangeCallback(text)
+        }}
       onFocus={e => {setIsFocus(true)}}
       onBlur={e => setIsFocus(false)}      
        />
 
-      <TouchableOpacity style={style.iconWrapperStyle} onPress={onPasswordChangeType}>
+      <TouchableOpacity style={style.iconWrapperStyle} onPress={onSearch}>
         <Image style={style.iconStyle} source={search} />
       </TouchableOpacity>   
     </View> 

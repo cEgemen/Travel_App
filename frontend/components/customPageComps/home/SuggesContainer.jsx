@@ -6,9 +6,9 @@ import { colors, fonts, spaces } from '../../../constands/appConstand'
 import getSuggesPlaces from "../../../confs/groqAlConf"
 import SuggesCard from './SuggesCard'
 
-const SuggesContainer = memo(() => {
+const SuggesContainer = memo((props) => {
     const [isLoading,setIsLoading] = useState(true)  
-    const [suggesData , setSuggesData] = useState({country:null,city:null,places:null})
+    const [suggesData , setSuggesData] = useState({country:null,city:null,places:["","","","",""]})
     useEffect(() => {
         let timeOut = null
          const getData = async () => {
@@ -37,7 +37,7 @@ const SuggesContainer = memo(() => {
    const suggesTextLocation = suggesData.city === null ? <ActivityIndicator color={colors.primary}/> : <Text style={styles.suggesText}>{suggesData.city},{suggesData.country}</Text>
 
     return (
-      <View style={styles.suggesContainer}>
+      <View style={[styles.suggesContainer,props.containerStyle]}>
         <View style={styles.suggesHeaderWrapper}>
             <Text style={styles.suggesText}>⚙️ Your suggestions are being created ...
             </Text>
@@ -59,7 +59,7 @@ const SuggesContainer = memo(() => {
             keyExtractor={(item,index) => index}
             data={suggesData.places}
             renderItem={({item}) => {
-                 return <SuggesCard suggesData={item} />
+                 return <SuggesCard suggesData={item} isLoading={suggesData.city === null} />
             }}
           /> 
        </View>
@@ -70,7 +70,7 @@ export default SuggesContainer
 
 const styles = StyleSheet.create({
     suggesContainer:{
-        width:"100%",height:300,marginVertical:"auto",gap:spaces.middle
+        width:"100%",height:300,gap:spaces.middle
      },
      suggesHeaderWrapper : {
         flexDirection:"column",gap:spaces.small,alignItems:"flex-start"
