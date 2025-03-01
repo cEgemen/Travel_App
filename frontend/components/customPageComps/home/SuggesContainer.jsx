@@ -16,7 +16,7 @@ const SuggesContainer = memo((props) => {
                      setIsLoading(false)
                    timeOut = setTimeout(()=> {
                          setSuggesData(JSON.parse(data))   
-                     }, 800)
+                     }, 500)
                  })
                  .catch(err => {
                      ToastAndroid.showWithGravity("Creatin Suggestion is faild.",ToastAndroid.LONG,ToastAndroid.BOTTOM)

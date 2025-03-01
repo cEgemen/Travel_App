@@ -3,9 +3,8 @@ import { StyleSheet} from 'react-native'
 import React from 'react'
 import CalendarPicker from "react-native-calendar-picker";
 import { colors, fonts } from '../../constands/appConstand';
-import moment from "moment"
 
-const CustomCalenderPicker = ({onPick=(date,type) => {}}) => {
+const CustomCalenderPicker = ({selectedStartDate=null,selectedEndDate=null,onPick=(date,type) => {}}) => {
   
   const onChange = (date, type) => {
           onPick(date,type)   
@@ -20,7 +19,8 @@ const CustomCalenderPicker = ({onPick=(date,type) => {}}) => {
     allowRangeSelection={true}  
     selectedRangeStyle={styles.selectedRangeStyle}
     disabledDatesTextStyle={styles.disableDateTextStle}
-
+    selectedStartDate={selectedStartDate !== null ?  selectedStartDate.toDate() : undefined }
+    selectedEndDate={selectedEndDate !== null ? selectedEndDate.toDate() : undefined}
     />  
   )
 }
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
          color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight,
      },
      disableDateTextStle : {
-         color:"rgba(0,0,0,0.3)"
+         color:colors.lightGray
      },
      selectedRangeStyle:{
-         backgroundColor:colors.secondary
+         backgroundColor:colors.primary
      }
 })

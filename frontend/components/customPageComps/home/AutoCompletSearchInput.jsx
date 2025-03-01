@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react'
 import SearchInput from '../../forms/SearchInput'
 import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand'
 
-const AutoCompletSearchInput = ({searchWrapperStyle={},inputStyle={}, focusColor=colors.gray, initialValue=""}) => {
+const AutoCompletSearchInput = ({onPress=(data) => {},searchWrapperStyle={},inputStyle={}, focusColor=colors.gray, initialValue=""}) => {
   const [locations,setLocations] = useState([])
   const timeOutRef = useRef(null)
 
@@ -19,7 +19,6 @@ const AutoCompletSearchInput = ({searchWrapperStyle={},inputStyle={}, focusColor
   }
 
   const getLocations = async (value) => {
-      console.log("value : ",value)
       fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${value}`, {headers: {
         'User-Agent': 'travell/1.0'
       }})
@@ -36,15 +35,16 @@ const AutoCompletSearchInput = ({searchWrapperStyle={},inputStyle={}, focusColor
     <View style={searchWrapperStyle}>
          <SearchInput inputStyle={inputStyle} focusColor={focusColor} initialValue={initialValue}  placeholder="Enter Location ..." onChangeCallback={handleOnChange}  />
          <FlatList
+             nestedScrollEnabled
              showsVerticalScrollIndicator={false}
-             style={{borderColor:colors.lightGray,borderWidth:1,borderRadius:borderRadius.middleRadius,borderTopColor:"white"}}
-             contentContainerStyle={{paddingVertical:spaces.small,paddingHorizontal:spaces.middle,gap:spaces.small}}
+             style={{maxHeight:150,borderRadius:borderRadius.middleRadius}}
+             contentContainerStyle={{paddingVertical:spaces.small,paddingHorizontal:spaces.high,gap:spaces.small}}
              data={locations}
              keyExtractor={(item,index) => index}
              renderItem={({item,index}) => {
                   return <>
                             <View style={styles.locationWrapper}>
-                               <Text numberOfLines={1} style={styles.locationText} onPress={() => {}}>
+                               <Text numberOfLines={1} style={styles.locationText} onPress={() => {onPress(item)}}>
                                  {item}
                                </Text>
                             </View>

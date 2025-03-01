@@ -9,15 +9,21 @@ import chatRobotIcon from "../../assets/icons/chatRobot.png"
 import useUserStore from '../../managments/userStore'
 import SuggesContainer from '../../components/customPageComps/home/SuggesContainer'
 import AutoCompletSearchInput from '../../components/customPageComps/home/AutoCompletSearchInput'
-
+import useGuideStore from "../../managments/guideStore"
 
 
 const Home = () => {
   const {username} = useUserStore(state => state.user)
+  const setGuideInfo = useGuideStore(state => state.setGuideInfo )
+
   const logOut = () => {
       router.replace("/login")
   }
  
+  const selectLocation = (location) => {
+        setGuideInfo(location)
+        router.push("/guide/selectTravelDates")
+  }
 
   return (
      <SafeAreaView style={styles.safeArea}>
@@ -48,7 +54,7 @@ const Home = () => {
            <Text style={styles.contentHeaderTopText}>Let the Adventure Begin! 🌍</Text>
            <Text style={styles.contentHeaderBottomText}>Discover new places, plan your trips, and create unforgettable memories!</Text>
           </View>
-          <AutoCompletSearchInput  focusColor={colors.primary} placeholder='Enter Location ...' searchWrapperStyle={{marginBottom:spaces.small}} />
+          <AutoCompletSearchInput onPress={selectLocation} focusColor={colors.primary} placeholder='Enter Location ...' searchWrapperStyle={{marginBottom:spaces.small}} />
           <SuggesContainer containerStyle = {{marginVertical:"auto"}}  />
        </ScrollView> 
      </KeyboardAvoidingView>

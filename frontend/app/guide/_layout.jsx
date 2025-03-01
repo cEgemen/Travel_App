@@ -15,7 +15,9 @@ const GuideLayot = () => {
 
   return (
     <Stack >
-         <Stack.Screen name='selectDate' options={reversibleOption} />
+         <Stack.Screen name='selectTravelPrice' options={reversibleOption} />
+         <Stack.Screen name='selectTravelType' options={reversibleOption} />
+         <Stack.Screen name='selectTravelDates' options={reversibleOption} />
          <Stack.Screen name='generateTravelGuide' options={normalOption}  />
          <Stack.Screen name='guideDetails' options={normalOption} />
     </Stack>

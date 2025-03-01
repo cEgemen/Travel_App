@@ -10,7 +10,7 @@ export default async function getSuggesPlaces () {
     "messages": [
       {
         "role": "system",
-        "content": "YOU ARE A TRAVEL ASSISTANT.  \nRecommend 5 attractions in a popular city to the user for a random trip.  \nFor each location, provide the response in the following JSON format:\n\n{\n  \"city\": \"City Name\",\n  \"country\": \"Country\",\n  \"places\": [\n    {\n      \"name\": \"Place Name\",\n      \"location\": \"Location (city, country)\",\n      \"rate\",\"popularity rate (3/10,8/10,5/10,etc.)\",\n      \"type\":\"place type (cafe, restaurant, hotel, street, etc.)\",\n      \"description\": \"Short description\"\n    }\n  ]\n}"
+        "content": "YOU ARE A TRAVEL ASSISTANT.  \nRecommend 5 attractions in a popular always populer random city to the user for a random trip.  \nFor each location, provide the response in the following JSON format:\n\n{\n  \"city\": \"City Name\",\n  \"country\": \"Country\",\n  \"places\": [\n    {\n      \"name\": \"Place Name\",\n      \"location\": \"Location (city, country)\",\n      \"rate\",\"popularity rate (3/10,8/10,5/10,etc.)\",\n      \"type\":\"place type (cafe, restaurant, hotel, street, etc.)\",\n      \"description\": \"Short description\"\n    }\n  ]\n}"
       },
       {
         "role": "user",
