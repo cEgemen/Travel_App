@@ -12,7 +12,7 @@ import TouchableIcon from '../../components/customButtons/TouchableIconButton';
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
 
 const SelectTravelDates = () => {    
-  const {setGuideInfo, resGuideInfo , guideInfo}= useGuideStore(state => state)
+  const {setGuideInfo, resDayData , guideInfo}= useGuideStore(state => state)
   const [dateState , setDateState] = useState({...guideInfo.dayData}); 
  
   const format =  'DD/MM/YYYY'
@@ -54,7 +54,7 @@ const SelectTravelDates = () => {
   }
 
   const handleBack = () => {
-       resGuideInfo()
+       resDayData()
        router.replace("/home")
   } 
  
@@ -68,7 +68,7 @@ const SelectTravelDates = () => {
      <View style={styles.container}>
         <View style={styles.headerContainer}>
                <Text style={styles.headerTitle}>
-                    Select Date
+               📅 Select Date
                </Text>
                <Text style={styles.headerSubTitle}>
                  Select the trip start date and end date
@@ -78,8 +78,6 @@ const SelectTravelDates = () => {
         <CustomTouchableButton disabled={dateState.startDate === null} text={"Continue"} onPress={onClick} textStyle={styles.btnTextStyle} buttonStyle={{...styles.btnStyle,...{opacity:dateState.startDate === null ? 0.7 : 1}}} />
      </View>
     </SafeAreaView>
-      
-
   )
 }
 

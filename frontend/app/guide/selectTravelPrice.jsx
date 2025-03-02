@@ -1,12 +1,13 @@
 
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SelectTravelPrice = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>SelectTravelPrice</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 

@@ -19,8 +19,8 @@ const CustomCalenderPicker = ({selectedStartDate=null,selectedEndDate=null,onPic
     allowRangeSelection={true}  
     selectedRangeStyle={styles.selectedRangeStyle}
     disabledDatesTextStyle={styles.disableDateTextStle}
-    selectedStartDate={selectedStartDate !== null ?  selectedStartDate.toDate() : undefined }
-    selectedEndDate={selectedEndDate !== null ? selectedEndDate.toDate() : undefined}
+    selectedStartDate={selectedStartDate !== null ?  selectedStartDate : undefined }
+    selectedEndDate={selectedEndDate !== null ? selectedEndDate : undefined}
     />  
   )
 }
