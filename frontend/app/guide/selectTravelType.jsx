@@ -32,7 +32,7 @@ const SelectTravelType = () => {
   }
 
   const onClick = () => {
-      const type = types[typeState.selectIndex].split(" ")[1]
+      const type = types[typeState.selectIndex].substring(1)
       setGuideInfo(type)
       router.push("/guide/selectTravelPrice")
   }
@@ -44,14 +44,15 @@ const SelectTravelType = () => {
   }
 
   const TypeContainer = ({item,index}) => {
-      const backgroundColor = typeState.selectIndex === index ? colors.primary : colors.background
-      const borderColor = typeState.selectIndex !== index ? colors.primary : colors.lightGray
-      const color = typeState.selectIndex !== index ? colors.primary : colors.background 
+      const backgroundColor =  colors.background
+      const borderColor =  colors.backgroundDark 
+      const color =  colors.text 
+      const opacity = typeState.selectIndex !== index ? .4 : 1
       const elevation = typeState.selectIndex !== index ? 0 : 4
        return <>
                 {
         item !== "" ? 
-        <Pressable style={[styles.typeContainerStyle,{backgroundColor , borderColor , borderWidth:2,elevation}]} onPress={() => {handleSelect(item)}}>
+        <Pressable style={[styles.typeContainerStyle,{backgroundColor , borderColor , borderWidth:1,elevation,opacity}]} onPress={() => {handleSelect(item)}}>
          <Text style={[styles.typeContainerTextStyle,{color}]}>{item}</Text>
         </Pressable> :
          <View style={{width:30,height:30}}>
@@ -75,7 +76,7 @@ const SelectTravelType = () => {
               🏕️ Select Type
               </Text>
               <Text style={styles.headerSubTitle}>
-                Select the trip type
+              📌 Select the trip type is {types[typeState.selectIndex].substring(1)}.
               </Text>
        </View>
         <FlatList 
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
               color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight
          },
          headerSubTitle : {
-               color:colors.text,fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray
+               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.highx2
          },
          btnStyle : {
              backgroundColor:colors.primary,marginVertical:"auto"

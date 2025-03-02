@@ -71,7 +71,10 @@ const SelectTravelDates = () => {
                📅 Select Date
                </Text>
                <Text style={styles.headerSubTitle}>
-                 Select the trip start date and end date
+               📌 Select start date is {dateState.startDate !== null ? dateFormat(dateState.startDate) : "../../...."}
+               </Text>
+               <Text style={styles.headerSubTitle}>
+               📌 Select end date is {dateState.endDate !== null ? dateFormat(dateState.endDate) : "../../...."}
                </Text>
         </View>
         <CustomCalenderPicker selectedStartDate={dateState.startDate} selectedEndDate={dateState.endDate} onPick={onPick}  />
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
           color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight
      },
      headerSubTitle : {
-           color:colors.text,fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray
+           color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.highx2
      },
      btnStyle : {
          backgroundColor:colors.primary,marginVertical:"auto"
