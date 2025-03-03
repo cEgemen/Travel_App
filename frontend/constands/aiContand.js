@@ -25,28 +25,6 @@ export const getGuidePromt = ({city,country,startDate,endDate,daysCount,nightsCo
           "currency": "$/€/₺",
           "emergencyContacts": ["local police: 155", "tourist hotline: 444 0 863"]
         },
-        "itinerary": [
-          {
-            "day": 1,
-            "theme": "Cultural Discovery",
-            "date": "${startDate}",
-            "timeline": [
-              {
-                "type": "Morning Routine",
-                "time": "07:30-08:00",
-                "activities": [
-                  {
-              "name": "Wake-up & Breakfast",
-              "location": "Hotel Restaurant (if staying at a hotel) or Tarihi Sultanahmet Köftecisi (if outside)",
-              "details": "Enjoy a traditional Turkish breakfast spread. If you are staying at a hotel, breakfast is likely included in your stay. Otherwise, you can visit a local restaurant to experience cheeses, olives, jams, simit, and other specialties.",
-              "duration": "30 mins",
-              "cost": "Included in hotel stay (if applicable), or ₺50 per person at Tarihi Sultanahmet Köftecisi.",
-              "address": "Your hotel’s restaurant (if staying at a hotel) or Tarihi Sultanahmet Köftecisi, Sultanahmet Mh., Istanbul."
-            }
-                ]
-              }
-            ]
-          },
    "itinerary": [
       {
          "day": 1,

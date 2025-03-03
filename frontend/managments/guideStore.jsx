@@ -4,7 +4,7 @@ const useGuideStore = create((set)=>{
       return {
           guideInfo : {location:null,price:null,type:null,
                        dayData:{startDate:null,endDate:null,daysCount:null,nightsCount:null}},
-          guide : [],             
+          guide : {},             
           setGuideInfo : ({type,data}) => {
                set(state => {
                    return {
@@ -15,7 +15,7 @@ const useGuideStore = create((set)=>{
           setGuide : (data) => {
             set(state => {
                 return {
-                    guide : [...data]
+                    guide : {...data}
                 }
             })
        } , 

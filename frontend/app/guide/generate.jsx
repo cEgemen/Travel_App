@@ -12,8 +12,7 @@ import { getGuidePromt } from '../../constands/aiContand'
 import dayjs from 'dayjs'
 
 const Generate = () => {
-  const {guideInfo,setGuide,guide} = useGuideStore(state => state)
-  console.log("guide : ",guide)
+  const {guideInfo,setGuide} = useGuideStore(state => state)
   const format =  'DD/MM/YYYY'
     const dateFormat = (date) => {
            const newDate = dayjs(date).format(format)
@@ -42,11 +41,10 @@ const Generate = () => {
      const {daysCount,nightsCount,startDate,endDate} = dayData;
      getTripGuide({messages:[{ role: "user", content: getGuidePromt({city,country,daysCount,nightsCount,startDate:dateFormat(startDate),endDate:dateFormat(endDate),type,price})}]})
      .then(data => {    
-
         setGuide(data)
-       /*  router.replace("/guide/guideDetails") */
+        router.replace("/guide/guideDetails")
      })
-     .catch(err => console.log("err : ",err))
+     .catch(err => console.log("1111err : ",err))
   },[])
 
   return (

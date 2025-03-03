@@ -14,7 +14,7 @@ import DoteSlider from '../components/sliders/DoteSlider';
 
 export default function App() {
    
-   const onJump = () => router.replace("/home")
+   const onJump = () => router.replace("/guide/guideDetails")
    const onStep = (size,mod,currentIndex) => {
         onHandleIndexState(size,mod,currentIndex)
    }

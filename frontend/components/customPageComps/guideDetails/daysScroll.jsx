@@ -1,43 +1,119 @@
 
 
-import { FlatList, StyleSheet,View,Text, TouchableOpacity} from 'react-native'
+import {StyleSheet,View,Pressable, Image, Text} from 'react-native'
 import React from 'react'
-import { borderRadius, colors, shadows, spaces } from '../../../constands/appConstand'
+import { borderRadius, colors, elevation, shadows, spaces } from '../../../constands/appConstand'
+import leftArrow from "../../../assets/icons/left_arrow_short.png"
+import rightArrow from "../../../assets/icons/right_arrow_short.png"
 
-const DaysScroll = ({dayCount,onPress}) => {
 
-  const days =  [...Array(dayCount).keys()].map(x => x + 1);
+const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {}}) => {
+  let days = [];
+  const index = currentDay % 3
+  if(totalDays === 1)
+  {
+     days = [currentDay,`~`,`~`]
+  }
+  else if(totalDays === 2)
+  {
+     if(totalDays > currentDay)
+     {
+       days=[currentDay,currentDay + 1,`~`]
+     }
+     else
+     {
+      days=[currentDay - 1,currentDay,`~`]
+     }
+  }
+  else 
+  {
+    if(currentDay % 3 === 1)
+      {
+        days=[currentDay,currentDay + 1 < totalDays ? currentDay + 1 : `~`,currentDay + 2 < totalDays ? currentDay + 1 : `~`]
+      }
+      else if(currentDay % 3 === 2)
+      {
+       days=[currentDay - 1,currentDay,currentDay + 1 < totalDays ? currentDay + 1 : `~`]
+      }
+      else if(currentDay % 3 === 0)
+      {
+         days=[currentDay - 2,currentDay-1,currentDay]
+      }
+  }
+ 
+  const handleClick = (mod) => { 
+           let listIndex ;
+           if(index - 1  === 0)
+            {
+               listIndex = 0
+            } 
+           else if(index - 1 === 1)
+            {
+               listIndex = 1
+            } 
+            else {
+               listIndex = 2
+            }
+           if(mod === 1)
+           {
+              if(totalDays >= 2)
+              {
+                 if(days[listIndex] - 1 > 0)
+                 {
+                    onPress(days[listIndex] - 1)
+                 }
+              }
+           }
+           else{
+            if(totalDays >= 2)
+              {
+                 if(days[listIndex] + 1 < totalDays)
+                 {
+                    onPress(days[listIndex] + 1)
+                 }
+              }
+              }
+  }
 
   return (
-    <View style={styles.flatWrapper}>
-   
-    <FlatList 
-         data={days}
-         showsVerticalScrollIndicator={false}
-         keyExtractor={((item,index) => index)}
-         renderItem={({item}) => {
-             return  <View style={styles.badge}> 
-                        <TouchableOpacity onPress={() => {onPress(item)}}>
-                            <Text style={styles.badgeText}>{item}</Text>
-                        </TouchableOpacity>
-                     </View>
-                                }}
-                                />
-  </View>
+    <View style={styles.wrapper}>
+         <Pressable onPress={() => {handleClick(1)}} >
+           <Image style={styles.buttonIconStyle} source={leftArrow} />
+         </Pressable>
+         <View style={styles.daysWrapper}>
+          <View style={index === 1 ? styles.activeDayStyle : styles.inActiveDayStyle}>
+            <Text>{days[0]}</Text>
+          </View>
+          <View style={index === 2 ? styles.activeDayStyle : styles.inActiveDayStyle}>
+            <Text>{days[1]}</Text>
+          </View>
+          <View style={index === 0 ? styles.activeDayStyle : styles.inActiveDayStyle}>
+            <Text>{days[2]}</Text>
+          </View>
+         </View>
+         <Pressable onPress={() => {handleClick(2)}} >
+           <Image style={styles.buttonIconStyle} source={rightArrow} />
+         </Pressable>
+    </View>
   )
 }
 
 export default DaysScroll
 
 const styles = StyleSheet.create({
-     flatWrapper: {
-             display:"flex",  marginBottom : spaces.high,
-             aliginItems:"center",
+     wrapper: {
+             flexDirection:"row",justifyContent:"space-around",alignItems:"center",paddingHorizontal:spaces.high
          },
-     badge:{
-           width:80,height:30,backgroundColor:colors.secondary,elevation:shadows.smallShadow,borderRadius:borderRadius.middleRadius,justifyContent:"center",marginRight:spaces.small,alignItems:"center"
-     },
-     badgeText : {
-            color:colors.text,textAlign:"center"
-     }
+      buttonIconStyle:{
+       tintColor:colors.backgroundDark,width:30,height:30
+      },
+      daysWrapper : {
+           flexDirection:"row",flexGrow:1,gap:spaces.high,alignItems:"center",justifyContent:"center"
+      },
+      inActiveDayStyle:{
+           width:20,height:20,backgroundColor:colors.lightGray,justifyContent:"center",alignItems:"center",borderRadius:borderRadius.circleRadius(20)
+      },
+      activeDayStyle : {
+        width:35,height:35,backgroundColor:colors.lightGray,borderRadius:borderRadius.circleRadius(35),elevation:elevation.middleShhadow,justifyContent:"center",alignItems:"center"
+      }
 })
