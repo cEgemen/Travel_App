@@ -1,21 +1,34 @@
 
-import { ScrollView, Image, StyleSheet, Text, View } from 'react-native'
+import { ScrollView,FlatList, StyleSheet, Text, View, Image } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts, spaces } from '../../constands/appConstand'
+import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
 import useGuideStore from '../../managments/guideStore'
 import { Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
 import TouchableIcon from '../../components/customButtons/TouchableIconButton'
 import notesIcon from "../../assets/icons/notes.png"
-import DaysScroll from '../../components/customPageComps/guideDetails/daysScroll'
+import DaysScroll from '../../components/customPageComps/guideDetails/DaysScroll'
+import GuideCard from '../../components/customPageComps/guideDetails/GuideCard'
 
 const GuideDetails = () => {
     const guide = useGuideStore(state => state.guide)
-    const [currentDay , setCurrentDay] = useState(1)
-    const test =  {"itinerary": [{"date": "03/03/2025", "day": 1, "theme": "Cultural Trip", "timeline": [Array]}], "metadata": {"currency": "$/€/₺", "emergencyContacts": ["local police: 155", "tourist hotline: 444 0 863"], "endDate": "03/03/2025", "location": "London, Greater London", "startDate": "03/03/2025", "totalDays": 1, "totalNights": 1}}
+    const [currentDay , setCurrentDay] = useState(0)
+    const test =  {"itinerary": [{"date": "03/03/2025", "day": 1, "theme": "Cultural Trip", "timeline": [{
+        "type": "Morning Routine",
+        "time": "07:30-08:00",
+        "activities": [
+           {
+              "name": "Wake-up & Breakfast",
+              "location": "Hotel Restaurant",
+              "details": "Enjoy a traditional English breakfast spread.",
+              "duration": "30 mins",
+              "cost": "Included in hotel stay",
+              "address": "Your hotel’s restaurant"
+           }
+        ]
+     },]}], "metadata": {"currency": "$/€/₺", "emergencyContacts": ["local police: 155", "tourist hotline: 444 0 863"], "endDate": "03/03/2025", "location": "London, Greater London", "startDate": "03/03/2025", "totalDays": 1, "totalNights": 1}}
     console.log("guide : ",guide)
-  
     const handleDay = (newDay) => {
           setCurrentDay(newDay)
     }
@@ -42,7 +55,24 @@ const GuideDetails = () => {
                  <Text numberOfLines={1} style={styles.headerTitle}>📍{test.metadata.location}</Text>
                  <Text style={styles.headerSubTitle}>Days</Text>
               </View>
-              <DaysScroll currentDay={currentDay} totalDays={test.itinerary.length + 5} onPress={handleDay} />
+              <DaysScroll currentDay={currentDay + 1} totalDays={test.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />
+              <FlatList
+                  style={{}}
+                  contentContainerStyle = {{}}
+                  keyExtractor={(item,index) => index}
+                  data={test.itinerary[currentDay].timeline}
+                  ListHeaderComponentStyle={{marginBottom:spaces.middle}}
+                  ListHeaderComponent={() => {
+                       const {date} = test.itinerary[currentDay]
+                       return <View style={{alignItems:"center"}}>
+                                <Text style={{fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.lightGray}}>{date}</Text>
+                              </View>
+                  }}
+                  renderItem={({item,index}) => {
+                       const {type,time,activities} = item
+                       return <GuideCard type={type} time={time} activities={activities} />
+                  }}
+               />
             </ScrollView>
       </SafeAreaView>
   )

@@ -7,7 +7,7 @@ import leftArrow from "../../../assets/icons/left_arrow_short.png"
 import rightArrow from "../../../assets/icons/right_arrow_short.png"
 
 
-const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {}}) => {
+const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle={}}) => {
   let days = [];
   const index = currentDay % 3
   if(totalDays === 1)
@@ -60,7 +60,7 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {}}) => {
               {
                  if(days[listIndex] - 1 > 0)
                  {
-                    onPress(days[listIndex] - 1)
+                    onPress((days[listIndex] - 1) - 1)
                  }
               }
            }
@@ -69,14 +69,14 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {}}) => {
               {
                  if(days[listIndex] + 1 < totalDays)
                  {
-                    onPress(days[listIndex] + 1)
+                    onPress((days[listIndex] - 1) + 1)
                  }
               }
               }
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper,wrapperStyle]}>
          <Pressable onPress={() => {handleClick(1)}} >
            <Image style={styles.buttonIconStyle} source={leftArrow} />
          </Pressable>
