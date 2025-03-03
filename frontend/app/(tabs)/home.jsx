@@ -21,8 +21,8 @@ const Home = () => {
   }
  
   const selectLocation = (location) => {
-        setGuideInfo(location)
-        router.push("/guide/selectTravelDates")
+        setGuideInfo({type:"location",data:location})
+        router.replace("/guide/selectTravelDates")
   }
 
   return (

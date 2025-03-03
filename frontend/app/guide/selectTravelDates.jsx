@@ -14,7 +14,6 @@ import leftArrowIcon from "../../assets/icons/left_arrow.png"
 const SelectTravelDates = () => {    
   const {setGuideInfo, resDayData , guideInfo}= useGuideStore(state => state)
   const [dateState , setDateState] = useState({...guideInfo.dayData}); 
- 
   const format =  'DD/MM/YYYY'
   const dateFormat = (date) => {
          const newDate = dayjs(date).format(format)
@@ -49,7 +48,15 @@ const SelectTravelDates = () => {
 
   const onClick = () => {
           const dayData = {...dateState}
-          setGuideInfo(dayData)
+          if(dateState.endDate === null)
+          {
+            setGuideInfo({type:"dayData",data:{...dayData,endDate:dayData.startDate,
+              daysCount:1,nightsCount:1}}) 
+          }
+          else
+          {
+           setGuideInfo({type:"dayData",data:dayData}) 
+          }  
           router.push("/guide/selectTravelType")
   }
 
@@ -68,13 +75,13 @@ const SelectTravelDates = () => {
      <View style={styles.container}>
         <View style={styles.headerContainer}>
                <Text style={styles.headerTitle}>
-               📅 Select Date
+               Select Date 📅 
                </Text>
                <Text style={styles.headerSubTitle}>
                📌 Select start date is {dateState.startDate !== null ? dateFormat(dateState.startDate) : "../../...."}
                </Text>
                <Text style={styles.headerSubTitle}>
-               📌 Select end date is {dateState.endDate !== null ? dateFormat(dateState.endDate) : "../../...."}
+               📌 Select end date is {dateState.endDate !== null ? dateFormat(dateState.endDate) : (dateState.startDate === null ? "../../...." : dateFormat(dateState.startDate))}
                </Text>
         </View>
         <CustomCalenderPicker selectedStartDate={dateState.startDate} selectedEndDate={dateState.endDate} onPick={onPick}  />
@@ -98,11 +105,11 @@ const styles = StyleSheet.create({
           marginBottom:spaces.high,gap:spaces.small
      },
      headerTitle : {
-          color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight
-     },
+              color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight,paddingLeft:spaces.middle
+         },
      headerSubTitle : {
-           color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.highx2
-     },
+               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.high
+         },
      btnStyle : {
          backgroundColor:colors.primary,marginVertical:"auto"
      },

@@ -3,7 +3,7 @@
 import { ActivityIndicator, StyleSheet, Text, View, FlatList, ToastAndroid} from 'react-native'
 import React,{memo, useEffect, useState} from 'react'
 import { colors, fonts, spaces } from '../../../constands/appConstand'
-import getSuggesPlaces from "../../../confs/groqAlConf"
+import {getSuggesPlaces} from "../../../confs/groqAlConf"
 import SuggesCard from './SuggesCard'
 
 const SuggesContainer = memo((props) => {

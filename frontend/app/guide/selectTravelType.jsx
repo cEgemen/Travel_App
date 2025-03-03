@@ -10,7 +10,7 @@ import rightArrowIcon from "../../assets/icons/right_arrow.png"
 
 const SelectTravelType = () => {
   const types = ["⛩️ Cultural Trip","","","🦙 Nature Trip","🏖️ Sea and Beach Trip","","","🍳 Gastronomy Trip","🎭 Art Trip",""];
-  
+
   const getSelectedIndex = (type) => {
     if(type === null)
     {
@@ -32,8 +32,8 @@ const SelectTravelType = () => {
   }
 
   const onClick = () => {
-      const type = types[typeState.selectIndex].substring(1)
-      setGuideInfo(type)
+      const type = types[typeState.selectIndex].substring(2)
+      setGuideInfo({type:"type", data : type})
       router.push("/guide/selectTravelPrice")
   }
 
@@ -73,10 +73,10 @@ const SelectTravelType = () => {
     <View style={styles.container}>
        <View style={styles.headerContainer}>
               <Text style={styles.headerTitle}>
-              🏕️ Select Type
+              Select Type 🏕️ 
               </Text>
               <Text style={styles.headerSubTitle}>
-              📌 Select the trip type is {types[typeState.selectIndex].substring(1)}.
+              📌 Select the trip type is {types[typeState.selectIndex].substring(2)}.
               </Text>
        </View>
         <FlatList 
@@ -112,11 +112,11 @@ const styles = StyleSheet.create({
               marginBottom:spaces.high,gap:spaces.small
          },
          headerTitle : {
-              color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight
-         },
+            color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight,paddingLeft:spaces.middle
+       },
          headerSubTitle : {
-               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.highx2
-         },
+             color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.high
+       },
          btnStyle : {
              backgroundColor:colors.primary,marginVertical:"auto"
          },

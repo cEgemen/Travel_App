@@ -3,6 +3,7 @@ import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 're
 import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
+import useGuideStore from '../../managments/guideStore'
 /* import { LocationManagment } from '../../managments/locationManagment'
 import HotelContainer from '../../components/customPageComps/guideDetails/hotelContainer'
 import DaysScroll from '../../components/customPageComps/guideDetails/daysScroll'
@@ -10,6 +11,8 @@ import ActivityContainer from '../../components/customPageComps/guideDetails/act
 import { GetPlaceImg } from '../../confs/googleAPIService' */
 
 const GuideDetails = () => {
+    const guide = useGuideStore(state => state.guide)
+    console.log("guide : ",guide)
 /*   const {locationState,setLocationState} = useContext(LocationManagment);
   const [daysState,setDaysState] = useState({currentIndex:0})  
   const locationPromt =  JSON.parse(locationState.locationPromt)

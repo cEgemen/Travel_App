@@ -5,7 +5,7 @@ import onBoardImg1 from "../assets/images/onBoard1.png"
 import onBoardImg2 from "../assets/images/onBoard2.png"
 import onBoardImg3 from "../assets/images/onBoard3.png"
 import onBoardImg4 from "../assets/images/onBoard4.png"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {spaces } from '../constands/appConstand';
 import CardSlider from '../components/sliders/CardSlider';
 import DoteSlider from '../components/sliders/DoteSlider';
@@ -14,7 +14,7 @@ import DoteSlider from '../components/sliders/DoteSlider';
 
 export default function App() {
    
-   const onJump = () => router.replace("/guide/selectTravelPrice")
+   const onJump = () => router.replace("/home")
    const onStep = (size,mod,currentIndex) => {
         onHandleIndexState(size,mod,currentIndex)
    }

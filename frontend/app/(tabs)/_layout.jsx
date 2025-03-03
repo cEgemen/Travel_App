@@ -1,9 +1,11 @@
 
 import { Tabs } from 'expo-router'
-import { colors } from '../../constands/appConstand'
 import CustomTab from "../../components/navigations/CustomTab"
 import homeIcon from "../../assets/icons/home.png"
 import userIcon from "../../assets/icons/user.png"
+import mapIcon from "../../assets/icons/map.png"
+import markIcon from "../../assets/icons/bookmark.png"
+import notesIcon from "../../assets/icons/notes.png"
 
 const TabLayout = () => {
   const commonOptions = {
@@ -25,13 +27,35 @@ const TabLayout = () => {
                tabBarIcon : ({focused,color}) => (<CustomTab  focused={focused} icon={homeIcon} text={"Home"} />)
            }}
             />
+            <Tabs.Screen 
+                name='guide'
+                options={{
+                    ...commonOptions,
+                    tabBarIcon : ({focused,color})=> (<CustomTab focused={focused} icon={notesIcon} text={"Guide"} />)
+                }} 
+             /> 
+             <Tabs.Screen 
+                name='map'
+                options={{
+                    ...commonOptions,
+                    tabBarIcon : ({focused,color})=> (<CustomTab focused={focused} icon={mapIcon} text={"Map"} />)
+                }} 
+             /> 
+            <Tabs.Screen 
+                name='favs'
+                options={{
+                    ...commonOptions,
+                    tabBarIcon : ({focused,color})=> (<CustomTab focused={focused} icon={markIcon} text={"Saves"} />)
+                }} 
+             />  
              <Tabs.Screen 
            name='profile'
            options={{
                ...commonOptions,
-               tabBarIcon : ({focused,color}) => ( <CustomTab  focused={focused} icon={userIcon} text={"User"} /> )
+               tabBarIcon : ({focused,color}) => ( <CustomTab  focused={focused} icon={userIcon} text={"Profile"} /> )
            }}
             />
+             
        </Tabs>   
     </>
   )

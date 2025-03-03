@@ -10,6 +10,7 @@ import rightArrowIcon from "../../assets/icons/right_arrow.png"
 
 const SelectTravelPrice = () => {
   const prices = [{type:"💵 Economic Price",price:"20 - 100 USD"},{type:"",price:""},{type:"",price:""},{type:"💷 Middle Level Price",price:"100 - 300 USD"},{type:"💰 Luxury Price",price:"300 - 1.000+ USD"},{type:"",price:""}];
+
   const getSelectedIndex = (type) => {
     if(type === null)
     {
@@ -31,9 +32,10 @@ const SelectTravelPrice = () => {
   }
 
   const onClick = () => {
-      const price = prices[priceState.selectIndex].type.substring(1)
-      setGuideInfo(price)
-      router.push("/guide/selectTravelPrice")
+      const price = prices[priceState.selectIndex].type.substring(2)
+      setGuideInfo({type:"price",data:price})
+      router.dismissAll()
+      router.replace("/guide/generate")
   }
 
   const handleSelect = (type) => {
@@ -72,7 +74,7 @@ const SelectTravelPrice = () => {
     <View style={styles.container}>
        <View style={styles.headerContainer}>
               <Text style={styles.headerTitle}>
-              💲Select Price Type
+              Select Price Type 💲
               </Text>
               <Text style={styles.headerSubTitle}>
               📌 Select the trip price is {prices[priceState.selectIndex].type.substring(2)}.
@@ -114,10 +116,10 @@ const styles = StyleSheet.create({
               marginBottom:spaces.high,gap:spaces.small
          },
          headerTitle : {
-              color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight
+              color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight,paddingLeft:spaces.middle
          },
          headerSubTitle : {
-               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.highx2
+               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.high
          },
          btnStyle : {
              backgroundColor:colors.primary,marginVertical:"auto"
