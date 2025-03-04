@@ -78,5 +78,4 @@ const styles = StyleSheet.create({
      suggesText:{
         fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.gray,
                 }
-
 })

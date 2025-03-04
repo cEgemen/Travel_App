@@ -67,7 +67,7 @@ const Login = () => {
         }
         else
         {
-          const {username , token,email,password,role} = ok_data;
+          const {username,token,email,password,role} = ok_data;
           setUser({username,token,email,password,role})
           router.replace("/home")
         }

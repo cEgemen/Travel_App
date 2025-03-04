@@ -41,6 +41,9 @@ const useGuideStore = create((set)=>{
         },
           resGuideInfo : () => {
             set({guideInfo:{location:null,price:null,type:null,dayData:{startDate:null,endDate:null,daysCount:null,nightsCount:null},nigtCount:null}}) 
+          },
+          resGuide  : () => {
+             set({guide:{}})
           }
       }
 })

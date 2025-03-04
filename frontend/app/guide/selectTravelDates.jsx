@@ -62,7 +62,7 @@ const SelectTravelDates = () => {
 
   const handleBack = () => {
        resDayData()
-       router.replace("/home")
+       router.back()
   } 
  
     return (

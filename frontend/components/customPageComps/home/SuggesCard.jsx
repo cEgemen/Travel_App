@@ -1,11 +1,11 @@
 
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, fonts } from '../../../constands/appConstand';
+import { borderRadius, colors, fonts, spaces } from '../../../constands/appConstand';
 
 const SuggesCard = ({suggesData,isLoading}) => {
   const {type,rate,description,location,name}  = suggesData;
-  const opacity = isLoading ? 0.4 : 0.6 
+  const opacity = isLoading ? 0.4 : 0.5 
   const justifyContent = isLoading ? "center" : "space-evenly"
   return (
     <View style={[styles.cardWrapper,{opacity,justifyContent}]}>
@@ -14,7 +14,7 @@ const SuggesCard = ({suggesData,isLoading}) => {
        <>
         <Text style={styles.title} numberOfLines={1} >{name}</Text>
         <Text style={styles.subTitle}>📍{location}</Text>
-        <Text style={styles.desc}>🔅{description}</Text>
+        <Text numberOfLines={3} style={styles.desc}>🔅{description}</Text>
         <View style={styles.infoWrapper}>
           <Text style={styles.info}>🏛️ {type}</Text>
           <Text style={styles.info}>🔥{rate}</Text>
@@ -32,7 +32,7 @@ export default SuggesCard
 const styles = StyleSheet.create({
      cardWrapper : {
        width:250,height:180, backgroundColor:colors.lightGray,
-       borderRadius:borderRadius.highRadius
+       borderRadius:borderRadius.highRadius,padding:spaces.small
      },
      title:{
         fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight,textAlign:"center"

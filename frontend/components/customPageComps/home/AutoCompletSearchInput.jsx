@@ -15,7 +15,7 @@ const AutoCompletSearchInput = ({onPress=(data) => {},searchWrapperStyle={},inpu
         }
         timeOutRef.current = setTimeout(() => {
                  getLocations(text)  
-        },5000)
+        },2500)
   }
 
   const getLocations = async (value) => {
@@ -44,7 +44,12 @@ const AutoCompletSearchInput = ({onPress=(data) => {},searchWrapperStyle={},inpu
              renderItem={({item,index}) => {
                   return <>
                             <View style={styles.locationWrapper}>
-                               <Text numberOfLines={1} style={styles.locationText} onPress={() => {onPress(item)}}>
+                               <Text numberOfLines={1} style={styles.locationText} onPress={() => {
+                                const splitData = item.split(",")
+                                const city = splitData[0]
+                                const country = splitData[splitData.length - 1]
+                                onPress(city+","+country)
+                                }}>
                                  {item}
                                </Text>
                             </View>

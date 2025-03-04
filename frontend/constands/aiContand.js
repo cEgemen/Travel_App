@@ -15,108 +15,115 @@ export const getGuidePromt = ({city,country,startDate,endDate,daysCount,nightsCo
       - **Budget Class**: ${price}
 
       **RESPONSE FORMAT STRICTLY JSON**:
-      { 
-        "metadata": { 
-          "location": "${city}, ${country}",
-          "startDate": "${startDate}",
-          "endDate": "${endDate}",
-          "totalDays": ${daysCount},
-          "totalNights": ${nightsCount},
-          "currency": "$/€/₺",
-          "emergencyContacts": ["local police: 155", "tourist hotline: 444 0 863"]
-        },
-   "itinerary": [
-      {
-         "day": 1,
-         "theme": "Nature Trip",
-         "date": "${startDate}",
-         "timeline": [
+     {
+  "metadata": {
+    "location": "${city}, ${country}",
+    "startDate": "${startDate}",
+    "endDate": "${endDate}",
+    "totalDays": ${daysCount},
+    "totalNights": ${nightsCount},
+    "currency": "$/€/₺",
+    "emergencyContacts": ["local police: 155", "tourist hotline: 444 0 863"]
+  },
+  "itinerary": [
+    {
+      "day": 1,
+      "theme": "Nature Trip",
+      "date": "${startDate}",
+      "timeline": [
+        {
+          "type": "Morning Routine",
+          "time": "07:30-08:00",
+          "activities": [
             {
-               "type": "Morning Routine",
-               "time": "07:30-08:00",
-               "activities": [
-                  {
-                     "name": "Wake-up & Breakfast",
-                     "location": "Hotel Restaurant",
-                     "details": "Enjoy a traditional English breakfast spread.",
-                     "duration": "30 mins",
-                     "cost": "Included in hotel stay",
-                     "address": "Your hotel’s restaurant"
-                  }
-               ]
-            },
-            {
-               "type": "Sightseeing",
-               "time": "09:00-10:30",
-               "activities": [
-                  {
-                     "name": "Visit Hyde Park",
-                     "location": "Hyde Park",
-                     "details": "Explore one of London's largest parks, including the Serpentine Lake and Diana Memorial Fountain.",
-                     "duration": "1.5 hours",
-                     "cost": "Free",
-                     "address": "Hyde Park, London"
-                  }
-               ]
-            },
-            {
-               "type": "Lunch",
-               "time": "11:00-12:30",
-               "activities": [
-                  {
-                     "name": "Lunch at a local pub",
-                     "location": "The Spaniards Inn",
-                     "details": "Try traditional English cuisine at a historic pub.",
-                     "duration": "1.5 hours",
-                     "cost": "£15-20 per person",
-                     "address": "The Spaniards Inn, Spaniards Rd, London"
-                  }
-               ]
-            },
-            {
-               "type": "Afternoon Activity",
-               "time": "13:30-15:00",
-               "activities": [
-                  {
-                     "name": "Visit Kew Gardens",
-                     "location": "Kew Gardens",
-                     "details": "Explore the Royal Botanic Gardens, a UNESCO World Heritage Site.",
-                     "duration": "1.5 hours",
-                     "cost": "£15 per person",
-                     "address": "Kew Gardens, Richmond, London"
-                  }
-               ]
-            },
-            {
-               "type": "Dinner",
-               "time": "18:00-20:00",
-               "activities": [
-                  {
-                     "name": "Dinner at a local restaurant",
-                     "location": "The Delaunay",
-                     "details": "Enjoy European cuisine in a grand setting.",
-                     "duration": "2 hours",
-                     "cost": "£25-35 per person",
-                     "address": "The Delaunay, 55 Aldwych, London"
-                  }
-               ]
-            },
-            {
-               "type": "Departure",
-               "time": "11:00",
-               "activities": [
-                  {
-                     "name": "Check-out and depart",
-                     "location": "Hotel",
-                     "details": "Check-out of the hotel and depart for the airport or your next destination.",
-                     "duration": "30 mins",
-                     "cost": "None",
-                     "address": "Your hotel"
-                  }
-               ]
+              "name": "Wake-up & Breakfast",
+              "location": "Recommended nearby restaurant",
+              "details": "Enjoy a local breakfast based on your location.",
+              "duration": "30 mins",
+              "cost": 10,
+              "popularity": "7/10",
+              "address": "Based on your accommodation"
             }
-         ]
-      }
-    ]
-  }`
+          ]
+        },
+        {
+          "type": "Sightseeing",
+          "time": "09:00-10:30",
+          "activities": [
+            {
+              "name": "Visit Hyde Park",
+              "location": "Hyde Park",
+              "details": "Explore one of London's largest parks, including the Serpentine Lake and Diana Memorial Fountain.",
+              "duration": "1.5 hours",
+              "cost": 0,
+              "popularity": "9/10",
+              "address": "Hyde Park, London"
+            }
+          ]
+        },
+        {
+          "type": "Lunch",
+          "time": "11:00-12:30",
+          "activities": [
+            {
+              "name": "Lunch at a recommended restaurant",
+              "location": "Suggested based on budget & area",
+              "details": "Try a popular local dish at a well-rated restaurant.",
+              "duration": "1.5 hours",
+              "cost": 20,
+              "popularity": "8/10",
+              "address": "Based on your itinerary location"
+            }
+          ]
+        },
+        {
+          "type": "Afternoon Activity",
+          "time": "13:30-15:00",
+          "activities": [
+            {
+              "name": "Visit Kew Gardens",
+              "location": "Kew Gardens",
+              "details": "Explore the Royal Botanic Gardens, a UNESCO World Heritage Site.",
+              "duration": "1.5 hours",
+              "cost": 15,
+              "popularity": "8/10",
+              "address": "Kew Gardens, Richmond, London"
+            }
+          ]
+        },
+        {
+          "type": "Dinner",
+          "time": "18:00-20:00",
+          "activities": [
+            {
+              "name": "Dinner at a recommended restaurant",
+              "location": "Suggested based on budget & area",
+              "details": "Enjoy a well-rated dinner experience suited to your budget.",
+              "duration": "2 hours",
+              "cost": 35,
+              "popularity": "9/10",
+              "address": "Based on your itinerary location"
+            }
+          ]
+        },
+        {
+          "type": "Departure",
+          "time": "11:00",
+          "activities": [
+            {
+              "name": "Check-out and depart",
+              "location": "Hotel",
+              "details": "Check-out of the hotel and depart for the airport or your next destination.",
+              "duration": "30 mins",
+              "cost": 0,
+              "popularity": "N/A",
+              "address": "Your stayin place"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+`
 }

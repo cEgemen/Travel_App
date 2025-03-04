@@ -1,36 +1,53 @@
 
-import { ScrollView,FlatList, StyleSheet, Text, View, Image } from 'react-native'
+import { ScrollView,FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
 import useGuideStore from '../../managments/guideStore'
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
 import TouchableIcon from '../../components/customButtons/TouchableIconButton'
 import notesIcon from "../../assets/icons/notes.png"
 import DaysScroll from '../../components/customPageComps/guideDetails/DaysScroll'
 import GuideCard from '../../components/customPageComps/guideDetails/GuideCard'
+import bookmarkIcon from "../../assets/icons/bookmark.png"
+import { useMutation,useQueryClient } from '@tanstack/react-query'
+import { saveFavGuide } from '../../utils/querys'
+import useUserStore from '../../managments/userStore'
+import { BASE_URL } from '../../secret'
+
 
 const GuideDetails = () => {
-    const guide = useGuideStore(state => state.guide)
+    const {guide,resGuideInfo,resGuide} = useGuideStore(state => state)
+    const {token,id} = useUserStore(state => state.user)
+    const [isSave , setIsSave] = useState(false)
+    const client = useQueryClient()
+
     const [currentDay , setCurrentDay] = useState(0)
-    const test =  {"itinerary": [{"date": "03/03/2025", "day": 1, "theme": "Cultural Trip", "timeline": [{
-        "type": "Morning Routine",
-        "time": "07:30-08:00",
-        "activities": [
-           {
-              "name": "Wake-up & Breakfast",
-              "location": "Hotel Restaurant",
-              "details": "Enjoy a traditional English breakfast spread.",
-              "duration": "30 mins",
-              "cost": "Included in hotel stay",
-              "address": "Your hotel’s restaurant"
-           }
-        ]
-     },]}], "metadata": {"currency": "$/€/₺", "emergencyContacts": ["local police: 155", "tourist hotline: 444 0 863"], "endDate": "03/03/2025", "location": "London, Greater London", "startDate": "03/03/2025", "totalDays": 1, "totalNights": 1}}
-    console.log("guide : ",guide)
+    
     const handleDay = (newDay) => {
           setCurrentDay(newDay)
+    }
+
+    const handleBackPress = () => {
+         resGuideInfo();resGuide();
+         router.replace("/Home")
+    }
+
+    const saveFavorite = () => {
+         const guideData = {favOwner:id,...guide}
+         fetch(BASE_URL+"favorite/save",{
+              body:JSON.stringify(guideData),
+              method:"POST",
+              headers:{
+                 "Content-Type" : "application/json",
+                 "Authorization":"Bearer "+token
+              }
+         }).then(res => res.json())
+           .then(data => {
+               setIsSave(true)
+           })
+           .catch(err => console.log("err : ",err))
     }
 
     return (
@@ -43,27 +60,29 @@ const GuideDetails = () => {
                      title:"Trip Guide",
                      headerTitleAlign:"center",
                      headerLeft:() => {
-                          return <TouchableIcon icon={leftArrowIcon} iconStyle={styles.headerIconStyle} />
+                          return <TouchableIcon onPress={handleBackPress} icon={leftArrowIcon} iconStyle={styles.headerIconStyle} />
                      },
                      headerRight:() => {
                           return <TouchableIcon icon={notesIcon} iconStyle={styles.headerIconStyle} />
                      }
                 }}
             />
-            <ScrollView style={styles.scrollStyle}>
+            <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={false}>
               <View style={styles.headerContainer}>  
-                 <Text numberOfLines={1} style={styles.headerTitle}>📍{test.metadata.location}</Text>
-                 <Text style={styles.headerSubTitle}>Days</Text>
+                 <Text numberOfLines={1} style={styles.headerTitle}>📍{guide.metadata.location}</Text>
+                 <Pressable onPress={saveFavorite} >
+                  <Image style={{...styles.markIconStyle,backgroundColor:isSave ? colors.primary : colors.background}} source={bookmarkIcon} /> 
+                 </Pressable>
               </View>
-              <DaysScroll currentDay={currentDay + 1} totalDays={test.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />
+              <DaysScroll currentDay={currentDay + 1} totalDays={guide.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />
               <FlatList
                   style={{}}
-                  contentContainerStyle = {{}}
+                  contentContainerStyle = {{gap:spaces.middle}}
                   keyExtractor={(item,index) => index}
-                  data={test.itinerary[currentDay].timeline}
+                  data={guide.itinerary[currentDay].timeline}
                   ListHeaderComponentStyle={{marginBottom:spaces.middle}}
                   ListHeaderComponent={() => {
-                       const {date} = test.itinerary[currentDay]
+                       const {date} = guide.itinerary[currentDay]
                        return <View style={{alignItems:"center"}}>
                                 <Text style={{fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.lightGray}}>{date}</Text>
                               </View>
@@ -86,16 +105,20 @@ const styles = StyleSheet.create({
            flex:1
       },
       scrollStyle : {
-         flexGrow:1,backgroundColor:colors.background ,padding:spaces.middle
+         flexGrow:1,backgroundColor:colors.background ,
+         paddingVertical:spaces.middle,paddingHorizontal:spaces.high
+      },
+      markIconStyle:{
+         width:25,height:25,resizeMode:"contain",tintColor:colors.backgroundDark,flexGrow:1
       },
       headerIconStyle: {
        tintColor:colors.backgroundDark
       },
       headerContainer:{
-         marginBottom:spaces.high,gap:spaces.small
+         marginBottom:spaces.high,flexDirection:"row",alignItems:"center"
       },
       headerTitle : {
-          fontSize : fonts.middleFontSize , fontWeight : fonts.highFontWeight,color : colors.text,marginBottom:spaces.small
+          fontSize : fonts.smallMidFontSize , fontWeight : fonts.highFontWeight,color : colors.text,marginBottom:spaces.small,flex:1
       },
       headerSubTitle : {
           fontSize:fonts.smallMidFontSize,fontWeight:fonts.smallFontSize,color:colors.lightGray,paddingHorizontal:spaces.middle
