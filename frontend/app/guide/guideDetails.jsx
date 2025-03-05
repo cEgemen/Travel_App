@@ -1,8 +1,8 @@
 
-import { ScrollView,FlatList, StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { ScrollView,FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
+import { colors, fonts, spaces } from '../../constands/appConstand'
 import useGuideStore from '../../managments/guideStore'
 import { router, Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
@@ -11,8 +11,8 @@ import notesIcon from "../../assets/icons/notes.png"
 import DaysScroll from '../../components/customPageComps/guideDetails/DaysScroll'
 import GuideCard from '../../components/customPageComps/guideDetails/GuideCard'
 import bookmarkIcon from "../../assets/icons/bookmark.png"
+import bookmark2Icon from "../../assets/icons/bookmark2.png"
 import { useMutation,useQueryClient } from '@tanstack/react-query'
-import { saveFavGuide } from '../../utils/querys'
 import useUserStore from '../../managments/userStore'
 import { BASE_URL } from '../../secret'
 
@@ -22,32 +22,37 @@ const GuideDetails = () => {
     const {token,id} = useUserStore(state => state.user)
     const [isSave , setIsSave] = useState(false)
     const client = useQueryClient()
-
     const [currentDay , setCurrentDay] = useState(0)
     
-    const handleDay = (newDay) => {
-          setCurrentDay(newDay)
-    }
-
-    const handleBackPress = () => {
-         resGuideInfo();resGuide();
-         router.replace("/Home")
-    }
-
-    const saveFavorite = () => {
+    const saveFavorite = async () => {
          const guideData = {favOwner:id,...guide}
-         fetch(BASE_URL+"favorite/save",{
+      const result = await  fetch(BASE_URL+"favorite/save",{
               body:JSON.stringify(guideData),
               method:"POST",
               headers:{
                  "Content-Type" : "application/json",
                  "Authorization":"Bearer "+token
               }
-         }).then(res => res.json())
-           .then(data => {
-               setIsSave(true)
-           })
-           .catch(err => console.log("err : ",err))
+         });
+       const data = await result.json()  
+       return data;
+    } 
+
+    const {mutate,isPending} = useMutation({
+       mutationFn:() => saveFavorite(),
+       onSuccess:(data) => {
+          setIsSave(true)
+          client.invalidateQueries({queryKey:"favorites"})
+       }
+    })
+ 
+    const handleDay = (newDay) => {
+          setCurrentDay(newDay)
+    }
+
+    const handleBackPress = () => {
+         resGuideInfo();resGuide();
+         router.replace("/home")
     }
 
     return (
@@ -70,8 +75,8 @@ const GuideDetails = () => {
             <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={false}>
               <View style={styles.headerContainer}>  
                  <Text numberOfLines={1} style={styles.headerTitle}>📍{guide.metadata.location}</Text>
-                 <Pressable onPress={saveFavorite} >
-                  <Image style={{...styles.markIconStyle,backgroundColor:isSave ? colors.primary : colors.background}} source={bookmarkIcon} /> 
+                 <Pressable onPress={mutate} >
+                  {isPending  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSave ? colors.primary : colors.backgroundDark}} source={isSave ? bookmark2Icon : bookmarkIcon} />} 
                  </Pressable>
               </View>
               <DaysScroll currentDay={currentDay + 1} totalDays={guide.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />

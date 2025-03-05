@@ -52,7 +52,7 @@ const goToRegister = () => {
               }
           })
           .catch(err => {
-              console.log("err : ",err)
+                 ToastAndroid.showWithGravity("Error occurred in the server.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
           })
           .finally(() => {
                 setLoading(false)

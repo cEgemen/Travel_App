@@ -67,13 +67,13 @@ const Login = () => {
         }
         else
         {
-          const {username,token,email,password,role} = ok_data;
-          setUser({username,token,email,password,role})
+          const {username,token,email,password,role,id} = ok_data;
+          setUser({username,token,email,password,role,id})
           router.replace("/home")
         }
     })
     .catch(err => {
-        console.log("err : ",err)
+      ToastAndroid.showWithGravity("Error occurred in the server.",ToastAndroid.LONG,ToastAndroid.BOTTOM)
     })
     .finally(() => {
         setLoading(false)

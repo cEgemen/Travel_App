@@ -1,6 +1,6 @@
 
 export const colors = {
-  primary: 'rgb(121, 149, 206)',
+  primary:"rgb(121, 149, 206)",
   secondary: 'rgb(144, 225, 174)',
   lightGray: 'rgb(207, 204, 204)', 
   gray: 'rgb(177, 175, 175)', 
