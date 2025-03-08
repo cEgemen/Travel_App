@@ -34,11 +34,14 @@ public class AuthService implements IAuthService {
           {
             throw new CustomException();
           }
-           User user = retUser.get();
-                user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+           User user = new User()
+                          .setUsername(registerUser.getUsername())
+                          .setEmail(registerUser.getEmail())
+                          .setPassword(new BCryptPasswordEncoder().encode(registerUser.getPassword()))
+                          .setRole(registerUser.getRole());
            userRepo.save(user);
            return Map.of("message","Register is success.");
-    }
+    } 
 
     @Override
     public Map<String, ?> login(LoginUser loginUser) {

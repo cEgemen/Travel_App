@@ -1,6 +1,7 @@
-package com.gezerkengor.models.user.entity;
+package com.gezerkengor.models.favorite.entity;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,30 +13,28 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.ToString;
 
-@Document(collection = "Users")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Accessors(chain = true)
-public class User {
-    
-      @MongoId(targetType = FieldType.OBJECT_ID)
-      private String id;
+@NoArgsConstructor
+@ToString
+@Document(collection = "Favorites")
+public class Favorite {
+     
+    @MongoId(targetType = FieldType.OBJECT_ID)
+    private  String id;
 
-      private String username;
+    @Indexed()
+    private  String favOwner;
 
-      @Indexed(unique = true)
-      private String email;
+    private  MetaData metadata;
 
-      private String password;
+    private  List<Itinerary> itinerary;
 
-      private String role;
+    @CreatedDate
+    private Instant createDate;
 
-      @CreatedDate
-      private Instant createDate;
-
-      @LastModifiedDate
-      private Instant updateDate;
+    @LastModifiedDate
+    private Instant updateDate;
 }

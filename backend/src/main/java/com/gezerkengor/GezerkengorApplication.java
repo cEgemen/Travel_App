@@ -10,4 +10,5 @@ public class GezerkengorApplication {
 		SpringApplication.run(GezerkengorApplication.class, args);
 	}
 
-}
+}   
+  

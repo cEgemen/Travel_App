@@ -31,10 +31,10 @@ public class JWTService {
 
      public String generateToken(String email,SecretKey secretKey,long expirationTime , Map<String,Object> extraClaims)
      {
-          return Jwts.builder()
-                     .setSubject(email)
-                     .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+          return  Jwts.builder()
                      .setClaims(extraClaims)
+                     .setSubject(email)
+                     .setExpiration(new Date(System.currentTimeMillis() + expirationTime))   
                      .signWith(secretKey,SignatureAlgorithm.HS256)
                      .compact();
      }

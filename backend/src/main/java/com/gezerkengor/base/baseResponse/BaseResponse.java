@@ -5,15 +5,25 @@ import lombok.Data;
 @Data
 public class BaseResponse<T> {
      
-    private T data;
+    private T ok_data;
     private boolean isSucces;
-    private T errorData;
+    private T error_data;
 
     private BaseResponse(T data,T errorData,boolean isSucces)
     {
-          this.data = data;
-          this.errorData = errorData;
+          this.ok_data = data;
+          this.error_data = errorData;
           this.isSucces = isSucces;
+    }
+
+    public boolean getIsSucces()
+    {
+        return this.isSucces;
+    }
+
+    public void setIsSucces(boolean isSucces)
+    {
+        this.isSucces = isSucces;
     }
     
     public static <T> BaseResponse<T> okResponse(T data){

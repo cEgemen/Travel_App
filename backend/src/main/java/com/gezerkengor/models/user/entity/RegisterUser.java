@@ -15,4 +15,6 @@ public class RegisterUser {
 
     private String password;
 
+    private String role;
+
 }
