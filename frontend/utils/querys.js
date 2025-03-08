@@ -1,32 +1,27 @@
+import useUserStore from "../managments/userStore";
 import {BASE_URL} from "../secret"
 
 const url = BASE_URL+"favorite/"
- 
+const {token,id} = useUserStore(state => state.user)
 
-async function baseFetching({path,method="GET",body,isHaveBody=false,header}){
-     
-}
-
-export async function saveFavGuide(guide,token){
-        const result  =  await fetch(url+"save",{
-              method:"POST",
-              body:JSON.stringify(guide),
-              headers:{
-                  "Content-Type":"application/json",
-                  "Authorization":"Bearer "+token
-              }
+async function baseQuery({path,method="GET",body=null,isHaveBody=false}){
+        const headers  = {
+             "Content-Type":"application/json",
+             "Authorization":"Bearer "+token
+        }
+        return fetch(url+path,{
+              headers,
+              method,
+              body : isHaveBody ? JSON.stringify(body) : null
         })
-        return result.text();
 }
 
-export async function getOwnerFavGuides(id,token){
-      const result = await fetch(url+"user/"+id,{
-           method:"GET",
-           headers:{
-              "Content-Type":"application/json",
-              "Authorization":"Bearer "+token
-           }
-      })
-      const data = await result.json()
-      return data
+export async function saveFavGuide(guide){
+        const result = await  baseQuery({path:"save",method:"POST",isHaveBody:true,body:guide})     
+        return result.json();
+}
+
+export async function getOwnerFavGuides(mod){
+      const result = await baseQuery({path:"user/"+id+"?mod="+mod})
+      return result.json()
 }

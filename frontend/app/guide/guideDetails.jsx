@@ -12,39 +12,18 @@ import DaysScroll from '../../components/customPageComps/guideDetails/DaysScroll
 import GuideCard from '../../components/customPageComps/guideDetails/GuideCard'
 import bookmarkIcon from "../../assets/icons/bookmark.png"
 import bookmark2Icon from "../../assets/icons/bookmark2.png"
-import { useMutation,useQueryClient } from '@tanstack/react-query'
 import useUserStore from '../../managments/userStore'
-import { BASE_URL } from '../../secret'
+import { useSaveFavGuide } from '../../hooks/query/queryHook'
 
 
 const GuideDetails = () => {
     const {guide,resGuideInfo,resGuide} = useGuideStore(state => state)
-    const {token,id} = useUserStore(state => state.user)
+    const {id} = useUserStore(state => state.user)
     const [isSave , setIsSave] = useState(false)
-    const client = useQueryClient()
     const [currentDay , setCurrentDay] = useState(0)
     
-    const saveFavorite = async () => {
-         const guideData = {favOwner:id,...guide}
-      const result = await  fetch(BASE_URL+"favorite/save",{
-              body:JSON.stringify(guideData),
-              method:"POST",
-              headers:{
-                 "Content-Type" : "application/json",
-                 "Authorization":"Bearer "+token
-              }
-         });
-       const data = await result.json()  
-       return data;
-    } 
-
-    const {mutate,isPending} = useMutation({
-       mutationFn:() => saveFavorite(),
-       onSuccess:(data) => {
-          setIsSave(true)
-          client.invalidateQueries({queryKey:"favorites"})
-       }
-    })
+    const guideData =  {favOwner:id,...guide}
+    const {mutate,isPending,isError} = useSaveFavGuide(guideData)
  
     const handleDay = (newDay) => {
           setCurrentDay(newDay)
