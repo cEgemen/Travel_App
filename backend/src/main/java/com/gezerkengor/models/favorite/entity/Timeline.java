@@ -13,8 +13,13 @@ import lombok.ToString;
 @ToString
 public class Timeline {
  
-    private String type;
     private String time;
-    private List<Activities> activities; 
-    
+    private String activity;
+    private String locationName;
+    private String address;
+    private String details;
+    private String cost;
+    private String popularity;
+    private String duration;
+    private NextActivityTransition  nextActivityTransition;
 }

@@ -11,6 +11,8 @@ public interface IFavoriteService {
 
    public Map<String , ?> deleteFavoriteGuide(String id);
 
-   public Map<String,?> getFavoriteGuide(String id,int mod);
+   public Map<String,?> getOwnerFavoriteGuide(String id,int mod);
+
+   public Map<String,?> getFavoriteGuide(String id);
 
 }

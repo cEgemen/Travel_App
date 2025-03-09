@@ -10,6 +10,8 @@ public interface IFavoriteController {
 
     public ResponseEntity<?> deleteFavoriteGuide(String id);
 
-    public ResponseEntity<?> getFavoriteGuide(String id,int mod);
+    public ResponseEntity<?> getOwnerFavoriteGuide(String id,int mod);
+
+    public ResponseEntity<?> getFavoriteGuide(String id);
 
 }

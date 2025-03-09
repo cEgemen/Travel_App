@@ -16,6 +16,7 @@ import com.gezerkengor.base.baseController.BaseController;
 import com.gezerkengor.models.favorite.entity.Favorite;
 import com.gezerkengor.services.favorite.FavoriteService;
 
+import jakarta.websocket.server.PathParam;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
@@ -36,17 +37,24 @@ public class FavoriteController extends BaseController<Map<String,?>> implements
     }
 
     @Override
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteFavoriteGuide(@PathVariable String id) {
        Map<String , ?> result = service.deleteFavoriteGuide(id);
        return okResponse(result);
     }
 
     @Override
-    @GetMapping("user/{id}")
-    public ResponseEntity<?> getFavoriteGuide(@PathVariable String id,@RequestParam int mod) {
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getOwnerFavoriteGuide(@PathVariable String id,@RequestParam int mod) {
         System.out.println("favOwner id : "+id+" --- mod : "+mod);
-        Map<String,?> result = service.getFavoriteGuide(id,mod);
+        Map<String,?> result = service.getOwnerFavoriteGuide(id,mod);
+        return okResponse(result);
+    }
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getFavoriteGuide(@PathVariable String id) {
+        Map<String,?> result = service.getFavoriteGuide(id);
         return okResponse(result);
     }
     
