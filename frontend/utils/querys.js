@@ -1,10 +1,8 @@
-import useUserStore from "../managments/userStore";
 import {BASE_URL} from "../secret"
 
 const url = BASE_URL+"favorite/"
-const {token,id} = useUserStore(state => state.user)
 
-async function baseQuery({path,method="GET",body=null,isHaveBody=false}){
+async function baseQuery({path,method="GET",body=null,isHaveBody=false,token}){
         const headers  = {
              "Content-Type":"application/json",
              "Authorization":"Bearer "+token
@@ -16,12 +14,22 @@ async function baseQuery({path,method="GET",body=null,isHaveBody=false}){
         })
 }
 
-export async function saveFavGuide(guide){
-        const result = await  baseQuery({path:"save",method:"POST",isHaveBody:true,body:guide})     
+export async function saveFavGuide(guide,token){
+        const result = await  baseQuery({path:"save",method:"POST",isHaveBody:true,body:guide,token})     
         return result.json();
 }
 
-export async function getOwnerFavGuides(mod){
-      const result = await baseQuery({path:"user/"+id+"?mod="+mod})
+export async function getOwnerFavGuides(id,mod,token){
+      const result = await baseQuery({path:"user/"+id+"?mod="+mod,token})
+      return result.json()
+}
+
+export async function getFavGuide(id,token){
+      const result = await baseQuery({path:id,token})
+      return result.json()
+}
+
+export async function deleteFavGuide(id,token){
+      const result = await baseQuery({path:"delete/"+id,token})
       return result.json()
 }

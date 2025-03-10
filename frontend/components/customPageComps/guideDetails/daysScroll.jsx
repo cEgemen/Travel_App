@@ -42,6 +42,7 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle=
   }
  
   const handleClick = (mod) => { 
+   
            let listIndex ;
            if(index - 1  === 0)
             {
@@ -67,9 +68,9 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle=
            else{
             if(totalDays >= 2)
               {
-                 if(days[listIndex] + 1 < totalDays)
+                 if(days[listIndex] + 1 <= totalDays)
                  {
-                    onPress((days[listIndex] - 1) + 1)
+                    onPress(days[listIndex])
                  }
               }
               }
@@ -77,7 +78,7 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle=
 
   return (
     <View style={[styles.wrapper,wrapperStyle]}>
-         <Pressable onPress={() => {handleClick(1)}} >
+         <Pressable onPress={() => handleClick(1)} >
            <Image style={styles.buttonIconStyle} source={leftArrow} />
          </Pressable>
          <View style={styles.daysWrapper}>
@@ -91,7 +92,7 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle=
             <Text>{days[2]}</Text>
           </View>
          </View>
-         <Pressable onPress={() => {handleClick(2)}} >
+         <Pressable onPress={() => handleClick(2)} >
            <Image style={styles.buttonIconStyle} source={rightArrow} />
          </Pressable>
     </View>

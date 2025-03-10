@@ -10,19 +10,18 @@ import FavGuideCard from '../../components/customPageComps/guideDetails/FavGuide
 import downIcon from "../../assets/icons/downArrow.png"
 import upIcon from "../../assets/icons/upArrow.png"
 import { useGetOwnerFavGuides } from '../../hooks/query/queryHook'
+import useUserStore from '../../managments/userStore'
 
 const Guide = () => {
   const [orderState,setOrderState] = useState(1)  
   const setGuideInfo = useGuideStore(state => state.setGuideInfo)
-
+  const {id,token} = useUserStore(state => state.user)
   const selectLocation = (location) => {
           setGuideInfo({type:"location",data:location})
           router.push("/guide/selectTravelDates")
     }
 
-   const {data,isError,isLoading} = useGetOwnerFavGuides(orderState)
-
-   const test = [{"createDate": "2025-03-05T14:16:43.256Z", "id": "67c85ccb4dbc28712c9e9987", "metadata": {"currency": "$/€/₺", "emergencyContacts": [Array], "endDate": "05/03/2025", "location": "London, United Kingdom", "startDate": "05/03/2025", "totalDays": 1, "totalNights": 1}, "updateDate": "2025-03-05T14:16:43.256Z"}]
+   const {data,isError,isLoading} = useGetOwnerFavGuides(id,orderState,token)
 
    const handleSort = (mod)=> {
        setOrderState(mod)
@@ -40,16 +39,12 @@ const Guide = () => {
              <AutoCompletSearchInput onPress={(data) => {
                 selectLocation(data)
              }} focusColor={colors.primary} placeholder='Enter Location ...' searchWrapperStyle={{marginBottom:spaces.small}} />
-             {false  ?  
-              <View style={{flex:1,justifyContent:"center"}}>
-                <ActivityIndicator size={"large"} color={colors.primary} />
-              </View> : 
+             { 
               <FlatList 
-                   data={test}
+                   data={isLoading ? [""] : data.ok_data.data}
                    keyExtractor={(item,index) => index}
-                   contentContainerStyle={styles.flatContainerStyle}
+                   contentContainerStyle={[styles.flatContainerStyle,{flex:isLoading ? 1 : undefined}]}
                    ListHeaderComponent={() => {
-
                       return <View style={styles.flatHeaderWrapper}>
                                <Text style={styles.flatHeaderText}>Favorite Guides</Text>
                                <View style={styles.flatHeaderIconButtonsContainer}>
@@ -63,7 +58,10 @@ const Guide = () => {
                               </View>
                    }}
                    renderItem={({item,index}) => {
-                        return <FavGuideCard guide={item} />
+                        const content = isLoading  ?  <View style={{height:"100%",justifyContent:"center",alignItems:"center"}}>
+                <ActivityIndicator size={"large"} color={colors.primary} />
+              </View> : <FavGuideCard guide={item} />
+                          return content;
                    }}
               />}
       </SafeAreaView>
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
          flex:1,backgroundColor:colors.background,paddingVertical:spaces.middle,paddingHorizontal:spaces.high
      },
      flatContainerStyle:{
-         gap:spaces.middle
+         gap:spaces.small
      },
      flatHeaderWrapper:{
          marginBottom:spaces.small,marginTop:spaces.high,flexDirection:"row",alignItems:"center"

@@ -39,12 +39,15 @@ const Generate = () => {
      const {location,dayData,type,price} = guideInfo
      const [city,country] = location.split(",")
      const {daysCount,nightsCount,startDate,endDate} = dayData;
-     getTripGuide({messages:[{ role: "user", content: getGuidePromt({city,country,daysCount,nightsCount,startDate:dateFormat(startDate),endDate:dateFormat(endDate),type,price})}]})
-     .then(data => {    
-        setGuide(data)
-        router.replace("/guide/guideDetails")
-     })
-     .catch(err => console.log("1111err : ",err))
+     const getGuides = async () => {
+      getTripGuide({messages:[{ role: "user", content: getGuidePromt({city,country,daysCount,nightsCount,startDate:dateFormat(startDate),endDate:dateFormat(endDate),type,price})}]})
+      .then(data => {    
+         setGuide(data)
+         router.replace("/guide/guideDetails")
+      })
+      .catch(err => console.log("1111err : ",err))
+     }
+     getGuides()
   },[])
 
   return (

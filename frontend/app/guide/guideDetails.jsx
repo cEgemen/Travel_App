@@ -7,23 +7,22 @@ import useGuideStore from '../../managments/guideStore'
 import { router, Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
 import TouchableIcon from '../../components/customButtons/TouchableIconButton'
-import notesIcon from "../../assets/icons/notes.png"
 import DaysScroll from '../../components/customPageComps/guideDetails/DaysScroll'
 import GuideCard from '../../components/customPageComps/guideDetails/GuideCard'
 import bookmarkIcon from "../../assets/icons/bookmark.png"
 import bookmark2Icon from "../../assets/icons/bookmark2.png"
 import useUserStore from '../../managments/userStore'
 import { useSaveFavGuide } from '../../hooks/query/queryHook'
-
+import { useQueryClient } from '@tanstack/react-query'
 
 const GuideDetails = () => {
     const {guide,resGuideInfo,resGuide} = useGuideStore(state => state)
-    const {id} = useUserStore(state => state.user)
-    const [isSave , setIsSave] = useState(false)
+    const {id,token} = useUserStore(state => state.user)
     const [currentDay , setCurrentDay] = useState(0)
+    const client = useQueryClient()
     
     const guideData =  {favOwner:id,...guide}
-    const {mutate,isPending,isError} = useSaveFavGuide(guideData)
+    const {mutate,isPending,isError,isSuccess} = useSaveFavGuide(guideData,client,token)
  
     const handleDay = (newDay) => {
           setCurrentDay(newDay)
@@ -41,26 +40,26 @@ const GuideDetails = () => {
                      headerTransparent:false,
                      headerShown:true,
                      headerShadowVisible:false,
-                     title:"Trip Guide",
+                     title:guide.metadata.travelType,
                      headerTitleAlign:"center",
                      headerLeft:() => {
                           return <TouchableIcon onPress={handleBackPress} icon={leftArrowIcon} iconStyle={styles.headerIconStyle} />
                      },
                      headerRight:() => {
-                          return <TouchableIcon icon={notesIcon} iconStyle={styles.headerIconStyle} />
+                          return <Pressable onPress={mutate} >
+                                  {isPending  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSuccess ? colors.primary : colors.backgroundDark}} source={isSuccess ? bookmark2Icon : bookmarkIcon} />} 
+                                </Pressable>
                      }
                 }}
             />
             <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={false}>
               <View style={styles.headerContainer}>  
-                 <Text numberOfLines={1} style={styles.headerTitle}>📍{guide.metadata.location}</Text>
-                 <Pressable onPress={mutate} >
-                  {isPending  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSave ? colors.primary : colors.backgroundDark}} source={isSave ? bookmark2Icon : bookmarkIcon} />} 
-                 </Pressable>
+                 <Text numberOfLines={1} style={styles.headerTitle}>📍{guide.metadata.city},{guide.metadata.country}</Text>
+                 <Text style={{color:colors.lightGray,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight}}>🌞 {guide.metadata.totalDays} 🌚 {guide.metadata.totalNights}</Text>
               </View>
               <DaysScroll currentDay={currentDay + 1} totalDays={guide.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />
               <FlatList
-                  style={{}}
+                  style={{paddingBottom:spaces.high}}
                   contentContainerStyle = {{gap:spaces.middle}}
                   keyExtractor={(item,index) => index}
                   data={guide.itinerary[currentDay].timeline}
@@ -72,8 +71,7 @@ const GuideDetails = () => {
                               </View>
                   }}
                   renderItem={({item,index}) => {
-                       const {type,time,activities} = item
-                       return <GuideCard type={type} time={time} activities={activities} />
+                       return <GuideCard dailyGuide={item} /> 
                   }}
                />
             </ScrollView>
@@ -104,7 +102,4 @@ const styles = StyleSheet.create({
       headerTitle : {
           fontSize : fonts.smallMidFontSize , fontWeight : fonts.highFontWeight,color : colors.text,marginBottom:spaces.small,flex:1
       },
-      headerSubTitle : {
-          fontSize:fonts.smallMidFontSize,fontWeight:fonts.smallFontSize,color:colors.lightGray,paddingHorizontal:spaces.middle
-      }
 })

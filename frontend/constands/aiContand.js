@@ -8,122 +8,174 @@ export const getGuidePromt = ({city,country,startDate,endDate,daysCount,nightsCo
       **USER INPUTS:**
       - **Country**: ${country}
       - **City**: ${city}
-      - **Departure Date**: ${startDate}
-      - **Return Date**: ${endDate}
+      - **Start Date**: ${startDate}
+      - **Last Date**: ${endDate}
       - **Total Duration**: ${daysCount} days, ${nightsCount} nights
       - **Travel Type**: ${type}
       - **Budget Class**: ${price}
 
-      **RESPONSE FORMAT STRICTLY JSON**:
-     {
-  "metadata": {
-    "location": "${city}, ${country}",
-    "startDate": "${startDate}",
-    "endDate": "${endDate}",
-    "totalDays": ${daysCount},
-    "totalNights": ${nightsCount},
-    "currency": "$/€/₺",
-    "emergencyContacts": ["local police: 155", "tourist hotline: 444 0 863"]
-  },
-  "itinerary": [
-    {
-      "day": 1,
-      "theme": "Nature Trip",
-      "date": "${startDate}",
-      "timeline": [
-        {
-          "type": "Morning Routine",
-          "time": "07:30-08:00",
-          "activities": [
+      **RESPONSE FORMAT STRICTLY JSON**:{
+   "metadata": {
+      "country":  ${country},
+      "city": ${city},
+      "startDate": ${startDate},
+      "lastDate": ${endDate},
+      "totalDays": ${daysCount}, 
+      "totalNights":${nightsCount},
+      "travelType": ${type},
+      "budgetClass": ${price}
+   },
+   "itinerary": [
+      {
+         "day": 1,
+         "date": ${startDate},
+         "timeline": [
             {
-              "name": "Wake-up & Breakfast",
-              "location": "Recommended nearby restaurant",
-              "details": "Enjoy a local breakfast based on your location.",
-              "duration": "30 mins",
-              "cost": 10,
-              "popularity": "7/10",
-              "address": "Based on your accommodation"
-            }
-          ]
-        },
-        {
-          "type": "Sightseeing",
-          "time": "09:00-10:30",
-          "activities": [
+               "time": "08:00 - 09:00",
+               "activity": "Breakfast at a local café",
+               "locationName": "The Breakfast Club Soho",
+               "address": "33 D'Arblay St, London W1F 8EU, UK",
+               "details": "Enjoy a classic English breakfast with tea or coffee.",
+               "cost": 15,
+               "popularity": "8/10",
+               "duration": "1 hour",
+               "nextActivityTransition": {
+                  "method": "Walking",
+                  "estimatedTime": "10 minutes",
+                  "nextLocation": "Buckingham Palace",
+                  "nextAddress": "London SW1A 1AA, UK"
+               }
+            },
             {
-              "name": "Visit Hyde Park",
-              "location": "Hyde Park",
-              "details": "Explore one of London's largest parks, including the Serpentine Lake and Diana Memorial Fountain.",
-              "duration": "1.5 hours",
-              "cost": 0,
-              "popularity": "9/10",
-              "address": "Hyde Park, London"
-            }
-          ]
-        },
-        {
-          "type": "Lunch",
-          "time": "11:00-12:30",
-          "activities": [
+               "time": "09:10 - 11:00",
+               "activity": "Visit Buckingham Palace",
+               "locationName": "Buckingham Palace",
+               "address": "London SW1A 1AA, UK",
+               "details": "Explore the iconic palace and witness the Changing of the Guard ceremony.",
+               "cost": "Free",
+               "popularity": "9/10",
+               "duration": "1 hour 50 minutes",
+               "nextActivityTransition": {
+                  "method": "Walking",
+                  "estimatedTime": "15 minutes",
+                  "nextLocation": "The British Museum",
+                  "nextAddress": "Great Russell St, London WC1B 3DG, UK"
+               }
+            },
             {
-              "name": "Lunch at a recommended restaurant",
-              "location": "Suggested based on budget & area",
-              "details": "Try a popular local dish at a well-rated restaurant.",
-              "duration": "1.5 hours",
-              "cost": 20,
-              "popularity": "8/10",
-              "address": "Based on your itinerary location"
-            }
-          ]
-        },
-        {
-          "type": "Afternoon Activity",
-          "time": "13:30-15:00",
-          "activities": [
+               "time": "11:15 - 13:00",
+               "activity": "Explore the British Museum",
+               "locationName": "The British Museum",
+               "address": "Great Russell St, London WC1B 3DG, UK",
+               "details": "One of the world's most famous museums with extensive historical artifacts.",
+               "cost": "Free",
+               "popularity": "9/10",
+               "duration": "1 hour 45 minutes",
+               "nextActivityTransition": {
+                  "method": "Walking",
+                  "estimatedTime": "10 minutes",
+                  "nextLocation": "The Harp",
+                  "nextAddress": "47 Chandos Pl, London WC2N 4HS, UK"
+               }
+            },
             {
-              "name": "Visit Kew Gardens",
-              "location": "Kew Gardens",
-              "details": "Explore the Royal Botanic Gardens, a UNESCO World Heritage Site.",
-              "duration": "1.5 hours",
-              "cost": 15,
-              "popularity": "8/10",
-              "address": "Kew Gardens, Richmond, London"
-            }
-          ]
-        },
-        {
-          "type": "Dinner",
-          "time": "18:00-20:00",
-          "activities": [
+               "time": "13:10 - 14:30",
+               "activity": "Lunch at a traditional English pub",
+               "locationName": "The Harp",
+               "address": "47 Chandos Pl, London WC2N 4HS, UK",
+               "details": "Enjoy classic fish and chips or a traditional meat pie with a pint.",
+               "cost": 20,
+               "popularity": "7/10",
+               "duration": "1 hour 20 minutes",
+               "nextActivityTransition": {
+                  "method": "Walking",
+                  "estimatedTime": "10 minutes",
+                  "nextLocation": "South Bank of the Thames",
+                  "nextAddress": "London SE1, UK"
+               }
+            },
             {
-              "name": "Dinner at a recommended restaurant",
-              "location": "Suggested based on budget & area",
-              "details": "Enjoy a well-rated dinner experience suited to your budget.",
-              "duration": "2 hours",
-              "cost": 35,
-              "popularity": "9/10",
-              "address": "Based on your itinerary location"
-            }
-          ]
-        },
-        {
-          "type": "Departure",
-          "time": "11:00",
-          "activities": [
+               "time": "14:40 - 17:00",
+               "activity": "Walk along the South Bank",
+               "locationName": "South Bank of the Thames",
+               "address": "London SE1, UK",
+               "details": "Enjoy street performers, book markets, and stunning river views.",
+               "cost": "Free",
+               "popularity": "8/10",
+               "duration": "2 hours 20 minutes",
+               "nextActivityTransition": {
+                  "method": "Walking",
+                  "estimatedTime": "10 minutes",
+                  "nextLocation": "The National Gallery",
+                  "nextAddress": "Trafalgar Square, London WC2N 5DN, UK"
+               }
+            },
             {
-              "name": "Check-out and depart",
-              "location": "Hotel",
-              "details": "Check-out of the hotel and depart for the airport or your next destination.",
-              "duration": "30 mins",
-              "cost": 0,
-              "popularity": "N/A",
-              "address": "Your stayin place"
+               "time": "17:10 - 19:30",
+               "activity": "Visit the National Gallery",
+               "locationName": "The National Gallery",
+               "address": "Trafalgar Square, London WC2N 5DN, UK",
+               "details": "Home to world-famous paintings from artists like Van Gogh and Monet.",
+               "cost": "Free",
+               "popularity": "9/10",
+               "duration": "2 hours 20 minutes",
+               "nextActivityTransition": {
+                  "method": "Walking",
+                  "estimatedTime": "10 minutes",
+                  "nextLocation": "Dishoom Covent Garden",
+                  "nextAddress": "12 Upper St Martin's Ln, London WC2H 9FB, UK"
+               }
+            },
+            {
+               "time": "19:40 - 21:00",
+               "activity": "Dinner at a mid-range restaurant",
+               "locationName": "Dishoom Covent Garden",
+               "address": "12 Upper St Martin's Ln, London WC2H 9FB, UK",
+               "details": "A popular restaurant offering delicious Indian cuisine in a stylish setting.",
+               "cost": 30,
+               "popularity": "9/10",
+               "duration": "1 hour 20 minutes",
+               "nextActivityTransition": {
+                  "method": "Walking",
+                  "estimatedTime": "5 minutes",
+                  "nextLocation": "Lyceum Theatre",
+                  "nextAddress": "21 Wellington St, London WC2E 7RQ, UK"
+               }
+            },
+            {
+               "time": "21:05 - 23:30",
+               "activity": "Watch a West End show",
+               "locationName": "Lyceum Theatre",
+               "address": "21 Wellington St, London WC2E 7RQ, UK",
+               "details": "Enjoy a world-class musical such as 'The Lion King'.",
+               "cost": 50,
+               "popularity": "9/10",
+               "duration": "2 hours 25 minutes",
+               "nextActivityTransition": {
+                  "method": "Taxi",
+                  "estimatedTime": "30 minutes",
+                  "nextLocation": "London Heathrow Airport",
+                  "nextAddress": "Longford TW6, UK"
+               }
+            },
+            {
+               "time": "00:00 - Departure",
+               "activity": "Departure from London",
+               "locationName": "London Heathrow Airport",
+               "address": "Longford TW6, UK",
+               "details": "Check-in for your flight and depart from London.",
+               "duration":"?",
+               "cost": "Varies",
+               "popularity": "N/A",
+               "nextActivityTransition": {
+                  "method": "Varies",
+                  "estimatedTime": "Varies",
+                  "nextLocation": "Destination",
+                  "nextAddress": "User's return location"
+               }
             }
-          ]
-        }
-      ]
-    }
-  ]
+         ]
+      }
+   ]
 }
-`
-}
+`}
