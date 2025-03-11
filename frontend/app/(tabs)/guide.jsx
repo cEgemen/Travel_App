@@ -22,7 +22,6 @@ const Guide = () => {
     }
 
    const {data,isError,isLoading} = useGetOwnerFavGuides(id,orderState,token)
-
    const handleSort = (mod)=> {
        setOrderState(mod)
    } 

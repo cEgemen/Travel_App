@@ -13,19 +13,19 @@ import DoteSlider from '../components/sliders/DoteSlider';
 
 export default function App() {
       
-   const onJump = () => router.replace("/login")
+   const onJump = () => router.replace("/profile")
    const onStep = (size,mod,currentIndex) => {
         onHandleIndexState(size,mod,currentIndex)
    }
 
    const data = [
-    {image:onBoardImg1,description:"Discover undiscovered routes around the world! Easily create travel plans and thrown into new adventures.",color:"rgb(189, 111, 146)"},
-    {image:onBoardImg2,description:"Discover the best restaurants, hidden paradise and popular tourist places. All the information you need on your journey is in one place!",color:"rgb(111, 189, 136)"},
-    {image:onBoardImg3,description:"Draw your own route, take a break where you want, continue without interrupting the discovery! Car rental and travel tips here.",color:"rgb(189, 142, 111)"},
-    {image:onBoardImg4,description:"Organize your entire trip from the city transportation guide to daily plans!",color:"rgb(111, 160, 189)"}
+    {image:onBoardImg1,description:"Discover undiscovered routes around the world! Easily create travel plans and thrown into new adventures.",color:"rgb(134, 116, 146)"},
+    {image:onBoardImg2,description:"Discover the best restaurants, hidden paradise and popular tourist places. All the information you need on your journey is in one place!",color:"rgb(145, 188, 158)"},
+    {image:onBoardImg3,description:"Draw your own route, take a break where you want, continue without interrupting the discovery! Car rental and travel tips here.",color:"rgb(197, 164, 142)"},
+    {image:onBoardImg4,description:"Organize your entire trip from the city transportation guide to daily plans!",color:"rgb(136, 177, 201)"}
                ]
 
-  const [indexState,setIndexState] = useState({left:{index:0,label:"Skip",onPress:onJump},current:{index:0,label:"current",onPress:()=>{}},right:{index:2,label:"Next",onPress:()=>{onStep(data.length,1,0)}}})
+  const [indexState,setIndexState] = useState({left:{index:3,label:"Skip",onPress:onJump},current:{index:0,label:"current",onPress:()=>{}},right:{index:2,label:"Next",onPress:()=>{onStep(data.length,1,0)}}})
 
   const onHandleIndexState = (size,mod,currentIndex) => {
        let left = {};
