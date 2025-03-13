@@ -1,4 +1,4 @@
-package com.gezerkengor.models.user.entity;
+package com.gezerkengor.models.user.dto;
 
 import com.gezerkengor.customs.anotations.Validation.Password.PasswordValidation;
 
@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterUser {
-
+public class DTOIUUser {
+      
     @NotEmpty(message = "Usename dont be empty...")
     @Size(min = 3 , max = 20,message = "Username should be 3-20 characters.")
     private String username;
@@ -23,8 +23,5 @@ public class RegisterUser {
 
     @PasswordValidation(message = "Password should be digit and 6 character.")
     private String password;
- 
-    @NotEmpty(message = "Email should be currect form ...")
-    private String role;
-
+     
 }

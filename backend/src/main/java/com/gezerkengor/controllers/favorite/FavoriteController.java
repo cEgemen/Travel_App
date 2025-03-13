@@ -16,7 +16,7 @@ import com.gezerkengor.base.baseController.BaseController;
 import com.gezerkengor.models.favorite.entity.Favorite;
 import com.gezerkengor.services.favorite.FavoriteService;
 
-import jakarta.websocket.server.PathParam;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
@@ -29,7 +29,7 @@ public class FavoriteController extends BaseController<Map<String,?>> implements
 
     @Override
     @PostMapping("/save")
-    public ResponseEntity<?> saveFavoriteGuide(@RequestBody Favorite favorite) {
+    public ResponseEntity<?> saveFavoriteGuide(@Valid @RequestBody Favorite favorite) {
         log.info("favorite  : "+favorite.toString());
         System.out.println("favorite : "+favorite);
         Map<String,?> result = service.saveFavoriteGuide(favorite);

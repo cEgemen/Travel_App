@@ -11,6 +11,8 @@ import com.gezerkengor.base.baseController.BaseController;
 import com.gezerkengor.models.user.entity.LoginUser;
 import com.gezerkengor.models.user.entity.RegisterUser;
 import com.gezerkengor.services.auth.AuthService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +26,7 @@ public class AuthController extends BaseController<Map<String,?>> implements IAu
 
     @PostMapping("/login")
     @Override
-    public ResponseEntity<?> login(@RequestBody LoginUser loginUser) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginUser loginUser) {
         log.info("loginUser : "+loginUser);
         Map<String,?> serviceData = authService.login(loginUser); 
         log.info("log service result : "+serviceData);
@@ -33,7 +35,7 @@ public class AuthController extends BaseController<Map<String,?>> implements IAu
 
     @PostMapping("/register")
     @Override
-    public ResponseEntity<?> register(@RequestBody RegisterUser registerUser){
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterUser registerUser){
         log.info("registerUser : "+registerUser);
         Map<String,?> serviceData = authService.register(registerUser); 
         return  this.okResponse(serviceData);

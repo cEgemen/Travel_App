@@ -1,9 +1,11 @@
 package com.gezerkengor.base.baseErrors;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class CustomException extends RuntimeException {
     
@@ -14,4 +16,5 @@ public class CustomException extends RuntimeException {
      {
          super(error.getMessage());
      }
+
 }
