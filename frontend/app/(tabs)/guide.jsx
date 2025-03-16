@@ -11,6 +11,8 @@ import downIcon from "../../assets/icons/downArrow.png"
 import upIcon from "../../assets/icons/upArrow.png"
 import { useGetOwnerFavGuides } from '../../hooks/query/queryHook'
 import useUserStore from '../../managments/userStore'
+import favImg from "../../assets/images/fav.png"
+
 
 const Guide = () => {
   const [orderState,setOrderState] = useState(1)  
@@ -25,7 +27,7 @@ const Guide = () => {
    const handleSort = (mod)=> {
        setOrderState(mod)
    } 
-
+   const flatData = isLoading ? [" "] : data.ok_data.data
   return (
       <SafeAreaView style={styles.safeAreaStyle}>
           <Stack.Screen 
@@ -40,9 +42,9 @@ const Guide = () => {
              }} focusColor={colors.primary} placeholder='Enter Location ...' searchWrapperStyle={{marginBottom:spaces.small}} />
              { 
               <FlatList 
-                   data={isLoading ? [""] : data.ok_data.data}
+                   data={flatData}
                    keyExtractor={(item,index) => index}
-                   contentContainerStyle={[styles.flatContainerStyle,{flex:isLoading ? 1 : undefined}]}
+                   contentContainerStyle={[styles.flatContainerStyle,{flex:(flatData.length === 0 || isLoading) ? 1 : undefined}]}
                    ListHeaderComponent={() => {
                       return <View style={styles.flatHeaderWrapper}>
                                <Text style={styles.flatHeaderText}>Favorite Guides</Text>
@@ -56,8 +58,13 @@ const Guide = () => {
                                </View>
                               </View>
                    }}
+                    ListEmptyComponent={() => {
+                                  return <View style={styles.flatEmptyWrapper}>
+                                                <Image style={styles.emptyImage} source={favImg} />
+                                          </View>
+                              }}
                    renderItem={({item,index}) => {
-                        const content = isLoading  ?  <View style={{height:"100%",justifyContent:"center",alignItems:"center"}}>
+                        const content = isLoading ?  <View style={{height:"100%",justifyContent:"center",alignItems:"center"}}>
                 <ActivityIndicator size={"large"} color={colors.primary} />
               </View> : <FavGuideCard guide={item} />
                           return content;
@@ -77,7 +84,7 @@ const styles = StyleSheet.create({
          gap:spaces.small
      },
      flatHeaderWrapper:{
-         marginBottom:spaces.small,marginTop:spaces.high,flexDirection:"row",alignItems:"center"
+         marginBottom:spaces.small,marginTop:spaces.high,flexDirection:"row",alignItems:"center",backgroundColor:"white"
      },
      flatHeaderText:{
        fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.gray,flex:1
@@ -87,5 +94,11 @@ const styles = StyleSheet.create({
      },
      flatHeaderIcon:{
          width:25,height:25,resizeMode:"contain",borderWidth:1,backgroundColor:colors.background
-     }
+     },
+     flatEmptyWrapper:{
+         flex:1
+    },
+    emptyImage : {
+        width:"100%",height:"500",resizeMode:"cover"
+     },
 })

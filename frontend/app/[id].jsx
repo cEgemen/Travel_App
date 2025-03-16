@@ -1,29 +1,50 @@
 
-import { ActivityIndicator, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { ActivityIndicator, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors, fonts, spaces } from '../constands/appConstand'
-import { useDeleteFavGuide, useGetFavGuide } from '../hooks/query/queryHook'
+import { useDeleteFavGuide, useGetFavGuide, useSaveFavGuide } from '../hooks/query/queryHook'
 import useUserStore from '../managments/userStore'
 import DaysScroll from '../components/customPageComps/guideDetails/DaysScroll'
 import GuideCard from '../components/customPageComps/guideDetails/GuideCard'
 import bookmarkIcon from "../assets/icons/bookmark.png"
 import bookmark2Icon from "../assets/icons/bookmark2.png"
+import { useQueryClient } from '@tanstack/react-query'
 
 const DynamicGuide = () => {
+  const client = useQueryClient() 
   const {token} = useUserStore(state => state.user)
   const {id} = useLocalSearchParams()
   const [currentDay , setCurrentDay] = useState(0)
-  const {data,isError,isLoading} = useGetFavGuide(id,token)
-  const {mutate,isError:isMutateError,isPending,isSuccess} = useDeleteFavGuide(id,token) 
- 
-  const guide = isLoading ? {} :  data.ok_data.data;
- 
-  const handleDay = (newDay) => {
-                       setCurrentDay(newDay)
-                                }
+  const [isSaved,setIsSaved] = useState(true)
+  const [guide , setGuide] = useState(null)
 
+  const {data,isError,isLoading,refetch} = useGetFavGuide(id,token,false)
+  useEffect(() => {
+    const getData = async () => {
+       refetch().then(data => {
+          setGuide(data.data.ok_data.data)
+       }).catch(err => {console.log("err : ",err)})
+    }          
+          getData()
+  },[])
+  
+  const errorCallBack = () => {ToastAndroid.showWithGravity("An Error Occurent.Plase Try Again.",ToastAndroid.LONG,ToastAndroid.BOTTOM)}
+  
+  const succesCallBack = (mod) => {
+      const isSavedSuccess = mod === 1;
+      setIsSaved(isSavedSuccess)
+  }
+  
+  const {mutate:deleteMutate,isError:isDeleteMutateError,isPending:deletePending} = useDeleteFavGuide(id,client,token,()=>{succesCallBack(2)},errorCallBack)
+  
+  const {mutate:saveMutate,isError:isSaveMutateError,isPending:savePending} = useSaveFavGuide(guide,client,token,()=>{succesCallBack(1)},errorCallBack)
+  
+  const handleDay = (newDay) => {setCurrentDay(newDay)}
+
+  const handleSave = isSaved ? deleteMutate : saveMutate                             
+                                
   return (
     <SafeAreaView style={styles.safeView}>
             <Stack.Screen options={{
@@ -31,13 +52,13 @@ const DynamicGuide = () => {
                   headerTitleAlign:"center",
                   title:"guide ID #"+id.substring(0,7),
                   headerRight:() => {
-                    return <Pressable onPress={mutate} >
-                           {isPending  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:!isSuccess ? colors.primary : colors.backgroundDark}} source={!isSuccess ? bookmark2Icon : bookmarkIcon} />} 
+                    return <Pressable onPress={handleSave} >
+                           {(deletePending || savePending || isLoading || guide === null)  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSaved ? colors.primary : colors.backgroundDark}} source={isSaved ? bookmark2Icon : bookmarkIcon} />} 
                             </Pressable>
                                        }
             }}/>
                         {
-                         isLoading ? 
+                         (isLoading || guide === null) ? 
                           <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
                             <ActivityIndicator size={"large"} color={colors.primary} />
                           </View>  : 

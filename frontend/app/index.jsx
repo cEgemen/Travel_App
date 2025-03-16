@@ -13,7 +13,7 @@ import DoteSlider from '../components/sliders/DoteSlider';
 
 export default function App() {
       
-   const onJump = () => router.replace("/login")
+   const onJump = () => router.replace("/home")
    const onStep = (size,mod,currentIndex) => {
         onHandleIndexState(size,mod,currentIndex)
    }

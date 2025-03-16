@@ -1,5 +1,5 @@
 
-import { ScrollView,FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator } from 'react-native'
+import { ScrollView,FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors, fonts, spaces } from '../../constands/appConstand'
@@ -12,7 +12,7 @@ import GuideCard from '../../components/customPageComps/guideDetails/GuideCard'
 import bookmarkIcon from "../../assets/icons/bookmark.png"
 import bookmark2Icon from "../../assets/icons/bookmark2.png"
 import useUserStore from '../../managments/userStore'
-import { useSaveFavGuide } from '../../hooks/query/queryHook'
+import { useDeleteFavGuide, useSaveFavGuide } from '../../hooks/query/queryHook'
 import { useQueryClient } from '@tanstack/react-query'
 
 const GuideDetails = () => {
@@ -20,18 +20,30 @@ const GuideDetails = () => {
     const {id,token} = useUserStore(state => state.user)
     const [currentDay , setCurrentDay] = useState(0)
     const client = useQueryClient()
-    
+    const [isSaved , setIsSaved] = useState(false)
     const guideData =  {favOwner:id,...guide}
-    const {mutate,isPending,isError,isSuccess} = useSaveFavGuide(guideData,client,token)
+    const errorCall = ()=> {ToastAndroid.showWithGravity("An Error Occurrent.Plase Try Again.",ToastAndroid.LONG,ToastAndroid.BOTTOM)}
+    const succesCall = (mod)=>{
+     const isSaveSucces = mod === 1
+     setIsSaved(isSaveSucces)
+     }
+    const {mutate:saveMutate,isPending:savePending,isError,isSuccess,data} = useSaveFavGuide(guideData,client,token,()=>{
+        succesCall(1)
+    },errorCall)
+    const guideID = data === undefined ? "" : data.ok_data.data
+    const {mutate:deleteMutate , isPending:deletePending} = useDeleteFavGuide(guideID,client,token,()=>{succesCall(2)},errorCall)
  
     const handleDay = (newDay) => {
           setCurrentDay(newDay)
     }
 
     const handleBackPress = () => {
-         resGuideInfo();resGuide();
+         resGuideInfo();
+         resGuide();
          router.replace("/home")
     }
+ 
+    const handleSave = isSaved ? deleteMutate : saveMutate 
 
     return (
       <SafeAreaView style={styles.safeView}>
@@ -46,8 +58,8 @@ const GuideDetails = () => {
                           return <TouchableIcon onPress={handleBackPress} icon={leftArrowIcon} iconStyle={styles.headerIconStyle} />
                      },
                      headerRight:() => {
-                          return <Pressable onPress={mutate} >
-                                  {isPending  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSuccess ? colors.primary : colors.backgroundDark}} source={isSuccess ? bookmark2Icon : bookmarkIcon} />} 
+                          return <Pressable onPress={handleSave} >
+                                  {(savePending || deletePending)  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSaved ? colors.primary : colors.backgroundDark}} source={isSaved ? bookmark2Icon : bookmarkIcon} />} 
                                 </Pressable>
                      }
                 }}

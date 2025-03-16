@@ -1,15 +1,15 @@
 
 import {SafeAreaView, ScrollView, StyleSheet,View,Text, KeyboardAvoidingView, Platform} from 'react-native'
-import React, { useCallback } from 'react'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../constands/appConstand'
+import React from 'react'
+import { colors, fonts, spaces } from '../../constands/appConstand'
 import { router, Stack } from 'expo-router'
 import TouchableIcon from '../../components/customButtons/TouchableIconButton'
 import logOutIcon from "../../assets/icons/logout.png"
-import chatRobotIcon from "../../assets/icons/chatRobot.png"
 import useUserStore from '../../managments/userStore'
 import SuggesContainer from '../../components/customPageComps/home/SuggesContainer'
 import AutoCompletSearchInput from '../../components/customPageComps/home/AutoCompletSearchInput'
 import useGuideStore from "../../managments/guideStore"
+import ChatBotHome from '../../components/customPageComps/chatbot/ChatBotHome'
 
 
 const Home = () => {
@@ -48,9 +48,8 @@ const Home = () => {
                       <TouchableIcon icon={logOutIcon} iconStyle={{tintColor:colors.gray}} onPress={logOut} />
                    </>
        }}}  />
-       
-          <TouchableIcon icon={chatRobotIcon} iconStyle={styles.chatIcon} iconWrapperStyle={styles.chatIconWrapper}  /> 
-          <View style={styles.contentHeader}>
+           <ChatBotHome />
+           <View style={styles.contentHeader}>
            <Text style={styles.contentHeaderTopText}>Let the Adventure Begin! 🌍</Text>
            <Text style={styles.contentHeaderBottomText}>Discover new places, plan your trips, and create unforgettable memories!</Text>
           </View>
@@ -69,13 +68,6 @@ const styles = StyleSheet.create({
        },
        scrollContent:{
           padding:spaces.middle,backgroundColor:colors.background,flexGrow:1
-       },
-       chatIconWrapper : {
-          width:50,aspectRatio:1,borderRadius:borderRadius.circleRadius(60),
-          backgroundColor:colors.primary,elevation:elevation.middleShhadow,position:"absolute",zIndex:2,bottom:spaces.high,right:spaces.middle
-       },
-       chatIcon : {
-             tintColor:colors.background
        },
        header:{
          gap:spaces.small,marginLeft:spaces.middle

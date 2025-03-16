@@ -31,7 +31,7 @@ export async function getFavGuide(id,token){
 }
 
 export async function deleteFavGuide(id,token){
-      const result = await baseQuery({path:"delete/"+id,token,url:favUrl})
+      const result = await baseQuery({path:"delete/"+id,method:"DELETE",isHaveBody:false,token,url:favUrl})
       return result.json()
 }
 
