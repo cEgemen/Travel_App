@@ -156,7 +156,7 @@ const goToRegister = () => {
          entering={FadeInDown.delay(400).duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <CustomTouchableButton disabled={!errorState.isReady} text={"Register"} onPress={onSubmit} 
+        <CustomTouchableButton disabled={!errorState.isReady || isLoading} text={"Register"} onPress={onSubmit} 
         buttonStyle={{...styles.btnStyle,...{marginTop:keyboardState ? spaces.high : spaces.highx2,marginBottom:!keyboardState ? spaces.high :  spaces.middle}}} isLoading={isLoading} />
        </Animated.View>
        <Animated.View
@@ -176,7 +176,7 @@ const goToRegister = () => {
 
 const styles = StyleSheet.create({
   safeArea : {
-    flex:1
+    flex:1,backgroundColor:colors.background
 },
 topBackImg:{
     width:"100%",position:"absolute"

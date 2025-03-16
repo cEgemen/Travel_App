@@ -1,11 +1,11 @@
 
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, fonts, spaces } from '../../../constands/appConstand';
+import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand';
 
 const SuggesCard = ({suggesData,isLoading}) => {
   const {type,rate,description,location,name}  = suggesData;
-  const opacity = isLoading ? 0.4 : 0.5 
+  const opacity = isLoading ? 0.4 : 1 
   const justifyContent = isLoading ? "center" : "space-evenly"
   return (
     <View style={[styles.cardWrapper,{opacity,justifyContent}]}>
@@ -32,7 +32,7 @@ export default SuggesCard
 const styles = StyleSheet.create({
      cardWrapper : {
        width:250,height:180, backgroundColor:colors.lightGray,
-       borderRadius:borderRadius.highRadius,padding:spaces.small
+       borderRadius:borderRadius.highRadius,padding:spaces.small,elevation:elevation.smallShadow
      },
      title:{
         fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight,textAlign:"center"

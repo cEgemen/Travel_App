@@ -11,12 +11,12 @@ const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onCl
         onClick(value)
   }
   return (
-     <View style={{...style.wrapper,...{borderColor:isFocus ? focusColor : colors.lightGray},...inputStyle}}>
+     <View style={{...style.wrapper,...{borderColor:isFocus ? focusColor : colors.gray},...inputStyle}}>
       <TextInput style={{...style.input}} 
       onEndEditing={() => onEndEditing(value)}
       value={value}
       placeholder={placeholder} 
-      placeholderTextColor={colors.lightGray} 
+      placeholderTextColor={colors.gray} 
       secureTextEntry = {false}
       numberOfLines={1}
       onChangeText={text => {

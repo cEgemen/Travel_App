@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
          gap:spaces.small,marginLeft:spaces.middle
        },
        headerText:{
-          fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight,color:colors.gray
+          fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight,color:colors.darkGray
        },
        contentHeader:{
           gap:spaces.small,marginBottom:spaces.highx2
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
          fontSize:fonts.middleFontSize,fontWeight:fonts.middleFontWeight,color:colors.textPrimary
        },
        contentHeaderBottomText:{
-         fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.textPrimary,color:colors.lightGray
+         fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.textPrimary,color:colors.gray
        },
       
 })

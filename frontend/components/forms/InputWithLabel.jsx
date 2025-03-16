@@ -4,15 +4,16 @@ import React from 'react'
 import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
 
 const InputWithLabel = ({label="",value="",placeholder="",keyboardType="default",secureTextEntry=false,editable=true,
-    onChange=(text)=>{},onEndEditing=()=>{},iconPress=()=>{} , errors=[],inputContainerStyle = {},icon=null }) => {
+  onChange=(text)=>{},onEndEditing=()=>{},iconPress=()=>{} , errors=[],inputContainerStyle = {},icon=null }) => {
+  const color = editable ? colors.backgroundDark : colors.darkGray
   return (
     <View style={[styles.inputContainer,inputContainerStyle]}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={[styles.input,{borderColor:errors.length !== 0 ? colors.error : colors.lightGray,borderWidth:1}]} 
+      <TextInput style={[styles.input,{color,borderColor:errors.length !== 0 ? colors.error : colors.gray,borderWidth:1}]} 
       value={value} 
       keyboardType={keyboardType} 
       placeholder={placeholder} 
-      placeholderTextColor={colors.lightGray}
+      placeholderTextColor={colors.gray}
       onChangeText={(text) => onChange(text)} 
       onEndEditing={onEndEditing} 
       secureTextEntry={secureTextEntry} 
@@ -42,11 +43,11 @@ const styles = StyleSheet.create({
         width:"100%",gap:spaces.small
            },
      input : {
-      backgroundColor:colors.background,borderRadius:borderRadius.highRadius,paddingRight:spaces.high*1.5
-     },
+        backgroundColor:colors.lightGray,borderRadius:borderRadius.highRadius,paddingRight:spaces.high*1.5
+             },
      error : {
         fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight,color:colors.error,paddingHorizontal:spaces.small
-     },
+             },
      label : {
       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,paddingHorizontal:spaces.small
      },
@@ -54,6 +55,6 @@ const styles = StyleSheet.create({
       position:"absolute",right:spaces.small,top:spaces.high*1.62
      },
      icon:{
-      width:30,height:30,tintColor:colors.lightGray
+      width:30,height:30,tintColor:colors.darkGray
      }
 })

@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         flexDirection:"row",alignItems:"center",justifyContent:"space-around"
      },
      minTitle:{
-       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.lightGray
+       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.gray
      },
      subtitle:{
         fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
       fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight
      },
      locationSubTitle:{
-      fontSize:fonts.smallFontSize-3,fontWeight:fonts.middleFontWeight,color:colors.lightGray,paddingLeft:spaces.high
+      fontSize:fonts.smallFontSize-3,fontWeight:fonts.middleFontWeight,color:colors.gray,paddingLeft:spaces.high
      }
 })

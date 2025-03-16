@@ -64,7 +64,7 @@ export default AutoCompletSearchInput
 
 const styles = StyleSheet.create({
         locationWrapper : {
-            borderColor:colors.lightGray,borderWidth:1,borderRadius:borderRadius.middleRadius,justifyContent:"center",paddingHorizontal:spaces.small  , paddingVertical:spaces.middle,elevation:elevation.smallShadow,backgroundColor:colors.background
+            borderColor:colors.gray,borderWidth:1,borderRadius:borderRadius.middleRadius,justifyContent:"center",paddingHorizontal:spaces.small  , paddingVertical:spaces.middle,elevation:elevation.smallShadow,backgroundColor:colors.background
         },
         locationText : {
            fontSize:fonts.smallFontSize,fontWeight : fonts.middleFontSize

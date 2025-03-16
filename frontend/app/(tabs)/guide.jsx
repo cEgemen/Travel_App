@@ -48,10 +48,10 @@ const Guide = () => {
                                <Text style={styles.flatHeaderText}>Favorite Guides</Text>
                                <View style={styles.flatHeaderIconButtonsContainer}>
                                   <Pressable onPress={() => handleSort(1)}>
-                                     <Image style={[styles.flatHeaderIcon,{elevation:orderState === 1 ? 4 : 0,borderColor:orderState === 1 ? colors.primary : colors.lightGray,tintColor:orderState === 1 ? colors.primary : colors.lightGray}]} source={upIcon} />
+                                     <Image style={[styles.flatHeaderIcon,{elevation:orderState === 1 ? 4 : 0,borderColor:orderState === 1 ? colors.primary : colors.gray,tintColor:orderState === 1 ? colors.primary : colors.gray}]} source={upIcon} />
                                   </Pressable>
                                   <Pressable onPress={() => {handleSort(2)}}>
-                                     <Image  style={[styles.flatHeaderIcon,{elevation:orderState === 2 ? 4 : 0,borderColor:orderState === 2 ? colors.primary : colors.lightGray,tintColor:orderState === 2 ? colors.primary : colors.lightGray}]} source={downIcon} />
+                                     <Image  style={[styles.flatHeaderIcon,{elevation:orderState === 2 ? 4 : 0,borderColor:orderState === 2 ? colors.primary : colors.gray,tintColor:orderState === 2 ? colors.primary : colors.gray}]} source={downIcon} />
                                   </Pressable>
                                </View>
                               </View>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
          marginBottom:spaces.small,marginTop:spaces.high,flexDirection:"row",alignItems:"center"
      },
      flatHeaderText:{
-       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.lightGray,flex:1
+       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.gray,flex:1
      },
      flatHeaderIconButtonsContainer:{
         flexDirection:"row",gap:spaces.middle

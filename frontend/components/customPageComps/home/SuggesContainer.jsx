@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
         flexDirection:"column",gap:spaces.small,alignItems:"flex-start"
      },
      suggesText:{
-        fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.gray,
+        fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.darkGray,
                 }
 })

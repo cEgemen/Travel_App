@@ -16,8 +16,8 @@ import FavGuideCard from '../../components/customPageComps/guideDetails/FavGuide
 const FavoriteGuides = () => {
   const [currentOrder,setCurrentOrder] = useState(1)
   const {id,token} = useUserStore(state => state.user)
-  const {data,isLoading} = useGetOwnerFavGuides("67be0bac77f67c6718a5e8fa",currentOrder,"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJleHAiOjE3NDE3MjUwOTZ9.ULhB9ilBooL7W71xhwwTUyXnj1r109um8jvQUhlghLs")
-  const guides = isLoading ? ["null"] : []
+  const {data,isLoading} = useGetOwnerFavGuides(id,currentOrder,token)
+  const guides = isLoading ? ["null"] : data.ok_data.data
   
   const format =  'DD/MM/YYYY'
   const dateFormat = (date) => {
@@ -91,7 +91,7 @@ const FavoriteGuides = () => {
            data={guides}
            ListHeaderComponent={() => {
                  return <View style={{paddingTop:spaces.high}}>
-                          <Image source={notesIcon} style={{width:30,height:30,tintColor:colors.gray,position:"absolute",left:"45%",zIndex:2}} />
+                          <Image source={notesIcon} style={{width:30,height:30,tintColor:colors.darkGray,position:"absolute",left:"45%",zIndex:2}} />
                           <View style={styles.flatHeaderWrapper}>
                              <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                               <Text style={styles.detailsText}>Fav Trip Type : {isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" : calculateFavType("travelType"))} </Text> 
@@ -106,10 +106,10 @@ const FavoriteGuides = () => {
                            <Text style={[styles.subTitle]}>Guides Count : {isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : guides.length} </Text>
                             <View style={{flexDirection:"row",gap:spaces.high}}>
                                   <Pressable onPress={() => handleSort(1)}>
-                                     <Image style={[styles.flatHeaderIcon,{elevation:currentOrder === 1 ? 4 : 0,borderColor:currentOrder === 1 ? colors.primary : colors.lightGray,tintColor:currentOrder === 1 ? colors.primary : colors.lightGray}]} source={upIcon} />
+                                     <Image style={[styles.flatHeaderIcon,{elevation:currentOrder === 1 ? 4 : 0,borderColor:currentOrder === 1 ? colors.primary : colors.gray,tintColor:currentOrder === 1 ? colors.primary : colors.gray}]} source={upIcon} />
                                   </Pressable>
                                   <Pressable onPress={() => {handleSort(2)}}>
-                                     <Image  style={[styles.flatHeaderIcon,{elevation:currentOrder === 2 ? 4 : 0,borderColor:currentOrder === 2 ? colors.primary : colors.lightGray,tintColor:currentOrder === 2 ? colors.primary : colors.lightGray}]} source={downIcon} />
+                                     <Image  style={[styles.flatHeaderIcon,{elevation:currentOrder === 2 ? 4 : 0,borderColor:currentOrder === 2 ? colors.primary : colors.gray,tintColor:currentOrder === 2 ? colors.primary : colors.gray}]} source={downIcon} />
                                   </Pressable>
                             </View>
                             <Text style={styles.subTitle}>Sorts : {currentOrder === 1 ? "ASC" : "DESC"} </Text>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         width:"100%",height:"100%"
      },
     flatHeaderWrapper : {
-        borderColor:colors.lightGray,borderWidth:2,width:"100%",borderRadius:borderRadius.middleRadius,elevation:elevation.middleShhadow,backgroundColor:colors.background,padding:spaces.high,gap:spaces.high
+        borderColor:colors.gray,borderWidth:2,width:"100%",borderRadius:borderRadius.middleRadius,elevation:elevation.middleShhadow,backgroundColor:colors.background,padding:spaces.high,gap:spaces.high
     },
     flatHeaderIcon:{
       width:25,height:25,resizeMode:"contain",borderWidth:1,backgroundColor:colors.background
@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
        justifyContent:"space-between",alignItems:"center",flexDirection:"row",marginVertical:spaces.high,marginHorizontal:spaces.middle
     }, 
     detailsText : {
-       fontSize:fonts.smallFontSize - 2 , fontWeight:fonts.middleFontSize,color:colors.gray,flex:1
+       fontSize:fonts.smallFontSize - 2 , fontWeight:fonts.middleFontSize,color:colors.darkGray,flex:1
     },
     title : {
       fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight
     },
     subTitle : {
-       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.lightGray
+       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.gray
     }
 })

@@ -5,8 +5,8 @@ import React from 'react'
 import { colors, fonts } from '../../constands/appConstand'
 
 const CustomTab = ({focused,text,icon}) => {
-  const tintColor = focused ? colors.primary : colors.lightGray
-  const color = focused ? colors.primary : colors.lightGray
+  const tintColor = focused ? colors.primary : colors.gray
+  const color = focused ? colors.primary : colors.gray
   const fontWeight = !focused ? fonts.smallFontWeight : fonts.middleFontWeight
   return (
     <View style={styles.tabWrapper}>

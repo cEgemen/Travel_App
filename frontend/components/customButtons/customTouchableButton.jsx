@@ -8,8 +8,9 @@ const CustomTouchableButton = (
       textStyle={},disabled=false,isLoading=false,indicatorColor="white"
       }
                               ) => {
+  const opacity = buttonStyle.opacity === undefined ? (disabled ? 0.7 : 1) : (disabled ? 0.7 : buttonStyle.opacity)                                   
   return (
-      <TouchableOpacity disabled={disabled} activeOpacity={0.7} style={{...styles.btn,...buttonStyle}} onPress={onPress}>
+      <TouchableOpacity disabled={disabled} activeOpacity={0.5} style={{...styles.btn,...buttonStyle,opacity}} onPress={onPress}>
             {isLoading ? <ActivityIndicator size={"large"} color={indicatorColor} /> : <Text style={{...styles.txt,...textStyle}}>{text}</Text>} 
       </TouchableOpacity>
          )

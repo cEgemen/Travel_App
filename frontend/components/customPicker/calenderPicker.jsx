@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
          color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight,
      },
      disableDateTextStle : {
-         color:colors.lightGray
+         color:colors.gray
      },
      selectedRangeStyle:{
          backgroundColor:colors.primary

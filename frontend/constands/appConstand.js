@@ -2,9 +2,9 @@
 export const colors = {
   primary:"rgb(121, 149, 206)",
   secondary: 'rgb(144, 225, 174)',
-  lightGray: 'rgb(207, 204, 204)', 
-  gray: 'rgb(177, 175, 175)', 
-  darkGray: 'rgb(101, 100, 100)', 
+  lightGray: 'rgb(242, 240, 240)', 
+  gray: 'rgb(207, 204, 204)', 
+  darkGray: 'rgb(167, 165, 165)', 
   background: 'rgb(255, 255, 255)', 
   backgroundDark: 'rgb(18, 18, 18)',
   textPrimary: 'rgb(0, 0, 0)', 

@@ -55,7 +55,7 @@ const GuideDetails = () => {
             <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={false}>
               <View style={styles.headerContainer}>  
                  <Text numberOfLines={1} style={styles.headerTitle}>📍{guide.metadata.city},{guide.metadata.country}</Text>
-                 <Text style={{color:colors.lightGray,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight}}>🌞 {guide.metadata.totalDays} 🌚 {guide.metadata.totalNights}</Text>
+                 <Text style={{color:colors.gray,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight}}>🌞 {guide.metadata.totalDays} 🌚 {guide.metadata.totalNights}</Text>
               </View>
               <DaysScroll currentDay={currentDay + 1} totalDays={guide.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />
               <FlatList
@@ -67,7 +67,7 @@ const GuideDetails = () => {
                   ListHeaderComponent={() => {
                        const {date} = guide.itinerary[currentDay]
                        return <View style={{alignItems:"center"}}>
-                                <Text style={{fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.lightGray}}>{date}</Text>
+                                <Text style={{fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.gray}}>{date}</Text>
                               </View>
                   }}
                   renderItem={({item,index}) => {

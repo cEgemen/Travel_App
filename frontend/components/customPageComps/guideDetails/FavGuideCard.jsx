@@ -24,7 +24,6 @@ const FavGuideCard = ({guide}) => {
      <Pressable onPress={handlePress} style={styles.wrapper}>
           <View style={styles.topDetailWrapper}>
            <Text numberOfLines={1} style={styles.title}>📍{city},{country}</Text>
-  
           </View>
           <View style={styles.detailWrapper}>
              <Text style={styles.detailText}>💾 {dateFormat(createDate)}</Text>
@@ -36,15 +35,11 @@ const FavGuideCard = ({guide}) => {
   )
 }
 
-/* 
-[{"createDate": "2025-03-09T12:04:12.707Z", "id": "67cd83bca09fa32dcd3bfbb4", "metadata": {"budgetClass": "Economic Price", "city": "Milano", "country": "Italia", "lastDate": "10/03/2025", "startDate": "09/03/2025", "totalDays": 2, "totalNights": 1, "travelType": "Cultural Trip"}, "updateDate": "2025-03-09T12:04:12.707Z"}]
-*/
-
 export default FavGuideCard
 
 const styles = StyleSheet.create({
         wrapper : {
-            width:"100%",borderRadius:borderRadius.middleRadius,borderColor:colors.lightGray,borderWidth:2,gap:spaces.small,elevation:elevation.middleShhadow,backgroundColor:colors.background,padding:spaces.small,paddingVertical:spaces.middle
+            width:"100%",borderRadius:borderRadius.middleRadius,borderColor:colors.gray,borderWidth:2,gap:spaces.small,elevation:elevation.middleShhadow,backgroundColor:colors.background,padding:spaces.small,paddingVertical:spaces.middle
         },
         topDetailWrapper:{
             flexDirection:"row",justifyContent:"space-between",alignItems:"center"
@@ -59,6 +54,6 @@ const styles = StyleSheet.create({
            fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,flex:1
         },
         detailText: {
-           fontSize:fonts.smallFontSize-3,fontWeight:fonts.middleFontWeight,color:colors.lightGray
+           fontSize:fonts.smallFontSize-3,fontWeight:fonts.middleFontWeight,color:colors.gray
         }
 })

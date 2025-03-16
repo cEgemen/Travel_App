@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
               color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight,paddingLeft:spaces.middle
          },
          headerSubTitle : {
-               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.lightGray,paddingLeft:spaces.high
+               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.gray,paddingLeft:spaces.high
          },
          btnStyle : {
              backgroundColor:colors.primary,marginVertical:"auto"
