@@ -13,6 +13,7 @@ const RootLayout = () => {
              <Stack.Screen name="(auth)" options={options} />
              <Stack.Screen name="(tabs)" options={options} />
              <Stack.Screen name="guide" options={options} />
+             <Stack.Screen name="chat" options={options} />
          </Stack>
        </QueryClientProvider>
          

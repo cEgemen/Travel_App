@@ -4,7 +4,7 @@ import search from "../../assets/icons/search.png"
 import { borderRadius, colors, elevation, spaces } from '../../constands/appConstand'
 
 
-const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onClick=(value) => {},onChangeCallback=(text)=>{},onEndEditing=(value)=>{},inputStyle}) => {
+const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onClick=(value) => {},onChangeCallback=(text)=>{},onEndEditing=(value)=>{},inputStyle={},isVisibleClickableIcon=true}) => {
   const [isFocus,setIsFocus] = useState(false)
   const [value , setValue] = useState(initialValue)
   const onSearch = () => {
@@ -27,9 +27,9 @@ const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onCl
       onBlur={e => setIsFocus(false)}      
        />
 
-      <TouchableOpacity style={style.iconWrapperStyle} onPress={onSearch}>
+      {isVisibleClickableIcon && <TouchableOpacity style={style.iconWrapperStyle} onPress={onSearch}>
         <Image style={style.iconStyle} source={search} />
-      </TouchableOpacity>   
+      </TouchableOpacity> }  
     </View> 
   )
 }

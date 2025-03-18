@@ -25,6 +25,10 @@ const Home = () => {
         router.replace("/guide/selectTravelDates")
   }
 
+  const selectChatBot = () => {
+      router.push("/chat")
+  }
+
   return (
      <SafeAreaView style={styles.safeArea}>
      
@@ -48,7 +52,7 @@ const Home = () => {
                       <TouchableIcon icon={logOutIcon} iconStyle={{tintColor:colors.gray}} onPress={logOut} />
                    </>
        }}}  />
-           <ChatBotHome />
+           <ChatBotHome onClick={selectChatBot} />
            <View style={styles.contentHeader}>
            <Text style={styles.contentHeaderTopText}>Let the Adventure Begin! 🌍</Text>
            <Text style={styles.contentHeaderBottomText}>Discover new places, plan your trips, and create unforgettable memories!</Text>
