@@ -14,8 +14,8 @@ export default function App() {
    
    const data = [
     {image:onBoardImg1,title:"Discover Amazing Destinations",description:" Explore breathtaking places around the world with personalized travel recommendations.",color:"rgb(134, 116, 146)"},
-    {image:onBoardImg2,title:"Plan Your Perfect Trip",description:" Get detailed travel itineraries tailored to your budget and preferences.",color:"rgb(145, 188, 158)"},
-    {image:onBoardImg3,title:"Hassle-Free Booking & Navigation",description:"Find top attractions, book tours, and navigate like a local—all in one app.",color:"rgb(197, 164, 142)"},
+    {image:onBoardImg2,title:"Plan Your Perfect Trip",description:" Get detailed travel itineraries tailored to your budget and preferences.",color:"rgb(224, 151, 102)"},
+    {image:onBoardImg3,title:"Hassle-Free Booking & Navigation",description:"Find top attractions, book tours, and navigate like a local—all in one app.",color:"rgb(111, 168, 120)"},
     {image:onBoardImg4,title:"Make Every Journey Memorable",description:" Capture your travel experiences and get personalized tips to make your trip unforgettable.",color:"rgb(136, 177, 201)"}
                ]
 
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
                position:"absolute",bottom:0,width:"100%",height:64,justifyContent:"center",paddingHorizontal:spaces.middle,backgroundColor:"rgba(255,255,255,.15)"
      },                   
      skipButton:{
-        width:60,height:60,borderRadius:borderRadius.circleRadius(60),backgroundColor:colors.background,
+        width:50,height:50,borderRadius:borderRadius.circleRadius(60),backgroundColor:colors.background,
         alignItems:"center",justifyContent:"center",position:"absolute",right:spaces.middle,top:spaces.middle,zIndex:4
      },
      skipText:{

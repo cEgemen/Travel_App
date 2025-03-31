@@ -1,6 +1,6 @@
 
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { Platform } from 'react-native';
@@ -10,21 +10,48 @@ import mapIcon from "../assets/icons/map.png"
 import warningIcon from "../assets/icons/warning.png"
 import { borderRadius, colors, fonts, spaces } from '../constands/appConstand';
 import SearchInput from '../components/forms/SearchInput';
+import CustomModal from '../components/customModals/CustomModal';
+import { router } from 'expo-router';
 
 const Chat = () => {
+    const infoData = [
+      {title:"** Personalized Travel Recommendations",desc:"Suggests the best routes based on your interests and budget."},
+      {title:"** Daily Travel Itinerary Planning",desc:"Creates a customized tour with a step-by-step schedule."},
+      {title:"** Food, Dining & Accommodation Suggestions",desc:"Recommends top restaurants, cafés, and suitable hotel options."},
+      {title:"** Transportation & Practical Information",desc:"Provides details on public transport, weather forecasts, and currency exchange rates."}               
+                     ]               
+
+    const [isVisible,setIsVisible] = useState(false)
+
+    const goBack = () => {router.back()}
+    
+    const setModal = (mod) => {
+        mod === 1 ? setIsVisible(true) : setIsVisible(false)
+    }
+
+    const CenterContent =  <>
+                      {infoData.map((value,index) => {
+                           return <View key={index}>
+                                    <Text style={styles.centerContentTitle}>{value.title}</Text>
+                                    <Text style={styles.centerContentDesc}>{value.desc}</Text>
+                                  </View>
+                      })}  
+                 </>
+
 
     return (
         <SafeAreaView style={styles.container}>
+          <CustomModal title='Asistan Information' isVisible={isVisible} closeVisible={() => setModal(2)} CenterContent={CenterContent} />
           <View style={styles.headerWrapper}>
             <TouchableOpacity
-              onPress={() => {}} // Call the handleBackPress function here
+              onPress={goBack}
             >
               <Image style={styles.normalIconStyle} source={leftArrowIcon} />
             </TouchableOpacity>
             
             <Text style={styles.headerTitle}>Asistan</Text>
 
-            <TouchableOpacity  onPress={() => {}}>
+            <TouchableOpacity  onPress={() => setModal(1)}>
               <Image style={styles.normalIconStyle} source={warningIcon} />
             </TouchableOpacity>
 
@@ -197,5 +224,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         backgroundColor: "#fff",
       },
-      
+      centerContentTitle : {
+          fontSize:fonts.smallFontSize*1.1,fontWeight:fonts.middleFontWeight
+      },
+      centerContentDesc : {
+          paddingHorizontal:spaces.middle,color:colors.darkGray
+      }
 })

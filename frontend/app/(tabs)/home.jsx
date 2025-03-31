@@ -1,6 +1,6 @@
 
 import {SafeAreaView, ScrollView, StyleSheet,View,Text, KeyboardAvoidingView, Platform} from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { colors, fonts, spaces } from '../../constands/appConstand'
 import { router, Stack } from 'expo-router'
 import TouchableIcon from '../../components/customButtons/TouchableIconButton'
@@ -10,16 +10,23 @@ import SuggesContainer from '../../components/customPageComps/home/SuggesContain
 import AutoCompletSearchInput from '../../components/customPageComps/home/AutoCompletSearchInput'
 import useGuideStore from "../../managments/guideStore"
 import ChatBotHome from '../../components/customPageComps/chatbot/ChatBotHome'
+import CustomModal from '../../components/customModals/CustomModal'
+import ModalWithButtons from '../../components/customModals/ModalWithButtons'
 
 
 const Home = () => {
   const {username} = useUserStore(state => state.user)
   const setGuideInfo = useGuideStore(state => state.setGuideInfo )
+  const [isVisible,setIsVisible] = useState(false)
 
   const logOut = () => {
       router.replace("/login")
   }
  
+  const setModal = (mod) => {
+      mod === 1 ? setIsVisible(true) : setIsVisible(false)
+  }
+
   const selectLocation = (location) => {
         setGuideInfo({type:"location",data:location})
         router.replace("/guide/selectTravelDates")
@@ -31,7 +38,7 @@ const Home = () => {
 
   return (
      <SafeAreaView style={styles.safeArea}>
-     
+     <ModalWithButtons isVisible={isVisible} closeVisible={() => {setModal(2)}} cancel={() => {setModal(2)}} confirm={logOut} title='Log Out Info' desc='Are you sure you want to log out?' />
      <KeyboardAvoidingView
      behavior={Platform.OS === "ios" ? "padding" : "height"}
      style={{ flex: 1 }}>
@@ -49,7 +56,7 @@ const Home = () => {
        },
        headerRight:() => {
             return <>
-                      <TouchableIcon icon={logOutIcon} iconStyle={{tintColor:colors.gray}} onPress={logOut} />
+                      <TouchableIcon icon={logOutIcon} iconStyle={{tintColor:colors.gray}} onPress={() => {setModal(1)}} />
                    </>
        }}}  />
            <ChatBotHome onClick={selectChatBot} />
