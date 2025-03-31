@@ -28,10 +28,10 @@ const CustomModal = ({isVisible=false,closeVisible=()=>{},title="",CenterContent
                  </Pressable>
              </View>
             {CenterContent ? <View style={[styles.centerContent,centerContentWrapper]}>
-                {CenterContent}
+                <CenterContent/>
              </View> : null}
              {BottomContent ?  <View style={[styles.bottomContent,bottomContentWrapper]} >
-                {BottomContent}
+                <BottomContent/>
              </View> : null}
          </View>
       </View>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     contentContainer : {
         width:"100%",
-        minHeight:auto,borderRadius:borderRadius.middleRadius,
+        minHeight:"auto",borderRadius:borderRadius.middleRadius,
         backgroundColor:colors.background
     },
     headerWrapper : {

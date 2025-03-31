@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
          gap:spaces.small
      },
      flatHeaderWrapper:{
-         marginBottom:spaces.small,marginTop:spaces.high,flexDirection:"row",alignItems:"center",backgroundColor:"white"
+         marginBottom:spaces.small,marginTop:spaces.high,flexDirection:"row",justifyContent:"space-between",alignItems:"center",backgroundColor:"white"
      },
      flatHeaderText:{
-       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.gray,flex:1
+       fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight,color:colors.gray
      },
      flatHeaderIconButtonsContainer:{
-        flexDirection:"row",gap:spaces.middle
+        flexDirection:"row",justifyContent:"center",gap:spaces.middle
      },
      flatHeaderIcon:{
          width:25,height:25,resizeMode:"contain",borderWidth:1,backgroundColor:colors.background

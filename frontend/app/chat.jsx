@@ -29,7 +29,7 @@ const Chat = () => {
         mod === 1 ? setIsVisible(true) : setIsVisible(false)
     }
 
-    const CenterContent =  <>
+    const CenterContent = () => <>
                       {infoData.map((value,index) => {
                            return <View key={index}>
                                     <Text style={styles.centerContentTitle}>{value.title}</Text>

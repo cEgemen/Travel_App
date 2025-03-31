@@ -15,14 +15,17 @@ import restartIcon from "../../assets/icons/restart.png"
 import CustomTouchableButton from "../../components/customButtons/CustomTouchableButton";
 import { passwordValid, userNameValid } from "../../utils/validations";
 import { updateProfile } from "../../utils/querys";
+import ModalWithButtons from "../../components/customModals/ModalWithButtons";
 
 export default function Profile() {
   const navigation = useNavigation();
+  const [isVisible , setIsVisible] = useState({state:false,title:"",desc:"",confirm:() => {},cancel:()=>{}})
   const {user,setUser} = useUserStore(state => state);
   const {id,username,password,email,token} = user
   const [profileData, setProfileData] = useState({username,email,password});
   const [isLoading ,setIsLoading] = useState(false)
   const [errorState,setErrorState] = useState({username:[],password:[],isReady:true});
+  
   const handleInputChange = (field, value) => {
     setProfileData((prevData) => ({
       ...prevData,
@@ -34,6 +37,10 @@ export default function Profile() {
       setProfileData(oldState => {
          return {username,email,password}
       })
+  }
+
+  const setModal = (mod,modalData={title:"",desc:"",confirm:()=>{},cancel:()=>{}}) => {
+       mod === 1 ? setIsVisible({state:true,...modalData}) : setIsVisible({state:false,...modalData})
   }
 
   const inputValidation = (value , mod) => {
@@ -81,8 +88,12 @@ export default function Profile() {
                                                       })
   }
 
+  const {state,title,desc,confirm,cancel} = isVisible
+
   return (
-      <ScrollView style={styles.container}>
+       <>
+        <ModalWithButtons isVisible={state} title={title} desc={desc} confirm={confirm} cancel={cancel} closeVisible={() => {setModal(2)}}/>
+        <ScrollView style={styles.container}>
         <Stack.Screen
             options={{
                 headerShown:true,
@@ -90,7 +101,7 @@ export default function Profile() {
                 headerTitleAlign:"center",
                 title:"Profile",
                 headerRight:() => {
-                   return <TouchableIcon onPress={handleRes} icon={restartIcon} iconStyle={{marginRight:spaces.middle}}  />
+                   return <TouchableIcon onPress={() => {setModal(1,{title:"Data Reset Info",desc:"Are you sure to take back the changes?",confirm:handleRes,cancel:()=>{setModal(2)}})}} icon={restartIcon} iconStyle={{marginRight:spaces.middle}}  />
                 }
 
             }}
@@ -135,9 +146,10 @@ export default function Profile() {
           entering={FadeInUp.duration(1000).springify()}
           style={styles.buttonContainer}
         >
-         <CustomTouchableButton disabled={!errorState.isReady || isLoading} onPress={handeleSave} text={"Save"} buttonStyle={styles.button} />
+         <CustomTouchableButton disabled={!errorState.isReady || isLoading} onPress={() => {setModal(1,{title:"Save Info",desc:"Are you sure to update your information?",confirm:handeleSave,cancel:()=>{setModal(2)}})}} text={"Save"} buttonStyle={styles.button} />
         </Animated.View>
       </ScrollView>
+       </>
   );
 }
 

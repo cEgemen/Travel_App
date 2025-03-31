@@ -94,17 +94,17 @@ const FavoriteGuides = () => {
                           <Image source={notesIcon} style={{width:30,height:30,tintColor:colors.darkGray,position:"absolute",left:"45%",zIndex:2}} />
                           <View style={styles.flatHeaderWrapper}>
                              <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                              <Text style={styles.detailsText}>Fav Trip Type : {isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" : calculateFavType("travelType"))} </Text> 
-                              <Text style={styles.detailsText}>Last Locaiton : {isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" :guides[currentOrder !== 1 ? guides.length-1 : 0].metadata.city)}  </Text>  
+                              <Text style={styles.detailsText}>Fav Trip :{isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" : calculateFavType("travelType"))} </Text> 
+                               <Text style={styles.detailsText}>Fav Location :{isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" : calculateFavType("city"))} </Text>
                              </View>
                              <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                               <Text style={styles.detailsText}>Fav Location : {isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" : calculateFavType("city"))} </Text>
-                                <Text style={styles.detailsText}>Last Save Date : {isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" : dateFormat(guides[currentOrder === 1 ? guides.length-1 : 0].createDate))} </Text>
+                                <Text style={styles.detailsText}>Last City :{isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" :guides[currentOrder !== 1 ? guides.length-1 : 0].metadata.city)}  </Text> 
+                                <Text style={[styles.detailsText]}>Last Save Date:{isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : (guides.length === 0 ? "^^^--^---" : dateFormat(guides[currentOrder === 1 ? guides.length-1 : 0].createDate))} </Text>
                              </View>
                           </View>
                           <View style={styles.sortWrapper}>
                            <Text style={[styles.subTitle]}>Guides Count : {isLoading ? <ActivityIndicator size={"small"} color={colors.primary} /> : guides.length} </Text>
-                            <View style={{flexDirection:"row",gap:spaces.high}}>
+                            <View style={{flexDirection:"row",gap:spaces.high,justifyContent:"center"}}>
                                   <Pressable onPress={() => handleSort(1)}>
                                      <Image style={[styles.flatHeaderIcon,{elevation:currentOrder === 1 ? 4 : 0,borderColor:currentOrder === 1 ? colors.primary : colors.gray,tintColor:currentOrder === 1 ? colors.primary : colors.gray}]} source={upIcon} />
                                   </Pressable>
@@ -112,7 +112,6 @@ const FavoriteGuides = () => {
                                      <Image  style={[styles.flatHeaderIcon,{elevation:currentOrder === 2 ? 4 : 0,borderColor:currentOrder === 2 ? colors.primary : colors.gray,tintColor:currentOrder === 2 ? colors.primary : colors.gray}]} source={downIcon} />
                                   </Pressable>
                             </View>
-                            <Text style={styles.subTitle}>Sorts : {currentOrder === 1 ? "ASC" : "DESC"} </Text>
                           </View>  
                         </View>
            }}
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
       width:25,height:25,resizeMode:"contain",borderWidth:1,backgroundColor:colors.background
     },
     sortWrapper:{
-       justifyContent:"space-between",alignItems:"center",flexDirection:"row",marginVertical:spaces.high,marginHorizontal:spaces.middle
+       justifyContent:"space-around",alignItems:"center",flexDirection:"row",marginVertical:spaces.high,marginHorizontal:spaces.middle
     }, 
     detailsText : {
        fontSize:fonts.smallFontSize - 2 , fontWeight:fonts.middleFontSize,color:colors.darkGray,flex:1
