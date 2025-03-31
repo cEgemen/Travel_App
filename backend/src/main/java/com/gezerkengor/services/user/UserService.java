@@ -50,7 +50,6 @@ public class UserService implements IUserService {
                                     .setRole(oldUserData.getRole())
                                     .setCreateDate(oldUserData.getCreateDate());
         User updatedUser = repo.save(newUserData);
-        System.out.println("password from repo : "+updatedUser.getPassword());
         DTOUser responseUser = new DTOUser()
                                            .setUsername(updateUser.getUsername())
                                            .setEmail(updateUser.getEmail())

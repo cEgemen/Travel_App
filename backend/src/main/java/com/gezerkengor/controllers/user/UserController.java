@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.gezerkengor.base.baseController.BaseController;
@@ -43,7 +44,7 @@ public class UserController<T> extends BaseController<Map<String,?>> implements 
 
     @Override
     @PutMapping("update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable String id,@Valid DTOIUUser updateUserData) {
+    public ResponseEntity<?> updateUser(@PathVariable String id,@RequestBody @Valid DTOIUUser updateUserData) {
         log.info("userController -> updateUser -> id : "+id+" AND updateUserData : "+updateUserData.toString());
         Map<String,?> result = service.updateUser(id, updateUserData);
         return okResponse(result);

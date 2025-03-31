@@ -7,6 +7,7 @@ public class PasswordValidationFunc implements ConstraintValidator<PasswordValid
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         int passwordSize = password.length();
+        System.out.println("passwordSize : "+passwordSize);
         if(passwordSize != 6)
         {
            return false;
@@ -17,6 +18,10 @@ public class PasswordValidationFunc implements ConstraintValidator<PasswordValid
         } catch (NumberFormatException e) {
             return false;
         }
+          catch(Exception exception)
+          {
+             return false;
+          }
         
     }
     

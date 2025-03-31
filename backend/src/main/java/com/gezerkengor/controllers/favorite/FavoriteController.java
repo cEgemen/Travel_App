@@ -39,6 +39,7 @@ public class FavoriteController extends BaseController<Map<String,?>> implements
     @Override
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteFavoriteGuide(@PathVariable String id) {
+       log.info("deleting guide id : "+id);
        Map<String , ?> result = service.deleteFavoriteGuide(id);
        return okResponse(result);
     }

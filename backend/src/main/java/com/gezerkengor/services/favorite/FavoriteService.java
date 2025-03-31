@@ -23,8 +23,8 @@ public class FavoriteService implements IFavoriteService{
 
     @Override
     public Map<String, ?> saveFavoriteGuide(Favorite favorite) {
-         repo.save(favorite);
-         return Map.of("message","guide is saved successfuly.");
+         Favorite fav =  repo.save(favorite);
+         return Map.of("message","guide is saved successfuly.","data",fav.getId());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class FavoriteService implements IFavoriteService{
     public Map<String, ?> getOwnerFavoriteGuide(String id,int mod) {
         Sort sort;
         if(mod == 1)
-        {
+        { 
             sort = Sort.by(Sort.Order.asc("updateDate"));
         }
         else{
