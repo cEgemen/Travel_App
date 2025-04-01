@@ -1,17 +1,18 @@
 
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState,useRef } from 'react'
 import { ScrollView } from 'react-native';
 import { ActivityIndicator } from 'react-native';
-import { Platform } from 'react-native';
 import leftArrowIcon from "../assets/icons/left_arrow.png"
 import sendIcon from "../assets/icons/send.png"
 import mapIcon from "../assets/icons/map.png"
 import warningIcon from "../assets/icons/warning.png"
-import { borderRadius, colors, fonts, spaces } from '../constands/appConstand';
-import SearchInput from '../components/forms/SearchInput';
+import { borderRadius, colors, elevation, fonts, spaces } from '../constands/appConstand';
 import CustomModal from '../components/customModals/CustomModal';
 import { router } from 'expo-router';
+import { chatResult } from '../confs/groqChatConf';
+import chatRobotIcon from "../assets/icons/chatRobot.png"
+import userIcon from "../assets/icons/user.png"
 
 const Chat = () => {
     const infoData = [
@@ -22,11 +23,34 @@ const Chat = () => {
                      ]               
 
     const [isVisible,setIsVisible] = useState(false)
+    const [isLoading,setIsLoading] = useState(false)
+    const [messages,setMessages] = useState([{role:"assistant",content:"How can I help you ?",isErrorMessage:false,id:Date.now()}]) 
+    const [input,setInput] = useState("")
+    const scrolRef = useRef(null)
 
     const goBack = () => {router.back()}
     
     const setModal = (mod) => {
         mod === 1 ? setIsVisible(true) : setIsVisible(false)
+    }
+
+    const sendQuestion = async () => {
+         const history = messages.map(value => ({role:value.role,content:value.content})) 
+         setIsLoading(true)
+         setInput("")
+         setMessages(oldState => ([...oldState,{role:"user",content:input,isErrorMessage:false,id:Date.now()}]))
+         chatResult(history,input)
+         .then(result => {
+            const {data,isSuccess} = result;
+            setMessages(oldState => ([...oldState,{role:"assistant",content:data,isErrorMessage:!isSuccess,id:Date.now()}]))
+         })
+         .catch(err => {
+            console.log("err : ",err)
+         })
+         .finally(() => {
+               setIsLoading(false)
+         })
+         
     }
 
     const CenterContent = () => <>
@@ -58,25 +82,31 @@ const Chat = () => {
           </View>
     
           <ScrollView
-            
             style={styles.chatContainer}
             contentContainerStyle={styles.chatContent}
-            
+            showsVerticalScrollIndicator={false}
+            ref={scrolRef}
+            onContentSizeChange={() => scrolRef.current?.scrollToEnd({ animated: true })}
           >
-            {[].map((message) => (
-              <View
+            {messages.map((message) => (
+               <View style={{}}>
+                <View
                 key={message.id.toString()}
                 style={[
                   styles.messageBubble,
-                  message.isUser ? styles.userBubble : styles.botBubble,
+                  message.role === "user" ? {...styles.userBubble,...{marginRight:spaces.high} }: {...styles.botBubble,...{marginLeft:spaces.high}},
                 ]}
-              >
-                <Text style={message.isUser ? styles.userText : styles.botText}>
-                  {message.text}
-                </Text>
-              </View>
+                >
+                {message.isErrorMessage ? <Text style={styles.errorText} >{message.content}</Text> : <Text style={message.role === "user" ? styles.userText : styles.botText}>
+                   {message.content}
+                </Text>}
+                </View>
+                <View style={{...styles.messageIconWrapper,...{alignSelf:message.role === "user" ? "flex-end" :  "flex-start" }}}>
+                   {message.isErrorMessage ? <Image style={styles.messageIcon} source={warningIcon} /> : <Image style={styles.messageIcon} source={message.role === "user" ? userIcon : chatRobotIcon} />}
+                </View>
+               </View>
             ))}
-            {true && (
+            {isLoading && (
               <View style={[styles.messageBubble, styles.botBubble]}>
                 <ActivityIndicator size="small" color="#7D0A0A" />
               </View>
@@ -89,15 +119,13 @@ const Chat = () => {
                 <Image style={{...styles.normalIconStyle,tintColor:colors.primary}} source={mapIcon} />
               </TouchableOpacity>
 
-              <SearchInput inputStyle={{flex:1}} isVisibleClickableIcon={false} />
+              <TextInput style={styles.input} value={input} numberOfLines={1} onChangeText={(text) => setInput(text)} placeholder='Ask An Question?' placeholderTextColor={colors.gray} />
              
-              <TouchableOpacity style={{flexShrink:1,...styles.sendButton}} onPress={() => {}} disabled={false}>
+              <TouchableOpacity style={{flexShrink:1,...styles.sendButton}} onPress={sendQuestion} disabled={false}>
                 <Image style={{...styles.normalIconStyle,tintColor:colors.primary}} source={sendIcon} />
               </TouchableOpacity>
 
           </View>
-    
-          {false && <Text style={styles.errorText}>{"error"}</Text>}
         </SafeAreaView>
       );
 }
@@ -118,8 +146,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primary,
         borderBottomWidth: 1,
         borderBottomColor: colors.lightGray,
-        borderBottomLeftRadius: borderRadius.highx2Radius, // Sol alt köşe radius
-        borderBottomRightRadius: borderRadius.highx2Radius, // Sağ alt köşe radius
+        borderBottomLeftRadius: borderRadius.highx2Radius,
+        borderBottomRightRadius: borderRadius.highx2Radius,
       },
       headerTitle: {
         color: colors.background,
@@ -133,7 +161,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 14,
         position: "absolute",
-        right: 21, // Sola sabitle
+        right: 21, 
       },
       buttonText: {
         color: "white",
@@ -154,7 +182,7 @@ const styles = StyleSheet.create({
         marginVertical: 6,
       },
       userBubble: {
-        backgroundColor: "#6A9C89",
+        backgroundColor: colors.primary,
         alignSelf: "flex-end",
         borderBottomRightRadius: 4,
       },
@@ -169,14 +197,27 @@ const styles = StyleSheet.create({
         elevation: 3,
       },
       userText: {
-        color: "white",
+        color: colors.background,
         fontSize: 16,
         lineHeight: 22,
       },
       botText: {
-        color: "#3D8D7A",
+        color: colors.primary,
         fontSize: 16,
         lineHeight: 22,
+      },
+      errorText:{
+         color: "rgb(194, 56, 56)",
+        fontSize: 16,
+        lineHeight: 22,
+      },
+      messageIconWrapper:{
+           width:30,height:30,borderRadius:borderRadius.circleRadius(30),
+           borderColor:colors.primary,borderWidth:1,justifyContent:"center",
+           alignItems:"center",elevation:elevation.smallShadow,backgroundColor:colors.background 
+                        },
+      messageIcon:{
+           width:25,height:25,tintColor:colors.primary
       },
       inputWrapper: {
         backgroundColor: colors.primary,
@@ -187,22 +228,15 @@ const styles = StyleSheet.create({
         gap:spaces.middle,
         flexDirection:"row",
         justifyContent:"center",alignItems:"center",
-        borderTopLeftRadius: borderRadius.highx2Radius, // Sol alt köşe radius
-        borderTopRightRadius: borderRadius.highx2Radius, // Sağ alt köşe radius
+        borderTopLeftRadius: borderRadius.highx2Radius, 
+        borderTopRightRadius: borderRadius.highx2Radius, 
       },
       input: {
         flex: 1,
-        backgroundColor: "#f3f4f6",
-        borderRadius: 25,
-        paddingHorizontal: 20,
-        paddingTop: Platform.OS === "android" ? 8 : 10,
-        paddingBottom: Platform.OS === "android" ? 8 : 10,
-        marginRight: 48,
-    
-        fontSize: 14,
+        backgroundColor: colors.background,
+        borderRadius: borderRadius.highRadius,
         color: "#1f2937",
         textAlignVertical: "top",
-        maxHeight: 100,
       },
       sendButton: {
         backgroundColor: colors.background,
@@ -216,13 +250,6 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 18,
         marginLeft: 2,
-      },
-      errorText: {
-        color: "#ef4444",
-        textAlign: "center",
-        padding: 8,
-        fontSize: 14,
-        backgroundColor: "#fff",
       },
       centerContentTitle : {
           fontSize:fonts.smallFontSize*1.1,fontWeight:fonts.middleFontWeight
