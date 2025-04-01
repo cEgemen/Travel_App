@@ -6,7 +6,7 @@ target/
 src/main/resources/application.properties
 application.properties
 .properties
-D:\Travel_App\backend\src\main\resources\application.properties
+D:\\Travel_App\\backend\\src\\main\\resources\\application.properties
 ### STS ###
 .apt_generated
 .classpath
