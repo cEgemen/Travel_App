@@ -41,6 +41,13 @@ const TabLayout = () => {
                     tabBarIcon : ({focused,color})=> (<CustomTab focused={focused} icon={mapIcon} text={"Map"} />)
                 }} 
              /> 
+             <Tabs.Screen 
+                name='test'
+                options={{
+                    ...commonOptions,
+                    tabBarIcon : ({focused,color})=> (<CustomTab focused={focused} icon={mapIcon} text={"Test"} />)
+                }} 
+             /> 
             <Tabs.Screen 
                 name='favs'
                 options={{

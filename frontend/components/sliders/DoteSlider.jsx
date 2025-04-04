@@ -11,7 +11,7 @@ const DoteSlider = ({doteSize=0,currentIndex=0}) => {
   const Dote = ({index}) => {
    const isActive = (currentIndex % 5) ===index
    return  <>
-         <View style={{width: isActive ? 55 : 25,height:25,backgroundColor:isActive ? colors.gray : colors.lightGray ,borderRadius:borderRadius.circleRadius(25)}}>
+         <View style={{width: isActive ? 55 : 25,height:25,backgroundColor:isActive ? colors.gray : colors.lightGray ,borderRadius:borderRadius.circleRadius(25)}} key={index}>
          </View>
    </>
   }
@@ -20,11 +20,10 @@ const DoteSlider = ({doteSize=0,currentIndex=0}) => {
     <View style={styles.doteSliderWrapper}>
       <FlatList
          data={dotes}
-         keyExtractor={(items,index) => index}
          horizontal={true}
          showsHorizontalScrollIndicator={false}
          contentContainerStyle={styles.flatListContainerStyle}
-         renderItem={({item,index}) => <Dote index={index}/>} 
+         renderItem={({item,index}) => <Dote index={index} />} 
       />
     </View>
   )

@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react'
 import SearchInput from '../../forms/SearchInput'
 import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand'
 
-const AutoCompletSearchInput = ({onPress=(data) => {},searchWrapperStyle={},inputStyle={}, focusColor=colors.gray, initialValue=""}) => {
+const AutoCompletSearchInput = ({onPress=(data) => {},placeholder="Enter Location ...",infoCount=3,searchWrapperStyle={},inputStyle={}, focusColor=colors.gray, initialValue=""}) => {
   const [locations,setLocations] = useState([])
   const timeOutRef = useRef(null)
 
@@ -25,7 +25,8 @@ const AutoCompletSearchInput = ({onPress=(data) => {},searchWrapperStyle={},inpu
         .then(res => res.json())
         .then(data => {
               setLocations(data.map((value,index) => {
-                     return value.display_name;
+                   const {display_name,lat,lon} = value;
+                   return {locationName :display_name,lat,lon};
               })) 
         })
         .catch(err => console.log("err : ",err))
@@ -33,11 +34,11 @@ const AutoCompletSearchInput = ({onPress=(data) => {},searchWrapperStyle={},inpu
 
   return (
     <View style={searchWrapperStyle}>
-         <SearchInput inputStyle={inputStyle} focusColor={focusColor} initialValue={initialValue}  placeholder="Enter Location ..." onChangeCallback={handleOnChange}  />
+         <SearchInput inputStyle={inputStyle} focusColor={focusColor} initialValue={initialValue}  placeholder={placeholder} onChangeCallback={handleOnChange}  />
          <FlatList
              nestedScrollEnabled
              showsVerticalScrollIndicator={false}
-             style={{maxHeight:150,borderRadius:borderRadius.middleRadius}}
+             style={{maxHeight:50*infoCount,borderRadius:borderRadius.middleRadius}}
              contentContainerStyle={{paddingVertical:spaces.small,paddingHorizontal:spaces.high,gap:spaces.small}}
              data={locations}
              keyExtractor={(item,index) => index}
@@ -45,12 +46,14 @@ const AutoCompletSearchInput = ({onPress=(data) => {},searchWrapperStyle={},inpu
                   return <>
                             <View style={styles.locationWrapper}>
                                <Text numberOfLines={1} style={styles.locationText} onPress={() => {
-                                const splitData = item.split(",")
+                                const {lat,lon,locationName} = item
+                                const splitData = locationName.split(",")
                                 const city = splitData[0]
                                 const country = splitData[splitData.length - 1]
-                                onPress(city+","+country)
+                                onPress({lat,lon,locationName:city+","+country})
+                                set
                                 }}>
-                                 {item}
+                                 {item.locationName}
                                </Text>
                             </View>
                          </>

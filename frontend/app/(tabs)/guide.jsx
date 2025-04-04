@@ -19,7 +19,7 @@ const Guide = () => {
   const setGuideInfo = useGuideStore(state => state.setGuideInfo)
   const {id,token} = useUserStore(state => state.user)
   const selectLocation = (location) => {
-          setGuideInfo({type:"location",data:location})
+          setGuideInfo({type:"location",data:location.locationName})
           router.push("/guide/selectTravelDates")
     }
 

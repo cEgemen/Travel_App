@@ -20,7 +20,7 @@ export default function App() {
                ]
 
   const handleSkip = () => {
-       router.replace("/login")
+       router.replace("/map")
   }            
 
   return <>

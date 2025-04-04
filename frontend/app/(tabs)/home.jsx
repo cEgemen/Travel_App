@@ -28,7 +28,7 @@ const Home = () => {
   }
 
   const selectLocation = (location) => {
-        setGuideInfo({type:"location",data:location})
+        setGuideInfo({type:"location",data:location.locationName})
         router.replace("/guide/selectTravelDates")
   }
 
