@@ -5,23 +5,28 @@ import useLocationStore from '../../../managments/locationStore'
 import dottedWayIcon from "../../../assets/icons/dottedWay.png"
 import AutoCompletSearchInput from '../../../components/customPageComps/home/AutoCompletSearchInput'
 import CustomTouchableButton from '../../../components/customButtons/CustomTouchableButton'
+import ModalWithButtons from '../../../components/customModals/ModalWithButtons'
+import { router } from 'expo-router'
 
 const LocDest = () => {
   const {locationDetails,setEndDetails} = useLocationStore(state => state);
   const [endData,setEndData] = useState({locationName:null,lat:null,lot:null})
   const handleSelect = (data) => {
        setEndData(oldState => ({...data}))
-       setEndDetails({...data})
-  }
-  return (
+       setEndDetails(data)
+      }
+  const goToSelectFilter = () => {
+      router.push("/map/selectFilter")
+  } 
+ return (
     <View style={styles.container}>
      <View>
       <Text style={styles.title} numberOfLines={1} >📍{locationDetails.startDetails.locationName}</Text>
       <Image style={styles.icon} source={dottedWayIcon} />
-      <Text style={[styles.title,{marginBottom:spaces.middle}]} numberOfLines={1} >📍{endData.locationName ?? "E.g. Berlin, Paris, Istanbul"}</Text>
+      <Text style={[styles.title,{marginBottom:spaces.high}]} numberOfLines={1} >📍{endData.locationName ?? "E.g. Berlin, Paris, Istanbul"}</Text>
      </View>
      <AutoCompletSearchInput onPress={handleSelect} focusColor={colors.primary} infoCount={2} /> 
-     <CustomTouchableButton onPress={()=>{}} text={"Generate"} buttonStyle={styles.buttonStyle}  disabled={(endData.locationName === null || endData.lat === null || endData.lot === null)} />
+     <CustomTouchableButton onPress={goToSelectFilter} text={"Filter"} buttonStyle={styles.buttonStyle}  disabled={(endData.locationName === null || endData.lat === null || endData.lot === null)} />
 </View> 
   )
 }
@@ -42,6 +47,6 @@ const styles = StyleSheet.create({
         buttonStyle:{
            backgroundColor:colors.primary,
            color:colors.background,
-           width:"60%",alignSelf:"center",marginTop:spaces.high
+           width:"60%",alignSelf:"center",marginVertical:"auto"
         }
 })

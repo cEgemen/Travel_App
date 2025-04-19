@@ -23,7 +23,7 @@ const CustomModal = ({isVisible=false,closeVisible=()=>{},title="",CenterContent
          <View style={styles.contentContainer}>
              <View style={styles.headerWrapper}>
                  <Text numberOfLines={1} style={styles.headerTitle}>{title}</Text>
-                 <Pressable onPress={handleClose}> 
+                 <Pressable onPress={handleClose} style={styles.headerIconWrapper}> 
                    <Image style={styles.headerIcon} source={closeIcon} />
                  </Pressable>
              </View>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     contentContainer : {
         width:"100%",
         minHeight:"auto",borderRadius:borderRadius.middleRadius,
+        paddingVertical:spaces.middle,
         backgroundColor:colors.background
     },
     headerWrapper : {
@@ -60,6 +61,9 @@ const styles = StyleSheet.create({
     headerTitle : {
       fontSize:fonts.middleFontSize,fontWeight:fonts.middleFontWeight,flexShrink:1
     },
+    headerIconWrapper: {
+       position:"absolute",top:-8,right:2
+    },
     headerIcon : {
        width:20,height:20,tintColor:colors.backgroundDark
     },
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
      paddingHorizontal:spaces.small,paddingVertical:spaces.middle
     },
     bottomContent:{
-      borderTopColor:colors.lightGray,borderTopWidth:1,padding:spaces.small
+      borderTopColor:colors.lightGray,borderTopWidth:1,paddingHorizontal:spaces.small,paddingTop:spaces.middle
     }
 
 })

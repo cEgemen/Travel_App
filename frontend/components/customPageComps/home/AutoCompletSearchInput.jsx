@@ -6,9 +6,11 @@ import { borderRadius, colors, elevation, fonts, spaces } from '../../../constan
 
 const AutoCompletSearchInput = ({onPress=(data) => {},placeholder="Enter Location ...",infoCount=3,searchWrapperStyle={},inputStyle={}, focusColor=colors.gray, initialValue=""}) => {
   const [locations,setLocations] = useState([])
+  const [clear,setClear] = useState(false)
   const timeOutRef = useRef(null)
 
   const handleOnChange = (text) => {
+        setClear(false)
         if(timeOutRef.current)
         { 
            clearTimeout(timeOutRef.current)
@@ -34,7 +36,7 @@ const AutoCompletSearchInput = ({onPress=(data) => {},placeholder="Enter Locatio
 
   return (
     <View style={searchWrapperStyle}>
-         <SearchInput inputStyle={inputStyle} focusColor={focusColor} initialValue={initialValue}  placeholder={placeholder} onChangeCallback={handleOnChange}  />
+         <SearchInput inputStyle={inputStyle} focusColor={focusColor} initialValue={initialValue}  placeholder={placeholder} onChangeCallback={handleOnChange} clearText={clear} />
          <FlatList
              nestedScrollEnabled
              showsVerticalScrollIndicator={false}
@@ -51,7 +53,8 @@ const AutoCompletSearchInput = ({onPress=(data) => {},placeholder="Enter Locatio
                                 const city = splitData[0]
                                 const country = splitData[splitData.length - 1]
                                 onPress({lat,lon,locationName:city+","+country})
-                                set
+                                setClear(true)
+                                setLocations([])
                                 }}>
                                  {item.locationName}
                                </Text>
