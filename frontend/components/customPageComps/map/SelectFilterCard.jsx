@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
            textAlign:"center"
        },
        title : {
-         fontSize:fonts.smallMidFontSize,fontWeight:fonts.smallFontWeight, textAlign:"center"
+         fontSize:fonts.smallMidFontSize,fontWeight:fonts.smallFontWeight, textAlign:"center",borderBottomColor:colors.backgroundDark,borderBottomWidth:1,marginBottom:spaces.small
        },
        content:{
          justifyContent:"space-around",paddingHorizontal:spaces.middle,rowGap:spaces.small
@@ -69,10 +69,10 @@ const styles = StyleSheet.create({
          width:"20",height:"20",tintColor:colors.lightGray
        },
        cardPressBtnStyle : {
-          width:40,height:40,borderRadius:borderRadius.circleRadius(40),backgroundColor:"black",margin:"auto"
+          width:40,height:40,borderRadius:borderRadius.circleRadius(40),backgroundColor:"black",margin:"auto",justifyContent:"center",alignItems:"center"
        },
        cardPressBtnIconStyle: {
-          width:40,height:40
+          width:35,height:35
        },
 
 })

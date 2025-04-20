@@ -3,16 +3,18 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SelectFilterCard from '../../../components/customPageComps/map/SelectFilterCard'
 import { borderRadius, colors, fonts, spaces } from '../../../constands/appConstand'
-import CustomTouchableButton from '../../../components/customButtons/CustomTouchableButton'
+import useLocationStore from '../../../managments/locationStore'
+import { router } from 'expo-router'
 
 const SelectFilter = () => {
     const [selectFilter,setSelectFilter] = useState(0)
+    const setFilters = useLocationStore(state => state.setFilters)
     const handleDefFilterPress = () => {
-         
-    }
+         setFilters({vehicle:"Car",price:"Free",places:["Tourism"]})
+                                       }
     const handleCusFilterPress = () => {
-
-    }
+          router.push("/route/customFilter")
+                                       }
     return (
        <SafeAreaView style={styles.safeArea}>
              <Text style={styles.title}>Select Fiter Settings</Text>
@@ -27,8 +29,7 @@ const SelectFilter = () => {
              </View>         
              </View>      
        </SafeAreaView>
-    )
-  
+           )
 }
 
 const styles = StyleSheet.create({

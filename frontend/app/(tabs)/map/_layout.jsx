@@ -12,9 +12,7 @@ const MapLayout = () => {
   const setEndData = useLocationStore(state => state.setEndData)
   const setStartData = useLocationStore(state => state.setStartData)
   const path = usePathname()
-  console.log("path : ",path)
-  const onBack = () => router.back()
-  /* const onBack = () => {
+  const onBack = () => {
      if(path === "/map/locDes")
      {
         setEndData(null)
@@ -24,7 +22,7 @@ const MapLayout = () => {
         setStartData(null)
      }
      router.back()    
-  } */
+  }
 
   let topWrapperHeight = "60%"
   let bottomWrapperHeight = "40%"
