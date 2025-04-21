@@ -20,7 +20,7 @@ export default function App() {
                ]
 
   const handleSkip = () => {
-       router.replace("/route/customFilter")
+       router.replace("/route/generate")
   }            
 
   return <>

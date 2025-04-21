@@ -9,10 +9,12 @@ import CustomTouchableButton from '../../components/customButtons/CustomTouchabl
 import VehicleFilter from '../../components/customPageComps/route/VehicleFilter'
 import PriceFilter from '../../components/customPageComps/route/PriceFilter'
 import PlaceFilter from '../../components/customPageComps/route/PlaceFilter'
+import useLocationStore from '../../managments/locationStore'
 
 const CustomFilter = () => {
   const stepperTitles = ["Vehicle Type","Price Type","Place Types"]
   const defaultValues = ["Car","Free",["Tourism"]]
+  const setFilters = useLocationStore(state => state.setFilters)
   const [stepperState,setStepperState] = useState({title:stepperTitles[0],index:0})
   const [filterState,setFilterState] = useState({vehicle:defaultValues[0],price:defaultValues[1],places:defaultValues[2],scan:5000})
   const handleFilter = (key,value) => {
@@ -67,15 +69,19 @@ const CustomFilter = () => {
         return {...oldState , price : filterState.price}
     })
      }
-     else{
+     else if(stepperState.index === 2){
       setFilterState(oldState => {
         return {...oldState , places : filterState.places}
     })
-       return
      }
-      
+     else {
+       setFilters(filterState)  
+       router.dismissAll()
+       router.replace("/guide/generate")
+       return;
+     }
      setStepperState(oldState => {
-        return {title : stepperTitles[oldState + 1],index : oldState.index + 1}
+        return {title : oldState.index >= 2 ? stepperTitles[2] : stepperTitles[oldState.index + 1],index : oldState.index + 1}
      })
 
   }
