@@ -13,7 +13,7 @@ import useLocationStore from '../../managments/locationStore'
 
 const CustomFilter = () => {
   const stepperTitles = ["Vehicle Type","Price Type","Place Types"]
-  const defaultValues = ["Car","Free",["Tourism"]]
+  const defaultValues = ["car","free",["tourism"]]
   const setFilters = useLocationStore(state => state.setFilters)
   const [stepperState,setStepperState] = useState({title:stepperTitles[0],index:0})
   const [filterState,setFilterState] = useState({vehicle:defaultValues[0],price:defaultValues[1],places:defaultValues[2],scan:5000})
@@ -67,23 +67,17 @@ const CustomFilter = () => {
      {
       setFilterState(oldState => {
         return {...oldState , price : filterState.price}
-    })
-     }
-     else if(stepperState.index === 2){
-      setFilterState(oldState => {
-        return {...oldState , places : filterState.places}
-    })
+                                 })
      }
      else {
        setFilters(filterState)  
        router.dismissAll()
-       router.replace("/guide/generate")
+       router.replace("/route/generate")
        return;
      }
      setStepperState(oldState => {
         return {title : oldState.index >= 2 ? stepperTitles[2] : stepperTitles[oldState.index + 1],index : oldState.index + 1}
      })
-
   }
   return (
      <>

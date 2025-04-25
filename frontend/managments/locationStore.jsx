@@ -16,7 +16,7 @@ const useLocationStore = create((set) => (
         },
         setFilters:(filterData) => {
            set(state => ({
-                filters : {...state,...filterData}
+                filters : {...state.filters,...filterData}
            }))
         },
         resetLocationDetails : () => {

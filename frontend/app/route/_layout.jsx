@@ -11,6 +11,11 @@ const RouteLayout = () => {
         <Stack.Screen name='main' options={{
               headerShown:false
         }} />
+        <Stack.Screen name='routeDetail'/>
+        <Stack.Screen name='placeDetail' />
+        <Stack.Screen name='selectedRoute' options={{
+              headerShown:false
+        }} />
      </Stack>
   )
 }

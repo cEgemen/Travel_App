@@ -1,4 +1,3 @@
-
 import { Stack } from "expo-router";
 import {QueryClientProvider,QueryClient} from "@tanstack/react-query"
 
@@ -17,7 +16,6 @@ const RootLayout = () => {
              <Stack.Screen name="route"  options={options} />
          </Stack>
        </QueryClientProvider>
-         
   )
 }
 

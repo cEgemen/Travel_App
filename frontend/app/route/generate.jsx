@@ -4,25 +4,34 @@ import route2Lottie from "../../assets/lottie/route2.json"
 import LottieView from 'lottie-react-native'
 import { colors, fonts } from '../../constands/appConstand'
 import { router } from 'expo-router'
+import useLocationStore from '../../managments/locationStore'
+import { generateRoute } from '../../utils/generateRoute'
+import useRouteStore from '../../managments/routeStore'
 
 const Generate = () => {
+
+  const {locationDetails:{startDetails,endDetails},filters} = useLocationStore(state => state)
+  const setRouteDatas  =  useRouteStore(state => state.setRouteDatas)
 
   useEffect(() => {
           const backFn = () => {
               return true
           }
-
           const backHand = BackHandler.addEventListener("hardwareBackPress",backFn)
-
           return () => {
               backHand.remove()
           }  
   },[])  
 
   useEffect(() => {
-        setTimeout(() => {
-             router.push("/route/main")
-        },2000)
+           const startLoc = [startDetails.lat,startDetails.lon]
+           const endLoc  =   [endDetails.lat,endDetails.lon]
+           const generate = async () => {
+              const result = await generateRoute(startLoc,endLoc,filters.price,filters.vehicle)
+              setRouteDatas(result)
+              router.replace("/route/main")
+           }
+           generate()
   },[])
 
   return (

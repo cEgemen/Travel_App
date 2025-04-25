@@ -7,14 +7,14 @@ import castleIcon from "../../../assets/icons/castle.png"
 import museumIcon from "../../../assets/icons/museum.png"
 import stadiumIcon from "../../../assets/icons/stadium.png"
 
-const PlaceFilter = ({activeValue=["Tourism"],onPress = (key,value) => {}}) => {
+const PlaceFilter = ({activeValue=["tourism"],onPress = (key,value) => {}}) => {
 
     return (
       <View style={styles.wrapper}>
-        <FilterCard icon={museumIcon} text='Tourism' onPress={() => onPress("places","Tourism")} isActive={activeValue.includes("Tourism")} />
-        <FilterCard icon={forestIcon} text='Naturel' onPress={() => onPress("places","Naturel")} isActive={activeValue.includes("Naturel")}  />
-        <FilterCard icon={castleIcon} text='Historic' onPress={() => onPress("places","Historic")} isActive={activeValue.includes("Historic")}  />
-        <FilterCard icon={stadiumIcon} text='Amenity' onPress={() => onPress("places","Amenity")} isActive={activeValue.includes("Amenity")}  />
+        <FilterCard icon={museumIcon} text='Tourism' onPress={() => onPress("places","tourism")} isActive={activeValue.includes("tourism")} />
+        <FilterCard icon={forestIcon} text='Naturel' onPress={() => onPress("places","naturel")} isActive={activeValue.includes("naturel")}  />
+        <FilterCard icon={castleIcon} text='Historic' onPress={() => onPress("places","historic")} isActive={activeValue.includes("historic")}  />
+        <FilterCard icon={stadiumIcon} text='Amenity' onPress={() => onPress("places","amenity")} isActive={activeValue.includes("amenity")}  />
       </View>
     )
   }
