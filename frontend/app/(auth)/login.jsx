@@ -1,19 +1,16 @@
 
-import { View, Text, StyleSheet, ToastAndroid, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Keyboard } from 'react-native'
+import { View, Text, StyleSheet, ToastAndroid, Image, TouchableOpacity, ScrollView, Keyboard } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router } from 'expo-router'
-import { colors, fonts, spaces } from '../../constands/appConstand'
+import { colors, fonts, spaces } from '../../constands'
 import { BASE_URL } from '../../secret'
-import useUserStore from '../../managments/userStore'
-import Animated, {FadeIn,FadeInDown,FadeInUp,} from "react-native-reanimated";
+import {useUserStore} from '../../managments'
+import Animated, {FadeInDown,FadeInUp,} from "react-native-reanimated";
 import authBack1 from "../../assets/images/authBack1.png"
 import authBack2 from "../../assets/images/authBack2.png"
 import emailIcon from "../../assets/icons/email.png"
-import InputWithLabel from '../../components/forms/InputWithLabel'
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton'
-import { emailValid, passwordValid } from '../../utils/validations'
-import PasswordInputLabel from '../../components/forms/PasswordInputLabel'
- 
+import {InputWithLabel,CustomTouchableButton,PasswordInputLabel} from '../../components'
+import { emailValid, passwordValid } from '../../utils/validations' 
 
 const Login = () => {
  const [isLoading,setLoading] = useState(false)

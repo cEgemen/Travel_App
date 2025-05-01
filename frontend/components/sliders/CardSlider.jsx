@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../constands/appConstand'
+import { borderRadius, colors, elevation, fonts, spaces } from '../../constands'
 
 const CardSlider = ({cardData = {image:"",description:"",color:""},indexState={}}) => {
    

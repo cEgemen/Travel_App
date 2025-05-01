@@ -1,11 +1,9 @@
 
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand'
+import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
 import dayjs from 'dayjs';
-import rightArrowShortIcon from "../../../assets/icons/right_arrow_short.png"
 import { router } from 'expo-router';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const FavGuideCard = ({guide}) => {
   const {metadata,createDate,id} = guide;

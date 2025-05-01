@@ -1,17 +1,17 @@
 
 import { ActivityIndicator, FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Stack } from 'expo-router'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../constands/appConstand'
+import { borderRadius, colors, elevation, fonts, spaces } from '../../constands'
 import { useGetOwnerFavGuides } from '../../hooks/query/queryHook'
-import useUserStore from '../../managments/userStore'
+import {useUserStore} from '../../managments'
 import dayjs from 'dayjs'
 import downIcon from "../../assets/icons/downArrow.png"
 import upIcon from "../../assets/icons/upArrow.png"
 import notesIcon from "../../assets/icons/notes.png"
 import favImg from "../../assets/images/fav.png"
-import FavGuideCard from '../../components/customPageComps/guideDetails/FavGuideCard'
+import {FavGuideCard} from '../../components'
 
 const FavoriteGuides = () => {
   const [currentOrder,setCurrentOrder] = useState(1)

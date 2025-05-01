@@ -1,17 +1,15 @@
 import { View, Text, StyleSheet, ToastAndroid, Image, ScrollView, TouchableOpacity, Keyboard } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router } from 'expo-router'
-import { colors, fonts, spaces } from '../../constands/appConstand'
+import { colors, fonts, spaces } from '../../constands'
 import { BASE_URL } from '../../secret'
-import Animated, {FadeIn,FadeInDown,FadeInUp,} from "react-native-reanimated";
+import Animated, {FadeInDown,FadeInUp,} from "react-native-reanimated";
 import authBack1 from "../../assets/images/authBack1.png"
 import authBack2 from "../../assets/images/authBack2.png"
 import userIcon from "../../assets/icons/user.png"
 import emailIcon from "../../assets/icons/email.png"
-import InputWithLabel from '../../components/forms/InputWithLabel'
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton'
+import {InputWithLabel,CustomTouchableButton,PasswordInputLabel} from '../../components'
 import { emailValid, passwordValid, userNameValid } from '../../utils/validations'
-import PasswordInputLabel from '../../components/forms/PasswordInputLabel'
 
 const Register = () => {
 const [isLoading,setLoading] = useState(false)  

@@ -1,5 +1,5 @@
 import { Text, StyleSheet, View, Image, Pressable } from 'react-native'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand';
+import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands';
 
 const FilterCard = ({icon=null,text="",isActive=false,onPress = (key,value) =>{}}) =>  {
   

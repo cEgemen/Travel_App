@@ -1,7 +1,7 @@
 
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, StyleSheet} from 'react-native'
 import React from 'react'
-import { borderRadius } from '../../constands/appConstand'
+import { borderRadius } from '../../constands'
 
 
 const TouchableIcon = ({icon=null,onPress=()=>{},iconStyle={},iconWrapperStyle={}}) => {

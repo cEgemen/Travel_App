@@ -1,11 +1,12 @@
 
-import { Image, Pressable, StyleSheet, View, ScrollView, Keyboard} from 'react-native'
+import { StyleSheet, View, Keyboard} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router, Stack, usePathname } from 'expo-router'
-import SelecterMap from '../../../components/customPageComps/map/SelecterMap'
-import { borderRadius, colors, spaces } from '../../../constands/appConstand'
-import leftArrowIcon from "../../../assets/icons/left_arrow.png"
-import useLocationStore from '../../../managments/locationStore'
+import {SelecterMap, TouchableIcon} from '../../../components'
+import { borderRadius, colors, spaces } from '../../../constands'
+import { leftShortArrowIcon } from '../../../assets'
+import {useLocationStore} from '../../../managments'
+import {CircleTouchableIcon} from '../../../components'
 
 const MapLayout = () => {
   const [keyboardIsShow , setKeyboardIsShow] = useState(false)
@@ -29,8 +30,8 @@ const MapLayout = () => {
   
   if(keyboardIsShow)
   {
-    topWrapperHeight = "50%"
-    bottomWrapperHeight = "50%"
+    topWrapperHeight = "52%"
+    bottomWrapperHeight = "48%"
   }
 
   useEffect(()=> {
@@ -54,9 +55,7 @@ const MapLayout = () => {
                 headerShown:false
             }} 
        />
-       <Pressable style={styles.iconWrapper} onPress={onBack}>
-         <Image style={styles.icon} source={leftArrowIcon} />
-       </Pressable>
+       <CircleTouchableIcon onPress={onBack} iconWrapperStyle={styles.iconWrapper} icon={leftShortArrowIcon} iconWidth={styles.icon.width} />
        <View style={styles.container}>
         <View style={{...styles.topWrapper,...{height:topWrapperHeight}}}>
           <SelecterMap />
@@ -96,10 +95,10 @@ const styles = StyleSheet.create({
          flex:1
     },
     iconWrapper:{
-        position:"absolute",zIndex:5,top:spaces.middle,left:spaces.middle,width:40,height:40,borderRadius:borderRadius.circleRadius(40),backgroundColor:colors.primary,justifyContent:"center",alignItems:"center",opacity:0.9
+        position:"absolute",zIndex:5,top:spaces.middle,left:spaces.middle,opacity:0.9
     },
     icon : {
-        width:30,height:30,tintColor:colors.background,
+        width:30
     },
     topWrapper:{
          width:"100%",

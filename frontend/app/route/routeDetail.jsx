@@ -1,17 +1,15 @@
 import { ActivityIndicator, Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../constands/appConstand'
+import { borderRadius, colors, elevation, fonts, spaces } from '../../constands'
 import { router, Stack } from 'expo-router'
-import useRouteStore from '../../managments/routeStore'
+import {useRouteStore,useLocationStore} from '../../managments'
 import freeIcon from "../../assets/icons/free.png"
 import clockIcon from "../../assets/icons/clock.png"
 import trafficIcon from "../../assets/icons/trafficLight.png"
 import distanceIcon from "../../assets/icons/distance.png"
-import { RouteDetailCard } from '../../components/customPageComps/route/RouteDetailCard'
-import useLocationStore from '../../managments/locationStore'
 import dottedWay from "../../assets/icons/dottedWay.png"
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton'
 import { fetchPOIs } from '../../utils/scanRoute'
+import { RouteDetailCard,CustomTouchableButton } from '../../components'
 
 const RouteDetail = () => {
   const selectRoute = useRouteStore(state => state.selectRoute) 
@@ -24,11 +22,14 @@ const RouteDetail = () => {
  
   useEffect(() => {
          const fetchData = async () => {
-             setIsLoading(true)
-             const result = await fetchPOIs({route:routeData})
-             console.log("result : ",result)
-             setPoiData(result)
-             setIsLoading(false)
+            if(!isLoading) 
+               {
+                setIsLoading(true)
+               }
+             
+            const result = await fetchPOIs({route:routeData})
+            setPoiData(result)
+            setIsLoading(false)
          }
          fetchData()
   },[])

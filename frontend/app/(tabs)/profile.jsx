@@ -3,19 +3,15 @@ import {StyleSheet,Text,View,ScrollView,TouchableOpacity,Image, ToastAndroid,} f
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import Animated, { FadeInUp, FadeInDown } from "react-native-reanimated";
-import { borderRadius, colors, spaces } from "../../constands/appConstand";
+import { borderRadius, colors, spaces } from "../../constands";
 import { Stack } from "expo-router";
-import useUserStore from "../../managments/userStore";
-import PasswordInputLabel from "../../components/forms/PasswordInputLabel";
-import InputWithLabel from "../../components/forms/InputWithLabel";
+import {useUserStore} from "../../managments";
+import {PasswordInputLabel,InputWithLabel,TouchableIcon,CustomTouchableButton,ModalWithButtons} from "../../components";
 import emailIcon from "../../assets/icons/email.png"
 import userIcon from "../../assets/icons/user.png"
-import TouchableIcon from "../../components/customButtons/TouchableIconButton";
 import restartIcon from "../../assets/icons/restart.png"
-import CustomTouchableButton from "../../components/customButtons/CustomTouchableButton";
 import { passwordValid, userNameValid } from "../../utils/validations";
 import { updateProfile } from "../../utils/querys";
-import ModalWithButtons from "../../components/customModals/ModalWithButtons";
 
 export default function Profile() {
   const navigation = useNavigation();

@@ -1,7 +1,7 @@
 
 import { FlatList, StyleSheet, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, spaces } from '../../constands/appConstand';
+import { borderRadius, colors, spaces } from '../../constands';
 
 const DoteSlider = ({doteSize=0,currentIndex=0}) => {
      

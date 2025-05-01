@@ -14,7 +14,7 @@ export const generateRoute = async (
         Math.max(startCoord[0], destCoord[0])
       ].join(",");
 
-      const url = `https://api.tomtom.com/routing/1/calculateRoute/${startCoord.join(",")}:${destCoord.join(",")}/json?key=${TOMTOM_API_KEY}&traffic=true&maxAlternatives=3&routeType=fastest&travelMode=${TravelMode}&computeTravelTimeFor=all&routeRepresentation=polyline&instructionsType=tagged&language=tr-TR${routePreference === "free" ? "&avoid=tollRoads" : "" 
+      const url = `https://api.tomtom.com/routing/1/calculateRoute/${startCoord.join(",")}:${destCoord.join(",")}/json?key=${TOMTOM_API_KEY}&traffic=true&maxAlternatives=2&routeType=fastest&travelMode=${TravelMode}&computeTravelTimeFor=all&routeRepresentation=polyline&instructionsType=tagged&language=tr-TR${routePreference === "free" ? "&avoid=tollRoads" : "" 
       }`
       const response = await fetch(url)
       const textResponse = await response.text()
@@ -31,7 +31,8 @@ export const generateRoute = async (
       }
       if (!data.routes) throw new Error("Rota bilgisi alınamadı");
       return {
-        routes: data.routes.map((route, index) => ({
+        routes: data.routes.map((route, index) => {
+         return {
           id: `route-${index}-${Date.now()}`,
           distance: `${(route.summary.lengthInMeters / 1000).toFixed(1)} km`,
           distanceMeters: route.summary.lengthInMeters,
@@ -48,7 +49,9 @@ export const generateRoute = async (
             latitude: inst.point?.latitude,
             longitude: inst.point?.longitude
           })) || []
-        })),
+                }
+                                                 }
+                             ),
         bbox
       };
     } catch (error) {

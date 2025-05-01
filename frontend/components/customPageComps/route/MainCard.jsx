@@ -2,8 +2,8 @@ import React from "react";
 import {View,Text,TouchableOpacity,StyleSheet,FlatList,ImageBackground} from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Animated, {FadeInRight} from "react-native-reanimated";
-import { borderRadius, colors, fonts, spaces } from "../../../constands/appConstand";
-import useRouteStore from "../../../managments/routeStore";
+import { borderRadius, colors, fonts, spaces } from "../../../constands";
+import {useRouteStore} from "../../../managments";
 import { router } from "expo-router";
 
 export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) {

@@ -1,16 +1,16 @@
-
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { router, Stack } from 'expo-router'
-import { colors, fonts, spaces } from '../../../constands/appConstand'
-import AutoCompletSearchInput from '../../../components/customPageComps/home/AutoCompletSearchInput'
-import CustomTouchableButton from '../../../components/customButtons/CustomTouchableButton'
-import useLocationStore from '../../../managments/locationStore'
+import { router } from 'expo-router'
+import { colors, fonts, spaces } from '../../../constands'
+import {AutoCompletSearchInput, CircleTouchableIcon} from '../../../components'
+import {useLocationStore} from '../../../managments'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { dottedWayIcon,rightShortArrowIcon} from '../../../assets'
 
 const LocStart = () => {
-  const [startData,setStartData] = useState({locationName:null,lat:null,lot:null})
+  const [startData,setStartData] = useState({locationName:null,lat:null,lon:null})
   const setStartDetails = useLocationStore(state => state.setStartDetails)
+  const startDataReady = startData.lat !== null && startData.lon !== null && startData.locationName !== null
  
   const handlePress = (data) => {
         setStartData(oldState => {
@@ -21,17 +21,31 @@ const LocStart = () => {
 
   const goNext = () => {
        router.push("/map/locDest")
+                       }
+
+  let locTextStyle = {...styles.title}
+
+  if(!startDataReady)
+  {
+        locTextStyle = {...locTextStyle,...{color:colors.gray}}
   }
 
   return (
      <>
        <SafeAreaView style={styles.container}>
-            <View>
-              <Text style={styles.title} numberOfLines={1} >📍{startData.locationName ?? "E.g. Berlin, Paris, Istanbul"}</Text>
+            <View style={styles.locDetailWrapper}>
+              <View style={styles.locDetailContainer}>
+               <Text style={{...locTextStyle}} numberOfLines={1} >{startDataReady ? "📍"+startData.locationName : "❌ Your Start Location"}</Text>
+               <Image source={dottedWayIcon} style={styles.iconSty} />
+               <Text style={{...styles.title,color:colors.gray}} numberOfLines={1}>❌ Your Destination Location</Text>
+              </View>
+              <CircleTouchableIcon icon={rightShortArrowIcon} isDisable={!startDataReady} onPress={goNext} /> 
             </View>
-            <AutoCompletSearchInput onPress={handlePress} focusColor={colors.primary} infoCount={2} /> 
-            <View style={{justifyContent:"center",alignItems:"center",flex:1}}>
-             <CustomTouchableButton onPress={goNext} text={"Continue"} buttonStyle={styles.buttonStyle}  disabled={(startData.locationName === null || startData.lat === null || startData.lot === null)} />
+            <View style={{flex:1}}>
+             <View style={{marginVertical:"auto"}}>
+              <Text style={styles.autoSearchLabel}>Search Start Location</Text>
+              <AutoCompletSearchInput onPress={handlePress} focusColor={colors.primary} infoCount={2} placeholder='İstanbul,London,Milano,Madrid,...' />
+             </View>
             </View>
        </SafeAreaView> 
      </>
@@ -45,15 +59,24 @@ const styles = StyleSheet.create({
         backgroundColor:colors.background,
         flex:1,paddingVertical:spaces.small,paddingHorizontal:spaces.middle
     },
+    locDetailWrapper : {
+        flexDirection:"row",alignItems:"center",marginBottom:spaces.middle
+                       },
+    locDetailContainer : {
+       flex:1
+    },
     title:{
-       fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight,marginBottom:spaces.high
+       fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight
     },
     subTitle : {
         fontSize:fonts.smallFontSize,fontWeight:fonts.smallFontWeight,marginBottom:spaces.small,color:colors.darkGray
     },
-    buttonStyle:{
-       backgroundColor:colors.primary,
-       color:colors.background,
-       width:"35%",alignSelf:"center",marginVertical:"auto"
+    iconSty:{
+       width:"30",
+       height:"30",
+       resizeMode:"contain"
+    },
+    autoSearchLabel : {
+       paddingLeft:spaces.small,color:colors.gray
     }
 })

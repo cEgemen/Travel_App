@@ -1,11 +1,10 @@
 import { Image, Pressable, SafeAreaView, StyleSheet, View } from 'react-native'
 import MapView, {Marker, Polyline} from 'react-native-maps'
-import { borderRadius, colors, elevation, spaces } from '../../constands/appConstand'
+import { borderRadius, colors, elevation, spaces } from '../../constands'
 import leftIcon from "../../assets/icons/left_arrow_short.png"
-import MainCard from '../../components/customPageComps/route/MainCard'
-import useRouteStore from '../../managments/routeStore'
+import {useRouteStore,useLocationStore} from '../../managments'
 import { useEffect, useRef, useState } from 'react'
-import useLocationStore from '../../managments/locationStore'
+import { MainCard } from '../../components'
 
 const Main = () => {
   const routeDatas = useRouteStore(state => state.routeDatas)
@@ -14,14 +13,14 @@ const Main = () => {
   const {routes} = routeDatas
   const [currentIndex , setCurrentIndex] = useState(0)
   const mapRef = useRef(null)
-  const routeColors  =  ["rgb(105, 186, 136)","rgb(36, 26, 187)","rgb(201, 76, 118)"]
+  const routeColors  =  ["rgb(33, 211, 74)","rgb(36, 26, 187)","rgb(201, 76, 118)"]
 
   useEffect(() => {
       mapRef.current?.fitToCoordinates(routes[currentIndex].coordinates.map(coord => ({
         latitude: coord[0],
         longitude: coord[1]
       })), {
-      edgePadding: { top: 15, right: 15, bottom: 100, left: 15 },
+      edgePadding: { top: .5, right: .5, bottom: 100, left: .5 },
       animated: true,
     });   
   },[currentIndex])

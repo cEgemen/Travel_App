@@ -1,14 +1,12 @@
 
-import { StyleSheet,View,Text, Button } from 'react-native'
+import {StyleSheet,View,Text} from 'react-native'
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, fonts, spaces } from '../../constands/appConstand';
-import CustomCalenderPicker from '../../components/customPicker/calenderPicker';
-import { useEffect, useState } from 'react';
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton';
+import { colors, fonts, spaces } from '../../constands';
+import {CustomCalenderPicker,CustomTouchableButton,TouchableIcon} from '../../components';
 import { router, Stack } from 'expo-router';
-import useGuideStore from '../../managments/guideStore';
+import {useGuideStore} from '../../managments';
 import dayjs from 'dayjs';
-import TouchableIcon from '../../components/customButtons/TouchableIconButton';
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
 
 const SelectTravelDates = () => {    

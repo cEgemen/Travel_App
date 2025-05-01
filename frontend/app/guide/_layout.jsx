@@ -1,8 +1,7 @@
 
-import { View, Text } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
-import { colors, fonts, spaces } from '../../constands/appConstand'
+import { colors} from '../../constands'
 
 const GuideLayot = () => {
   

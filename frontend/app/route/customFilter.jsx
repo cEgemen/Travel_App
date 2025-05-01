@@ -1,15 +1,10 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
-import { colors, spaces } from '../../constands/appConstand'
+import { colors, spaces } from '../../constands'
 import { router, Stack } from 'expo-router'
-import TouchableIcon from '../../components/customButtons/TouchableIconButton'
-import leftArrowIcon from "../../assets/icons/left_arrow_short.png"
-import TopStepper from '../../components/customPageComps/route/TopStepper'
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton'
-import VehicleFilter from '../../components/customPageComps/route/VehicleFilter'
-import PriceFilter from '../../components/customPageComps/route/PriceFilter'
-import PlaceFilter from '../../components/customPageComps/route/PlaceFilter'
-import useLocationStore from '../../managments/locationStore'
+import {TouchableIcon,TopStepper,CustomTouchableButton,VehicleFilter,PriceFilter,PlaceFilter} from '../../components'
+import {leftShortArrowIcon} from "../../assets"
+import {useLocationStore} from '../../managments'
 
 const CustomFilter = () => {
   const stepperTitles = ["Vehicle Type","Price Type","Place Types"]
@@ -87,7 +82,7 @@ const CustomFilter = () => {
                headerTitleAlign:"center",
                title:stepperState.title,
                headerLeft:() => {
-                  return <TouchableIcon icon={leftArrowIcon} iconStyle={styles.headerIcon} onPress={handleBackBtn} />
+                  return <TouchableIcon icon={leftShortArrowIcon} iconStyle={styles.headerIcon} onPress={handleBackBtn} />
                }
         }} />
         <SafeAreaView style={styles.wrapper}> 

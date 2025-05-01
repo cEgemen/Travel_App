@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet, Text, View} from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import SelectFilterCard from '../../../components/customPageComps/map/SelectFilterCard'
-import { borderRadius, colors, fonts, spaces } from '../../../constands/appConstand'
-import useLocationStore from '../../../managments/locationStore'
+import {SelectFilterCard} from '../../../components'
+import { borderRadius, colors, fonts, spaces } from '../../../constands'
+import {useLocationStore} from '../../../managments'
 import { router } from 'expo-router'
 
 const SelectFilter = () => {

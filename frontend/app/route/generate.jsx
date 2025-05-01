@@ -2,11 +2,10 @@ import { BackHandler, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import route2Lottie from "../../assets/lottie/route2.json"
 import LottieView from 'lottie-react-native'
-import { colors, fonts } from '../../constands/appConstand'
+import { colors, fonts } from '../../constands'
 import { router } from 'expo-router'
-import useLocationStore from '../../managments/locationStore'
+import {useLocationStore,useRouteStore} from '../../managments'
 import { generateRoute } from '../../utils/generateRoute'
-import useRouteStore from '../../managments/routeStore'
 
 const Generate = () => {
 

@@ -2,7 +2,7 @@
 
 import { ActivityIndicator, StyleSheet, Text, View, FlatList, ToastAndroid} from 'react-native'
 import React,{memo, useEffect, useState} from 'react'
-import { colors, fonts, spaces } from '../../../constands/appConstand'
+import { colors, fonts, spaces } from '../../../constands'
 import {getSuggesPlaces} from "../../../confs/groqAlConf"
 import SuggesCard from './SuggesCard'
 

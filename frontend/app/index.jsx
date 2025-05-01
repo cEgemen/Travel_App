@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text ,ScrollView, Dimensions, Image, Pressable, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Text ,ScrollView, Dimensions, Image, Pressable} from 'react-native';
 import { router} from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import onBoardImg1 from "../assets/images/onBoard1.png"
@@ -6,8 +6,10 @@ import onBoardImg2 from "../assets/images/onBoard2.png"
 import onBoardImg3 from "../assets/images/onBoard3.png"
 import onBoardImg4 from "../assets/images/onBoard4.png"
 import { useState } from 'react';
-import {borderRadius, colors, fonts, spaces } from '../constands/appConstand';
-import DoteSlider from '../components/sliders/DoteSlider';
+import { colors,fonts,borderRadius,spaces } from '../constands';
+import { DoteSlider, TouchableIcon } from '../components';
+import { rightShortArrowIcon } from '../assets';
+
 const windowWidth = Dimensions.get("window").width
 export default function App() {
    const [currentIndex,setCurrentIndex] = useState(0)    
@@ -20,7 +22,7 @@ export default function App() {
                ]
 
   const handleSkip = () => {
-       router.replace("/login")
+        router.replace("/map/locStart")
   }            
 
   return <>

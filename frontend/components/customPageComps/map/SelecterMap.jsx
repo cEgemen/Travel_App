@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState } from 'react';
-import {Alert,StyleSheet,Dimensions, View, TextInput, TouchableOpacity, ScrollView, Button, Text, ActivityIndicator} from 'react-native';
-import MapView, { Polyline, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import useLocationStore from '../../../managments/locationStore';
+import {StyleSheet} from 'react-native';
+import MapView, {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import {useLocationStore} from '../../../managments';
 
 const SelecterMap = () => {
   const {startDetails,endDetails} =  useLocationStore(state => state.locationDetails)

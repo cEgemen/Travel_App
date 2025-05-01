@@ -2,7 +2,7 @@
 import { StyleSheet} from 'react-native'
 import React from 'react'
 import CalendarPicker from "react-native-calendar-picker";
-import { colors, fonts } from '../../constands/appConstand';
+import { colors, fonts } from '../../constands';
 
 const CustomCalenderPicker = ({selectedStartDate=null,selectedEndDate=null,onPick=(date,type) => {}}) => {
   

@@ -1,14 +1,13 @@
 
-import { Alert, BackHandler, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { BackHandler, StyleSheet, Text, View } from 'react-native'
+import React, {useEffect} from 'react'
 import LottieView from 'lottie-react-native'
-import generate from "../../assets/lottie/generate.json"
+import {generate} from "../../assets"
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts } from '../../constands/appConstand'
-import useGuideStore from '../../managments/guideStore'
+import { colors, fonts,getGuidePromt } from '../../constands'
+import {useGuideStore} from '../../managments'
 import { router } from 'expo-router'
 import { getTripGuide } from '../../confs/groqAlConf'
-import { getGuidePromt } from '../../constands/aiContand'
 import dayjs from 'dayjs'
 
 const Generate = () => {

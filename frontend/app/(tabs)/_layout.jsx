@@ -1,6 +1,6 @@
 
 import { Tabs } from 'expo-router'
-import CustomTab from "../../components/navigations/CustomTab"
+import {CustomTab} from "../../components"
 import homeIcon from "../../assets/icons/home.png"
 import userIcon from "../../assets/icons/user.png"
 import mapIcon from "../../assets/icons/map.png"
@@ -42,13 +42,6 @@ const TabLayout = () => {
                 }} 
              /> 
              <Tabs.Screen 
-                name='test'
-                options={{
-                    ...commonOptions,
-                    tabBarIcon : ({focused,color})=> (<CustomTab focused={focused} icon={mapIcon} text={"Test"} />)
-                }} 
-             /> 
-            <Tabs.Screen 
                 name='favs'
                 options={{
                     ...commonOptions,

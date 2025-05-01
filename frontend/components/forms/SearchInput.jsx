@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import search from "../../assets/icons/search.png"
-import { borderRadius, colors, elevation, spaces } from '../../constands/appConstand'
+import { borderRadius, colors, elevation, spaces } from '../../constands'
 
 
 const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onClick=(value) => {},onChangeCallback=(text)=>{},onEndEditing=(value)=>{},inputStyle={},isVisibleClickableIcon=true,clearText=false}) => {

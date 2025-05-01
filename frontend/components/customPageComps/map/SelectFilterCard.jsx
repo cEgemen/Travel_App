@@ -1,9 +1,9 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand'
+import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
 import checkIcon from "../../../assets/icons/check.png"
 import closeIcon from "../../../assets/icons/close.png"
-import rightArrowShort from "../../../assets/icons/right_arrow_short.png"
+import {rightShortArrowIcon} from "../../../assets"
 
 const SelectFilterCard = ({title="",isCustom=false,onPress=() => {},isActive=false}) => {
   
@@ -35,7 +35,7 @@ const SelectFilterCard = ({title="",isCustom=false,onPress=() => {},isActive=fal
         <TypeWrapper custom={isCustom} text={"Place Type"} />
        </View>  
        <Pressable style={styles.cardPressBtnStyle} onPress={isActive ? onPress : null} >
-        <Image style={styles.cardPressBtnIconStyle} source={rightArrowShort} />
+        <Image style={styles.cardPressBtnIconStyle} source={rightShortArrowIcon} />
        </Pressable>
     </View>
   )

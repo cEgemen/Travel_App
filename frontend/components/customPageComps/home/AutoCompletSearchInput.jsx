@@ -2,7 +2,7 @@
 import { StyleSheet, Text, View,FlatList } from 'react-native'
 import React, { useRef, useState } from 'react'
 import SearchInput from '../../forms/SearchInput'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand'
+import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
 
 const AutoCompletSearchInput = ({onPress=(data) => {},placeholder="Enter Location ...",infoCount=3,searchWrapperStyle={},inputStyle={}, focusColor=colors.gray, initialValue=""}) => {
   const [locations,setLocations] = useState([])

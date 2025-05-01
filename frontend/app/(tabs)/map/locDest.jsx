@@ -1,42 +1,64 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { colors, fonts, spaces } from '../../../constands/appConstand'
-import useLocationStore from '../../../managments/locationStore'
-import dottedWayIcon from "../../../assets/icons/dottedWay.png"
-import AutoCompletSearchInput from '../../../components/customPageComps/home/AutoCompletSearchInput'
-import CustomTouchableButton from '../../../components/customButtons/CustomTouchableButton'
-import ModalWithButtons from '../../../components/customModals/ModalWithButtons'
+import { colors, fonts, spaces } from '../../../constands'
+import {useLocationStore} from '../../../managments'
+import {dottedWayIcon,rightShortArrowIcon} from "../../../assets"
+import {AutoCompletSearchInput,CircleTouchableIcon} from '../../../components'
 import { router } from 'expo-router'
 
 const LocDest = () => {
   const {locationDetails,setEndDetails} = useLocationStore(state => state);
-  const [endData,setEndData] = useState({locationName:null,lat:null,lot:null})
+  const [endData,setEndData] = useState({locationName:null,lat:null,lon:null})
+  const endDataReady = endData.lat !== null && endData.lon !== null && endData.locationName !== null
+  
   const handleSelect = (data) => {
        setEndData(oldState => ({...data}))
        setEndDetails(data)
       }
+  
   const goToSelectFilter = () => {
       router.push("/map/selectFilter")
   } 
- return (
+
+  let locTextStyl = {...styles.title}
+  
+  if(!endDataReady)
+  {
+     locTextStyl = {...locTextStyl,color:colors.gray}
+  }
+
+  return (
     <View style={styles.container}>
-     <View>
-      <Text style={styles.title} numberOfLines={1} >📍{locationDetails.startDetails.locationName}</Text>
-      <Image style={styles.icon} source={dottedWayIcon} />
-      <Text style={[styles.title,{marginBottom:spaces.high}]} numberOfLines={1} >📍{endData.locationName ?? "E.g. Berlin, Paris, Istanbul"}</Text>
+     <View style={styles.locDetailWrapper}>
+       <View style={styles.locDetailContainer}>
+        <Text style={styles.title} numberOfLines={1} >📍{locationDetails.startDetails.locationName}</Text>
+        <Image style={styles.icon} source={dottedWayIcon} />
+        <Text style={[locTextStyl,{marginBottom:spaces.middle}]} numberOfLines={1} >{endDataReady ? "📍"+endData.locationName :  "❌ Your Destination Location"}</Text>
+       </View>
+       <CircleTouchableIcon icon={rightShortArrowIcon} isDisable={!endDataReady} onPress={goToSelectFilter} />
      </View>
-     <AutoCompletSearchInput onPress={handleSelect} focusColor={colors.primary} infoCount={2} /> 
-     <CustomTouchableButton onPress={goToSelectFilter} text={"Filter"} buttonStyle={styles.buttonStyle}  disabled={(endData.locationName === null || endData.lat === null || endData.lot === null)} />
-</View> 
+     <View style={{flex:1}}>
+      <View style={{marginVertical:"auto"}}>
+       <Text style={styles.autoCompLabel} >Search Destination Location</Text>
+       <AutoCompletSearchInput onPress={handleSelect} focusColor={colors.primary} infoCount={2} placeholder='İstanbul,London,Milano,Madrid,...' />  
+      </View>
+     </View>
+    </View> 
   )
 }
 
 export default LocDest
 
 const styles = StyleSheet.create({
-      container : {
+        container : {
             backgroundColor:colors.background,
             flex:1,paddingVertical:spaces.small,paddingHorizontal:spaces.middle
+        },
+        locDetailWrapper : {
+         flexDirection:"row",alignItems:"center"
+                       },
+        locDetailContainer : {
+           flex:1
         },
         title:{
            fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight
@@ -44,9 +66,8 @@ const styles = StyleSheet.create({
         icon:{
            width:25,height:25,resizeMode:"contain",marginLeft:spaces.small
         }, 
-        buttonStyle:{
-           backgroundColor:colors.primary,
-           color:colors.background,
-           width:"60%",alignSelf:"center",marginVertical:"auto"
-        }
+        autoCompLabel:{
+         paddingLeft:spaces.small,
+         color:colors.gray
+                      }
 })

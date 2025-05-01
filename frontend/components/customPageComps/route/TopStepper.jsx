@@ -1,10 +1,9 @@
 
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, elevation } from '../../../constands/appConstand'
+import { borderRadius, colors, elevation } from '../../../constands'
 
 const TopStepper = ({activeIndex=0}) => {
-  
   
   const Circle = ({text,isActive=false}) => {
      const activeStyle = {borderColor:colors.primary,elevation:elevation.middleShhadow}

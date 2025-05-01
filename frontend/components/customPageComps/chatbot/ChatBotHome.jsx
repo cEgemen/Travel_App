@@ -2,7 +2,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import chatRobotIcon from "../../../assets/icons/chatRobot.png"
-import { borderRadius, colors, elevation, spaces } from '../../../constands/appConstand'
+import { borderRadius, colors, elevation, spaces } from '../../../constands'
 import TouchableIcon from '../../customButtons/TouchableIconButton'
 import cld1Img from "../../../assets/images/cloud/cloud1.png"
 import cld2Img from "../../../assets/images/cloud/cloud2.png"

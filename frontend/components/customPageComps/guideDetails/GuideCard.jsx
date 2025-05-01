@@ -1,8 +1,8 @@
 
 import {Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands/appConstand'
-import dottedWay from "../../../assets/icons/dottedWay.png"
+import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
+import {dottedWayIcon} from "../../../assets"
 
 const GuideCard = ({dailyGuide}) => {
   const {time,activity,locationName,address,details,cost,popularity,duration,nextActivityTransition} = dailyGuide
@@ -25,7 +25,7 @@ const GuideCard = ({dailyGuide}) => {
                                              <Text numberOfLines={1} style={styles.locationSubTitle}>{address}</Text>
                                         </View>
                                         <View style={styles.locationDetailWrapper}>
-                                             <Image style={styles.locationDetailIcon} source={dottedWay}/> 
+                                             <Image style={styles.locationDetailIcon} source={dottedWayIcon}/> 
                                              <View>
                                                  <Text style={styles.locationSubTitle}>- {method}</Text>
                                                  <Text style={styles.locationSubTitle}>- {estimatedTime}</Text>

@@ -1,10 +1,9 @@
 import { StyleSheet,View,Text,FlatList, Image, Pressable, SafeAreaView } from 'react-native'
-import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand';
+import { borderRadius, colors, fonts, spaces } from '../../constands';
 import { useState } from 'react';
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton';
+import {CustomTouchableButton,TouchableIcon} from '../../components';
 import { router, Stack } from 'expo-router';
-import useGuideStore from '../../managments/guideStore';
-import TouchableIcon from '../../components/customButtons/TouchableIconButton';
+import {useGuideStore} from '../../managments';
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
 import rightArrowIcon from "../../assets/icons/right_arrow.png"
 

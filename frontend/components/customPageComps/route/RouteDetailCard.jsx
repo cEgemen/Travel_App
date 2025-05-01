@@ -1,12 +1,11 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import useRouteStore from '../../../managments/routeStore';
+import {useRouteStore} from '../../../managments';
 import { router } from 'expo-router';
 import Animated, { FadeInRight } from 'react-native-reanimated';
-import { borderRadius, colors, fonts, spaces } from '../../../constands/appConstand';
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { borderRadius, colors, fonts, spaces } from '../../../constands';
 
-export  const RouteDetailCard = ({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) => {
+export default ({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) => {
   const setSelectPlace = useRouteStore(state => state.setSelectPlace)
   const cardWidth = 220 + 20;
 

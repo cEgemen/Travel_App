@@ -1,11 +1,10 @@
 import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React, { useRef } from 'react'
-import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
-import useLocationStore from '../../managments/locationStore'
-import useRouteStore from '../../managments/routeStore'
+import { borderRadius, colors, fonts, spaces } from '../../constands'
+import {useRouteStore,useLocationStore} from '../../managments'
 import leftArrowIcon from "../../assets/icons/left_arrow_short.png"
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton'
+import { CustomTouchableButton } from '../../components'
 import { router } from 'expo-router'
 
 

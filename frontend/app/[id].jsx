@@ -3,11 +3,10 @@ import { ActivityIndicator, FlatList, Image, Pressable, ScrollView, StyleSheet, 
 import React, { useEffect, useState } from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts, spaces } from '../constands/appConstand'
+import { colors, fonts, spaces } from '../constands'
 import { useDeleteFavGuide, useGetFavGuide, useSaveFavGuide } from '../hooks/query/queryHook'
-import useUserStore from '../managments/userStore'
-import DaysScroll from '../components/customPageComps/guideDetails/DaysScroll'
-import GuideCard from '../components/customPageComps/guideDetails/GuideCard'
+import {useUserStore} from '../managments'
+import { DaysScroll,GuideCard } from '../components'
 import bookmarkIcon from "../assets/icons/bookmark.png"
 import bookmark2Icon from "../assets/icons/bookmark2.png"
 import { useQueryClient } from '@tanstack/react-query'

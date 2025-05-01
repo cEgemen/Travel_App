@@ -1,11 +1,11 @@
 import { ActivityIndicator, Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { colors, elevation, fonts, spaces } from '../../constands/appConstand'
-import { router, Stack, useLocalSearchParams } from 'expo-router'
+import { colors, elevation, fonts, spaces } from '../../constands'
+import { router, Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow_short.png"
-import CustomTouchableButton from '../../components/customButtons/CustomTouchableButton'
-import useRouteStore from '../../managments/routeStore'
+import {useRouteStore} from '../../managments'
 import { detailResult } from '../../confs/groqPlaceDetail'
+import { CustomTouchableButton } from '../../components'
 
 const PlaceDetail = () => {
   const selectPlace = useRouteStore(state => state.selectPlace)
@@ -15,14 +15,12 @@ const PlaceDetail = () => {
   }
 
   useEffect(() => {
-     const fetchData = async () => {
+      const fetchData = async () => {
        const result = await detailResult(selectPlace.name)
        console.log("result : ",JSON.parse(result.data))
        setData(JSON.parse(result.data))
-     }
-
-      fetchData()
-        
+                                   }
+      fetchData()  
   },[])
 
   const handleSelectRoute = () => {

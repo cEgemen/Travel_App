@@ -1,17 +1,10 @@
-
 import {SafeAreaView, ScrollView, StyleSheet,View,Text, KeyboardAvoidingView, Platform} from 'react-native'
 import React, { useState } from 'react'
-import { colors, fonts, spaces } from '../../constands/appConstand'
+import { colors, fonts, spaces } from '../../constands'
 import { router, Stack } from 'expo-router'
-import TouchableIcon from '../../components/customButtons/TouchableIconButton'
+import {TouchableIcon,SuggesContainer,AutoCompletSearchInput,ChatBotHome,ModalWithButtons} from '../../components'
 import logOutIcon from "../../assets/icons/logout.png"
-import useUserStore from '../../managments/userStore'
-import SuggesContainer from '../../components/customPageComps/home/SuggesContainer'
-import AutoCompletSearchInput from '../../components/customPageComps/home/AutoCompletSearchInput'
-import useGuideStore from "../../managments/guideStore"
-import ChatBotHome from '../../components/customPageComps/chatbot/ChatBotHome'
-import CustomModal from '../../components/customModals/CustomModal'
-import ModalWithButtons from '../../components/customModals/ModalWithButtons'
+import {useUserStore,useGuideStore} from '../../managments'
 
 
 const Home = () => {

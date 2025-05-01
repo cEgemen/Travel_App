@@ -6,8 +6,7 @@ import carIcon from "../../../assets/icons/car.png"
 import walkerIcon from "../../../assets/icons/walker.png"
 import bikeIcon from "../../../assets/icons/bike.png"
 
-const VehicelFilter = ({activeValue="car",onPress = (key,value) => {}}) => {
-
+const VehicleFilter = ({activeValue="car",onPress = (key,value) => {}}) => {
 
   return (
     <View style={styles.wrapper}>
@@ -24,4 +23,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default VehicelFilter
+export default VehicleFilter

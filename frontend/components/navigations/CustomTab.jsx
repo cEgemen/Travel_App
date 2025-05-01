@@ -2,7 +2,7 @@
 
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
-import { colors, fonts } from '../../constands/appConstand'
+import { colors, fonts } from '../../constands'
 
 const CustomTab = ({focused,text,icon}) => {
   const tintColor = focused ? colors.primary : colors.gray

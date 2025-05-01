@@ -1,17 +1,13 @@
-
 import { ScrollView,FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts, spaces } from '../../constands/appConstand'
-import useGuideStore from '../../managments/guideStore'
+import { colors, fonts, spaces } from '../../constands'
+import {useGuideStore,useUserStore} from '../../managments'
 import { router, Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
-import TouchableIcon from '../../components/customButtons/TouchableIconButton'
-import DaysScroll from '../../components/customPageComps/guideDetails/DaysScroll'
-import GuideCard from '../../components/customPageComps/guideDetails/GuideCard'
+import {TouchableIcon,DaysScroll,GuideCard} from '../../components'
 import bookmarkIcon from "../../assets/icons/bookmark.png"
 import bookmark2Icon from "../../assets/icons/bookmark2.png"
-import useUserStore from '../../managments/userStore'
 import { useDeleteFavGuide, useSaveFavGuide } from '../../hooks/query/queryHook'
 import { useQueryClient } from '@tanstack/react-query'
 

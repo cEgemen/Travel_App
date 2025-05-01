@@ -2,15 +2,13 @@
 import { StyleSheet,FlatList, ActivityIndicator, View, Text, Pressable, Image  } from 'react-native'
 import React, { useState } from 'react'
 import {  SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts, spaces } from '../../constands/appConstand'
+import { colors, fonts, spaces } from '../../constands'
 import { router, Stack } from 'expo-router'
-import AutoCompletSearchInput from '../../components/customPageComps/home/AutoCompletSearchInput'
-import useGuideStore from '../../managments/guideStore'
-import FavGuideCard from '../../components/customPageComps/guideDetails/FavGuideCard'
+import {AutoCompletSearchInput,FavGuideCard} from '../../components'
+import {useGuideStore,useUserStore} from '../../managments'
 import downIcon from "../../assets/icons/downArrow.png"
 import upIcon from "../../assets/icons/upArrow.png"
 import { useGetOwnerFavGuides } from '../../hooks/query/queryHook'
-import useUserStore from '../../managments/userStore'
 import favImg from "../../assets/images/fav.png"
 
 

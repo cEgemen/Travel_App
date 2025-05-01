@@ -1,14 +1,12 @@
 
-import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View,ScrollView ,ActivityIndicator } from 'react-native'
 import React, { useState,useRef } from 'react'
-import { ScrollView } from 'react-native';
-import { ActivityIndicator } from 'react-native';
 import leftArrowIcon from "../assets/icons/left_arrow.png"
 import sendIcon from "../assets/icons/send.png"
 import mapIcon from "../assets/icons/map.png"
 import warningIcon from "../assets/icons/warning.png"
-import { borderRadius, colors, elevation, fonts, spaces } from '../constands/appConstand';
-import CustomModal from '../components/customModals/CustomModal';
+import { borderRadius, colors, elevation, fonts, spaces } from '../constands';
+import { CustomModal } from '../components';
 import { router } from 'expo-router';
 import { chatResult } from '../confs/groqChatConf';
 import chatRobotIcon from "../assets/icons/chatRobot.png"

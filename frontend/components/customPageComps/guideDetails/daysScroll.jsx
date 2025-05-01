@@ -2,9 +2,8 @@
 
 import {StyleSheet,View,Pressable, Image, Text} from 'react-native'
 import React from 'react'
-import { borderRadius, colors, elevation, shadows, spaces } from '../../../constands/appConstand'
-import leftArrow from "../../../assets/icons/left_arrow_short.png"
-import rightArrow from "../../../assets/icons/right_arrow_short.png"
+import { borderRadius, colors, elevation, spaces } from '../../../constands'
+import {rightShortArrowIcon,leftShortArrowIcon} from "../../../assets"
 
 
 const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle={}}) => {
@@ -79,7 +78,7 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle=
   return (
     <View style={[styles.wrapper,wrapperStyle]}>
          <Pressable onPress={() => handleClick(1)} >
-           <Image style={styles.buttonIconStyle} source={leftArrow} />
+           <Image style={styles.buttonIconStyle} source={leftShortArrowIcon} />
          </Pressable>
          <View style={styles.daysWrapper}>
           <View style={index === 1 ? styles.activeDayStyle : styles.inActiveDayStyle}>
@@ -93,7 +92,7 @@ const DaysScroll = ({currentDay,totalDays,onPress = (newDay) => {},wrapperStyle=
           </View>
          </View>
          <Pressable onPress={() => handleClick(2)} >
-           <Image style={styles.buttonIconStyle} source={rightArrow} />
+           <Image style={styles.buttonIconStyle} source={rightShortArrowIcon} />
          </Pressable>
     </View>
   )
