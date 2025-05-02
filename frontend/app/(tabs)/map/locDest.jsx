@@ -29,11 +29,11 @@ const LocDest = () => {
 
   return (
     <View style={styles.container}>
-     <View style={styles.locDetailWrapper}>
-       <View style={styles.locDetailContainer}>
+     <View style={[styles.locDetailWrapper,{marginBottom:spaces.middle}]}>
+       <View style={{...styles.locDetailContainer}}>
         <Text style={styles.title} numberOfLines={1} >📍{locationDetails.startDetails.locationName}</Text>
         <Image style={styles.icon} source={dottedWayIcon} />
-        <Text style={[locTextStyl,{marginBottom:spaces.middle}]} numberOfLines={1} >{endDataReady ? "📍"+endData.locationName :  "❌ Your Destination Location"}</Text>
+        <Text style={[locTextStyl]} numberOfLines={1} >{endDataReady ? "📍"+endData.locationName :  "❌ Your Destination Location"}</Text>
        </View>
        <CircleTouchableIcon icon={rightShortArrowIcon} isDisable={!endDataReady} onPress={goToSelectFilter} />
      </View>

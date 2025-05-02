@@ -1,16 +1,26 @@
 import {SafeAreaView, ScrollView, StyleSheet,View,Text, KeyboardAvoidingView, Platform} from 'react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { colors, fonts, spaces } from '../../constands'
-import { router, Stack } from 'expo-router'
+import { router, Stack, useFocusEffect } from 'expo-router'
 import {TouchableIcon,SuggesContainer,AutoCompletSearchInput,ChatBotHome,ModalWithButtons} from '../../components'
 import logOutIcon from "../../assets/icons/logout.png"
-import {useUserStore,useGuideStore} from '../../managments'
+import {useUserStore,useGuideStore, useLocationStore} from '../../managments'
 
 
 const Home = () => {
   const {username} = useUserStore(state => state.user)
   const setGuideInfo = useGuideStore(state => state.setGuideInfo )
+  const {setStartDetails,locationDetails:{startDetails,endDetails}} = useLocationStore(state => state)
   const [isVisible,setIsVisible] = useState(false)
+
+  useFocusEffect(
+    useCallback(() => {
+         const {lat , lon ,locationName} = startDetails || {lat:null , lon : null , locationName : null}
+         if(lat !== null || lon !== null || locationName)
+         {
+             setStartDetails({lat : null , lon : null , locationName : null})
+         }
+                      },[startDetails]))
 
   const logOut = () => {
       router.replace("/login")

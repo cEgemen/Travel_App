@@ -5,6 +5,7 @@ import {useLocationStore} from '../../../managments';
 
 const SelecterMap = () => {
   const {startDetails,endDetails} =  useLocationStore(state => state.locationDetails)
+  console.log("startDetails : ",startDetails , " --- endDetails : ",endDetails)
   const [mapState , setMapState] = useState({startReady : false,endReady:false})
   const mapRef = useRef(null);
   useEffect(()=>{
@@ -22,6 +23,12 @@ const SelecterMap = () => {
                   })
            },1100)
        }
+       else 
+       {
+          setMapState(oldState => {
+              return {...oldState , startReady : false}
+          })
+       }
        if(endDetails !== null)
        {
            mapRef.current.animateToRegion({
@@ -33,6 +40,11 @@ const SelecterMap = () => {
            setTimeout(()=> {
                  setMapState(oldState => ({...oldState,endReady:true}))
            },1100)
+       }
+       else{
+           setMapState(oldState => (
+               {...oldState,endReady : false}
+           ))
        }
   },[startDetails,endDetails])
 
@@ -71,12 +83,12 @@ const SelecterMap = () => {
           followsUserLocation
         >
          {
-           mapState.startReady ? 
+           (mapState.startReady && startDetails) ? 
             <Marker title={startDetails.locationName} description='Start Location' coordinate={{latitude:parseFloat(startDetails.lat),longitude:parseFloat(startDetails.lon)}} /> : 
             null
          }
          {
-           mapState.endReady ? 
+           (mapState.endReady && endDetails) ? 
             <Marker title={endDetails.locationName} description='Destination Location' coordinate={{longitude:parseFloat(endDetails.lon),latitude:parseFloat(endDetails.lat)}} /> :
             null
          }

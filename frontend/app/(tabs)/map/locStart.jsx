@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { router } from 'expo-router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { router, useFocusEffect } from 'expo-router'
 import { colors, fonts, spaces } from '../../../constands'
 import {AutoCompletSearchInput, CircleTouchableIcon} from '../../../components'
 import {useLocationStore} from '../../../managments'
@@ -9,9 +9,19 @@ import { dottedWayIcon,rightShortArrowIcon} from '../../../assets'
 
 const LocStart = () => {
   const [startData,setStartData] = useState({locationName:null,lat:null,lon:null})
-  const setStartDetails = useLocationStore(state => state.setStartDetails)
+  const {setStartDetails,setEndDetails,locationDetails : {endDetails}} = useLocationStore(state => state)
   const startDataReady = startData.lat !== null && startData.lon !== null && startData.locationName !== null
  
+  useFocusEffect(
+   useCallback(() => {
+           const {lat,lon,locationName} = endDetails || {lat : null , lon : null , locationName : null}
+           if(lat !== null || lon !== null || locationName !== null)
+           {
+              setEndDetails(null)
+           }
+                     },[endDetails]
+              ) )
+
   const handlePress = (data) => {
         setStartData(oldState => {
             return {...data}
