@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {View,Text,TouchableOpacity,StyleSheet,FlatList,ImageBackground} from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Animated, {FadeInRight} from "react-native-reanimated";
-import { borderRadius, colors, fonts, spaces } from "../../../constands";
+import { borderRadius, colors, elevation, fonts, spaces } from "../../../constands";
 import {useRouteStore} from "../../../managments";
 import { router } from "expo-router";
+import TouchableIcon from "../../customButtons/TouchableIconButton";
+import { leftShortArrowIcon, rightShortArrowIcon } from "../../../assets";
 
 export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) {
   const setSelectRoute = useRouteStore(state => state.setSelectRoute)
+  const [showLevel,setShowLevel] = useState(false)
   const cardWidth = 220 + 20;
-
+ 
   const handleScroll = (event) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / (cardWidth - 20));
@@ -24,9 +27,77 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
         router.push("/route/routeDetail")
   }
 
+  const CardDetail = ({data,level}) => {
+      const levelColor = level === 0 ? "rgb(44, 168, 48)" : level === 1 ? "rgb(236, 222, 71)" : "rgb(205, 44, 44)"
+      return <>
+                  <View style={styles.cardDetailWrapper}>
+                    <Text style={styles.cardText}>{data}</Text>
+                    <CircleLevel levelColor={levelColor}/>
+                  </View>
+             </>
+
+  }
+
+  const calculateLevel = (key,index) => {
+        let mainValue = null;
+        let otherValue1 = null;
+        let otherValue2 = null;
+        for(let i = 0 ;  i < routesData.length ; i ++)
+        {
+            const value = routesData[i][key]
+            if(i === index)
+            {
+               mainValue = value  
+            }
+            else if (otherValue1 === null)
+            {
+               otherValue1 = value
+            } 
+            else
+            {
+               otherValue2 = value
+            } 
+        }
+        if(mainValue <= otherValue1 && mainValue <= otherValue2)
+          {
+            return 0;
+          } 
+       else if((otherValue1 < mainValue && mainValue <= otherValue2) || (otherValue2 < mainValue && mainValue <= otherValue1))
+        {
+            return 1
+        } 
+        else
+        {
+           return 2;
+        }  
+  }
+
+  const CircleLevel = ({levelColor}) => {
+      return  <View style={{...styles.levelCircle,backgroundColor:levelColor}}></View>
+
+  }
+
   return (
 
         <View style={styles.container}>
+
+          <View style={styles.levelDetailWrapper}>
+              <Text style={{width:"auto"}}> Levels</Text>
+              <TouchableIcon icon={showLevel ? leftShortArrowIcon : rightShortArrowIcon} iconStyle={{tintColor:colors.backgroundDark,width:25,height:25}} onPress={() => setShowLevel(oldState => !oldState)} /> 
+              {showLevel ? <View style={{flex:1,flexDirection:"row",justifyContent:"space-around"}}>
+            <View style={styles.levelWrapper}>
+              <CircleLevel levelColor={"rgb(205, 44, 44)"} /> <Text> High</Text>
+            </View>
+            <View style={styles.levelWrapper}>
+              <CircleLevel levelColor={"rgb(236, 222, 71)"} /> <Text> Middle</Text>
+            </View>
+            <View style={styles.levelWrapper}>
+              <CircleLevel levelColor={"rgb(44, 168, 48)"} /> <Text> Low</Text>
+            </View>
+                        </View> : null 
+          }
+          </View>
+          
           <FlatList
             data={routesData}
             keyExtractor={(item) => item.id.toString()}
@@ -53,11 +124,9 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
                    />
                   </View>
                   <View style={styles.cardFooter}>
-                  <Text style={styles.cardText}>{"Distance : "+item.distance}</Text>
-                  <Text style={styles.cardText}>{"Duration : "+item.duration}</Text>
-                  <Text style={styles.cardText}>{"Cost : " + item.cost}</Text>
-                  <Text style={styles.cardText}>{"Traffic Level : " + item.trafficLevel}</Text>
-               
+                  <CardDetail data={"🛤️ "+item.distance+" km"} level={calculateLevel("distance",index)} />
+                  <CardDetail data={"⏱️ "+item.duration+" min"} level={calculateLevel("duration",index)} />
+                  <CardDetail data={"💰 "+item.cost+" $"} level={calculateLevel("cost",index)} />             
                   </View>
 
                   <TouchableOpacity
@@ -74,7 +143,8 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
 }
 
 const styles = StyleSheet.create({
-  container: { paddingHorizontal:spaces.middle,paddingVertical:spaces.high},
+  container: {flexDirection:"column",rowGap:spaces.middle,paddingHorizontal:spaces.middle,paddingVertical:spaces.high},
+  
   card: {
     backgroundColor: colors.lightGray,
     height: 220,
@@ -95,10 +165,25 @@ const styles = StyleSheet.create({
 
   cardFooter: {
     flexDirection: "column",
+    justifyContent:"space-around",
     flex:1,
   },
 
+  cardDetailWrapper : {
+      flexDirection:"row",columnGap:spaces.small,justifyContent:"space-between",alignItems:"center"
+  },
+
   cardText: { flex: 1, fontSize:fonts.smallFontSize, color: colors.darkGray, marginRight:spaces.middle },
+
+  levelCircle : {
+      width:15,height:15,borderRadius:borderRadius.circleRadius(25),borderWidth:1,borderColor:"black"
+  },
+
+ levelDetailWrapper :{flexDirection:"row",alignItems:"center",alignSelf:"flex-start",columnGap:spaces.small,elevation:elevation.middleShhadow,backgroundColor:colors.lightGray,borderRadius:borderRadius.middleRadius}, 
+
+ levelWrapper : {
+    flexDirection:"row",alignItems:"center"
+ },
 
   routeButton: {
     marginTop:spaces.middle,

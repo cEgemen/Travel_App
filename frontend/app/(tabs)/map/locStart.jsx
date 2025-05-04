@@ -8,10 +8,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { dottedWayIcon,rightShortArrowIcon} from '../../../assets'
 
 const LocStart = () => {
-  const [startData,setStartData] = useState({locationName:null,lat:null,lon:null})
-  const {setStartDetails,setEndDetails,locationDetails : {endDetails}} = useLocationStore(state => state)
-  const startDataReady = startData.lat !== null && startData.lon !== null && startData.locationName !== null
- 
+  
+  const {setStartDetails,setEndDetails,locationDetails : {endDetails,startDetails}} = useLocationStore(state => state)
+  const initialValue = startDetails || {locationName:null,lat:null,lon:null}
+  const [startData,setStartData] = useState(initialValue)
+  const startDataReady = (startData.lat !== null && startData.lon !== null && startData.locationName !== null)
+
   useFocusEffect(
    useCallback(() => {
            const {lat,lon,locationName} = endDetails || {lat : null , lon : null , locationName : null}
@@ -45,7 +47,7 @@ const LocStart = () => {
        <SafeAreaView style={styles.container}>
             <View style={styles.locDetailWrapper}>
               <View style={styles.locDetailContainer}>
-               <Text style={{...locTextStyle}} numberOfLines={1} >{startDataReady ? "📍"+startData.locationName : "❌ Your Start Location"}</Text>
+               <Text style={{...locTextStyle}} numberOfLines={1} >{(startDataReady) ? "📍"+(startData.locationName) : "❌ Your Start Location"}</Text>
                <Image source={dottedWayIcon} style={styles.iconSty} />
                <Text style={{...styles.title,color:colors.gray}} numberOfLines={1}>❌ Your Destination Location</Text>
               </View>

@@ -34,9 +34,9 @@ export const generateRoute = async (
         routes: data.routes.map((route, index) => {
          return {
           id: `route-${index}-${Date.now()}`,
-          distance: `${(route.summary.lengthInMeters / 1000).toFixed(1)} km`,
+          distance: (route.summary.lengthInMeters / 1000).toFixed(1),
           distanceMeters: route.summary.lengthInMeters,
-          duration: `${Math.round(route.summary.travelTimeInSeconds / 60)} min`,
+          duration: Math.round(route.summary.travelTimeInSeconds / 60),
           durationSeconds: route.summary.travelTimeInSeconds,
           coordinates: route.legs[0].points.map(point => [point.latitude, point.longitude]),
           isPaid: (route.summary.tollCost || 0) > 0,

@@ -5,8 +5,8 @@ import {useLocationStore} from '../../../managments';
 
 const SelecterMap = () => {
   const {startDetails,endDetails} =  useLocationStore(state => state.locationDetails)
-  console.log("startDetails : ",startDetails , " --- endDetails : ",endDetails)
   const [mapState , setMapState] = useState({startReady : false,endReady:false})
+  console.log("startDetails : ",startDetails)
   const mapRef = useRef(null);
   useEffect(()=>{
        if(startDetails !== null)
