@@ -4,10 +4,12 @@ import MapView, {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import {useLocationStore} from '../../../managments';
 
 const SelecterMap = () => {
+
   const {startDetails,endDetails} =  useLocationStore(state => state.locationDetails)
-  const [mapState , setMapState] = useState({startReady : false,endReady:false})
-  console.log("startDetails : ",startDetails)
+  const [mapState , setMapState] = useState({startReady : startDetails !== null,endReady:endDetails !== null})
   const mapRef = useRef(null);
+  const timeOutRef = useRef(null)
+ 
   useEffect(()=>{
        if(startDetails !== null)
        {
@@ -18,6 +20,7 @@ const SelecterMap = () => {
              longitudeDelta:0.1
            },1000)
            setTimeout(() => {
+                 if(!mapState.startReady)
                   setMapState(oldState => {
                       return {...oldState,startReady:true}
                   })
@@ -25,6 +28,7 @@ const SelecterMap = () => {
        }
        else 
        {
+        if(mapState.startReady)
           setMapState(oldState => {
               return {...oldState , startReady : false}
           })
@@ -38,10 +42,12 @@ const SelecterMap = () => {
                longitudeDelta:0.1
            },1000)
            setTimeout(()=> {
+                if(!mapState.endReady)
                  setMapState(oldState => ({...oldState,endReady:true}))
            },1100)
        }
        else{
+         if(mapState.endReady)
            setMapState(oldState => (
                {...oldState,endReady : false}
            ))
@@ -49,9 +55,9 @@ const SelecterMap = () => {
   },[startDetails,endDetails])
 
   useEffect(() => {
-      if(mapState.startReady !== false && mapState.endReady !== false)
+      if((mapState.startReady !== false && startDetails) && (mapState.endReady !== false && endDetails))
       {
-         setTimeout(() => {
+         timeOutRef.current =  setTimeout(() => {
                mapRef.current.fitToCoordinates(
                   [
                      {latitude:parseFloat(startDetails.lat),longitude:parseFloat(startDetails.lon)},
@@ -63,6 +69,10 @@ const SelecterMap = () => {
                   }
                )
          },2000)
+      }
+      else
+      {
+          clearTimeout(timeOutRef.current)
       }
   },[mapState])
 

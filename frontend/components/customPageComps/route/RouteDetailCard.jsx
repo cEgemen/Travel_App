@@ -1,9 +1,9 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import {useRouteStore} from '../../../managments';
 import { router } from 'expo-router';
 import Animated, { FadeInRight } from 'react-native-reanimated';
-import { borderRadius, colors, fonts, spaces } from '../../../constands';
+import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands';
 
 export default ({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) => {
   const setSelectPlace = useRouteStore(state => state.setSelectPlace)
@@ -27,6 +27,8 @@ export default ({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) 
    * {"id": 13799212, "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Holborn_library.jpg", "lat": 51.5210756, "lon": -0.1156142, "name": "Holborn Library", "score": 6, "type": "library"}
    */
 
+  console.log("routeData[0] : ",routesData[0])
+
   return (
 
         <View style={styles.container}>
@@ -45,20 +47,14 @@ export default ({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) 
                    entering={FadeInRight.delay(400 + index * 200).duration(1000)}
                    style={styles.card}
                   >
-                  <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",columnGap:spaces.small}}>
-                   <Text style={styles.cardTitle} numberOfLines={1}>{item.name}</Text>   
+                  <View style={styles.imgContainer}>
+                   <Image style={{width:"100%",height:"100%",resizeMode:"contain"}} source={{uri:"https://placehold.co/600x400"}} />
+                   <Text numberOfLines={1} style={{fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight,position:"relative",bottom:30,left:10}}>{item.name}</Text>
                   </View>
-                  <View style={styles.cardFooter}>
-                  <Text style={styles.cardText}>🔖 {item.type.toUpperCase()}</Text>
-                  <Text style={styles.cardText}>🔥 {item.score}/10</Text>
+                  <View>
+                    
                   </View>
-                  <TouchableOpacity
-                    onPress={() => handleCart(item)}
-                    style={styles.routeButton}
-                  >
-                   <Text style={styles.routeButtonText}>Detail</Text>
-                  </TouchableOpacity>
-                 </Animated.View>
+                  </Animated.View>
             )}
           />
         </View>
@@ -72,38 +68,10 @@ const styles = StyleSheet.create({
      height: 220,
      width: 220,
      borderRadius: borderRadius.highRadius,
-     padding: spaces.middle,
      marginHorizontal: spaces.middle,
      justifyContent: "space-between",
   },
-
-  cardTitle: {
-    fontSize: fonts.smallMidFontSize,
-    fontWeight: fonts.middleFontWeight,
-    color:colors.backgroundDark,
-    textAlign: "center",
-    marginBottom:spaces.small,
-  },
-
-  cardFooter: {
-    flexDirection: "row",
-    flex:1,
-    justifyContent:"space-around",alignItems:"center"
-  },
-
-  cardText: {fontSize:fonts.smallFontSize, color: colors.darkGray, marginRight:spaces.middle },
-
-  routeButton: {
-    marginTop:spaces.middle,
-    backgroundColor:colors.primary,
-    borderRadius:borderRadius.highRadius,
-    paddingVertical: spaces.middle,
-    alignItems: "center",
-  },
-
-  routeButtonText: {
-    color: colors.background,
-    fontSize: fonts.smallFontSize,
-    fontWeight: fonts.smallMidFontSize,
-  },
+  imgContainer : {
+    height:"50%",width:"100%",borderBottomLeftRadius:borderRadius.highRadius,borderBottomRightRadius:borderRadius.highRadius,backgroundColor:colors.primary,elevation:elevation.middleShhadow,overflow:"hidden",position:"relative"
+  }
 });

@@ -22,7 +22,7 @@ export default function App() {
                ]
 
   const handleSkip = () => {
-        router.replace("/map/locStart")
+        router.replace("/route/routeDetail")
   }            
 
   return <>

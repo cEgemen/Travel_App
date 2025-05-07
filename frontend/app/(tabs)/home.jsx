@@ -13,15 +13,6 @@ const Home = () => {
   const {setStartDetails,locationDetails:{startDetails,endDetails}} = useLocationStore(state => state)
   const [isVisible,setIsVisible] = useState(false)
 
-  useFocusEffect(
-    useCallback(() => {
-         const {lat , lon ,locationName} = startDetails || {lat:null , lon : null , locationName : null}
-         if(lat !== null || lon !== null || locationName)
-         {
-             setStartDetails({lat : null , lon : null , locationName : null})
-         }
-                      },[startDetails]))
-
   const logOut = () => {
       router.replace("/login")
   }
@@ -31,8 +22,8 @@ const Home = () => {
   }
 
   const selectLocation = (location) => {
-        setGuideInfo({type:"location",data:location.locationName})
-        router.replace("/guide/selectTravelDates")
+      setGuideInfo({type:"location",data:location.locationName})
+      router.replace("/guide/selectTravelDates")
   }
 
   const selectChatBot = () => {
@@ -70,8 +61,7 @@ const Home = () => {
           <AutoCompletSearchInput onPress={selectLocation} focusColor={colors.primary} placeholder='Enter Location ...' searchWrapperStyle={{marginBottom:spaces.small}} />
           <SuggesContainer containerStyle = {{marginVertical:"auto"}}  />
        </ScrollView> 
-     </KeyboardAvoidingView>
-      
+     </KeyboardAvoidingView>  
      </SafeAreaView>
   )
 }

@@ -80,7 +80,6 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
   return (
 
         <View style={styles.container}>
-
           <View style={styles.levelDetailWrapper}>
               <Text style={{width:"auto"}}> Levels</Text>
               <TouchableIcon icon={showLevel ? leftShortArrowIcon : rightShortArrowIcon} iconStyle={{tintColor:colors.backgroundDark,width:25,height:25}} onPress={() => setShowLevel(oldState => !oldState)} /> 
@@ -97,7 +96,6 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
                         </View> : null 
           }
           </View>
-          
           <FlatList
             data={routesData}
             keyExtractor={(item) => item.id.toString()}
@@ -119,7 +117,7 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
                       name="map-marker"
                       size={25}
                       color={
-                        index === 0 ? "#ff5c83": index === 1? "#5facdb" : "#bb32fe"
+                        index === 0 ? "rgb(33, 211, 74)": index === 1? "rgb(36, 26, 187)":"rgb(201, 76, 118)"
                             }
                    />
                   </View>

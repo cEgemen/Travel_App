@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { router, useFocusEffect } from 'expo-router'
 import { colors, fonts, spaces } from '../../../constands'
 import {AutoCompletSearchInput, CircleTouchableIcon} from '../../../components'
@@ -22,7 +22,7 @@ const LocStart = () => {
               setEndDetails(null)
            }
                      },[endDetails]
-              ) )
+              ))
 
   const handlePress = (data) => {
         setStartData(oldState => {

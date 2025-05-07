@@ -80,11 +80,12 @@ export const fetchPOIs = async ({route, selectedCategories=[]}) => {
         "amenity=library",
         "amenity=theatre",
         "amenity=cinema"
-    ];
+                            ];
+                            
     const activeCategories = selectedCategories.length > 0 ? selectedCategories : defaultCultural;
     const poiData = [];
 
-    console.log("📍 POI araması başlatıldı. Kategoriler:", activeCategories);
+    console.log("📍 POI araması başlatıldı. Kategoriler : ", activeCategories);
 
     for (let i = 0; i < route.coordinates.length - 1;) {
         const [lat1, lon1] = route.coordinates[i];
