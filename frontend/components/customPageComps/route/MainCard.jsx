@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import {View,Text,TouchableOpacity,StyleSheet,FlatList,ImageBackground} from "react-native";
+import { useState } from "react";
+import {View,Text,TouchableOpacity,StyleSheet,FlatList, Image} from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Animated, {FadeInRight} from "react-native-reanimated";
 import { borderRadius, colors, elevation, fonts, spaces } from "../../../constands";
 import {useRouteStore} from "../../../managments";
 import { router } from "expo-router";
 import TouchableIcon from "../../customButtons/TouchableIconButton";
-import { leftShortArrowIcon, rightShortArrowIcon } from "../../../assets";
+import { leftShortArrowIcon, rightShortArrowIcon,upShortArrowIcon,downShortArrowIcon, lineIcon, mainCardImg } from "../../../assets";
 
 export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex = (index) => {}}) {
   const setSelectRoute = useRouteStore(state => state.setSelectRoute)
@@ -28,11 +28,12 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
   }
 
   const CardDetail = ({data,level}) => {
-      const levelColor = level === 0 ? "rgb(44, 168, 48)" : level === 1 ? "rgb(236, 222, 71)" : "rgb(205, 44, 44)"
+      const levelColor = level === 0 ? "rgb(44, 168, 48)" : level === 1 ? "rgb(1, 33, 241)" : "rgb(205, 44, 44)"
+      const levelIcon  = level === 0 ? upShortArrowIcon : level === 1 ? lineIcon : downShortArrowIcon
       return <>
                   <View style={styles.cardDetailWrapper}>
                     <Text style={styles.cardText}>{data}</Text>
-                    <CircleLevel levelColor={levelColor}/>
+                    <CircleLevel levelColor={levelColor} levelIcon = {levelIcon}/>
                   </View>
              </>
 
@@ -72,30 +73,13 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
         }  
   }
 
-  const CircleLevel = ({levelColor}) => {
-      return  <View style={{...styles.levelCircle,backgroundColor:levelColor}}></View>
+  const CircleLevel = ({levelColor,levelIcon}) => {
+      return  <Image style={{...styles.levelCircle,tintColor:levelColor}} source={levelIcon}  />
 
   }
 
   return (
-
         <View style={styles.container}>
-          <View style={styles.levelDetailWrapper}>
-              <Text style={{width:"auto"}}> Levels</Text>
-              <TouchableIcon icon={showLevel ? leftShortArrowIcon : rightShortArrowIcon} iconStyle={{tintColor:colors.backgroundDark,width:25,height:25}} onPress={() => setShowLevel(oldState => !oldState)} /> 
-              {showLevel ? <View style={{flex:1,flexDirection:"row",justifyContent:"space-around"}}>
-            <View style={styles.levelWrapper}>
-              <CircleLevel levelColor={"rgb(205, 44, 44)"} /> <Text> High</Text>
-            </View>
-            <View style={styles.levelWrapper}>
-              <CircleLevel levelColor={"rgb(236, 222, 71)"} /> <Text> Middle</Text>
-            </View>
-            <View style={styles.levelWrapper}>
-              <CircleLevel levelColor={"rgb(44, 168, 48)"} /> <Text> Low</Text>
-            </View>
-                        </View> : null 
-          }
-          </View>
           <FlatList
             data={routesData}
             keyExtractor={(item) => item.id.toString()}
@@ -111,15 +95,11 @@ export default function MainCard({routesData=[],currentIndex = 0,onChangeIndex =
                    entering={FadeInRight.delay(400 + index * 200).duration(1000)}
                    style={styles.card}
                   >
-                  <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",columnGap:spaces.small}}>
-                   <Text style={styles.cardTitle}>{"Rota "+(index+1)}</Text>   
-                   <Icon
-                      name="map-marker"
-                      size={25}
-                      color={
-                        index === 0 ? "rgb(33, 211, 74)": index === 1? "rgb(36, 26, 187)":"rgb(201, 76, 118)"
-                            }
-                   />
+                  <View style={{height:"35%",flexDirection:"row",justifyContent:"flex-start",alignItems:"center",columnGap:spaces.small}}>
+                   <Image style={styles.cardImg} source={mainCardImg} />
+                   <View style={styles.cardTitleWrapper}>
+                    <Text style={styles.cardTitle}>{(index+1)}</Text> 
+                   </View>
                   </View>
                   <View style={styles.cardFooter}>
                   <CardDetail data={"🛤️ "+item.distance+" km"} level={calculateLevel("distance",index)} />
@@ -151,15 +131,20 @@ const styles = StyleSheet.create({
     padding: spaces.middle,
     marginHorizontal: spaces.middle,
     justifyContent: "space-between",
+    elevation:elevation.smallShadow
   },
+  
+  cardTitleWrapper : {width:30,height:30,position:"absolute",top:spaces.high,right:spaces.middle,backgroundColor:"rgba(255,255,255,.7)",borderRadius:borderRadius.circleRadius(30),alignItems:"center",justifyContent:"center",borderColor:colors.backgroundDark,borderWidth:1},
 
   cardTitle: {
-    fontSize: fonts.middleFontSize,
     fontWeight: fonts.middleFontWeight,
+    fontSize : fonts.smallMidFontSize,
     color:colors.backgroundDark,
-    textAlign: "center",
-    marginBottom:spaces.small,
   },
+
+  cardImg : {
+      height:"100%",width:"80%",resizeMode:"contain"
+  } ,
 
   cardFooter: {
     flexDirection: "column",
@@ -174,10 +159,10 @@ const styles = StyleSheet.create({
   cardText: { flex: 1, fontSize:fonts.smallFontSize, color: colors.darkGray, marginRight:spaces.middle },
 
   levelCircle : {
-      width:15,height:15,borderRadius:borderRadius.circleRadius(25),borderWidth:1,borderColor:"black"
+      width:20,height:20
   },
 
- levelDetailWrapper :{flexDirection:"row",alignItems:"center",alignSelf:"flex-start",columnGap:spaces.small,elevation:elevation.middleShhadow,backgroundColor:colors.lightGray,borderRadius:borderRadius.middleRadius}, 
+ levelDetailWrapper :{flexDirection:"row",alignItems:"center",alignSelf:"flex-start",columnGap:spaces.small,elevation:elevation.middleShadow,backgroundColor:colors.lightGray,borderRadius:borderRadius.middleRadius}, 
 
  levelWrapper : {
     flexDirection:"row",alignItems:"center"

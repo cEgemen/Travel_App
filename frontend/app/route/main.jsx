@@ -10,17 +10,32 @@ const Main = () => {
   const routeDatas = useRouteStore(state => state.routeDatas)
   const locationDetails = useLocationStore(state => state.locationDetails)
   const {startDetails,endDetails} = locationDetails
-  const {routes} = routeDatas
+  
+ /*  const  startDetails =  {"lat": "51.5080490", "locationName": "London Bridge, United Kingdom", "lon": "-0.0876715"}
+  const  endDetails   =  {"lat": "51.5074456", "locationName": "London, United Kingdom", "lon": "-0.1277653"} */
+
+  const {routes} = routeDatas 
+  
   const [currentIndex , setCurrentIndex] = useState(0)
   const mapRef = useRef(null)
   const routeColors  =  ["rgb(33, 211, 74)","rgb(36, 26, 187)","rgb(201, 76, 118)"]
+
+  useEffect(() => {
+        mapRef.current?.fitToCoordinates(
+        [{latitude : parseFloat(startDetails.lat),longitude : parseFloat(startDetails.lon)},{latitude:parseFloat(endDetails.lat),longitude:parseFloat(endDetails.lon)}],
+        {
+         edgePadding : {top:100,right:20,bottom:200,left:20}, 
+         animated : true
+        }
+                                     )
+  },[])
 
   useEffect(() => {
       mapRef.current?.fitToCoordinates(routes[currentIndex].coordinates.map(coord => ({
         latitude: coord[0],
         longitude: coord[1]
       })), {
-      edgePadding: { top: .5, right: .5, bottom: 100, left: .5 },
+      edgePadding: { top: 100, right: 20, bottom: 300, left: 20},
       animated: true,
     });   
   },[currentIndex])
@@ -35,8 +50,8 @@ const Main = () => {
             style = {styles.map}
             initialRegion={
                 {
-                  latitude: routeDatas.routes[0].coordinates[0][0],
-                  longitude: routeDatas.routes[0].coordinates[0][1],
+                  latitude:  routes[0].coordinates[0][0],
+                  longitude: routes[0].coordinates[0][1],
                   latitudeDelta: 0.2,
                   longitudeDelta: 0.2,
                 }
@@ -45,7 +60,7 @@ const Main = () => {
            <Marker title={startDetails.locationName} description='Start Location' coordinate={{latitude:parseFloat(startDetails.lat),longitude:parseFloat(startDetails.lon)}} />
            <Marker title={endDetails.locationName} description='Destination Location' coordinate={{longitude:parseFloat(endDetails.lon),latitude:parseFloat(endDetails.lat)}} />
 
-            {routeDatas.routes.slice(0,3).map((route,index) =>  {
+            {routes.slice(0,3).map((route,index) =>  { 
                      return <Polyline key={route.id}  
                              coordinates={route.coordinates.map(coord => ({
                                          latitude: coord[0],

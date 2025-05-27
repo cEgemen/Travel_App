@@ -1,19 +1,19 @@
-import { StyleSheet, View, Text ,ScrollView, Dimensions, Image, Pressable} from 'react-native';
+import { StyleSheet, View,Text ,ScrollView, Dimensions, Image, Pressable} from 'react-native';
 import { router} from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import onBoardImg1 from "../assets/images/onBoard1.png"
 import onBoardImg2 from "../assets/images/onBoard2.png"
 import onBoardImg3 from "../assets/images/onBoard3.png"
 import onBoardImg4 from "../assets/images/onBoard4.png"
 import { useState } from 'react';
 import { colors,fonts,borderRadius,spaces } from '../constands';
-import { DoteSlider, TouchableIcon } from '../components';
-import { rightShortArrowIcon } from '../assets';
+import { BasePageWrapper, DoteSlider } from '../components';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const windowWidth = Dimensions.get("window").width
 export default function App() {
    const [currentIndex,setCurrentIndex] = useState(0)    
-   
+   const insets = useSafeAreaInsets()
+
    const data = [
     {image:onBoardImg1,title:"Discover Amazing Destinations",description:" Explore breathtaking places around the world with personalized travel recommendations.",color:"rgb(134, 116, 146)"},
     {image:onBoardImg2,title:"Plan Your Perfect Trip",description:" Get detailed travel itineraries tailored to your budget and preferences.",color:"rgb(224, 151, 102)"},
@@ -21,13 +21,15 @@ export default function App() {
     {image:onBoardImg4,title:"Make Every Journey Memorable",description:" Capture your travel experiences and get personalized tips to make your trip unforgettable.",color:"rgb(136, 177, 201)"}
                ]
 
+   const topButtonPositionElements = {right:(spaces.middle + insets.right),top:(spaces.middle + insets.top)}            
+
   const handleSkip = () => {
-        router.replace("/route/routeDetail")
-  }            
+        router.replace("/map/locStart")
+  }         
 
   return <>
-              <SafeAreaView style={[styles.safeArea,{backgroundColor:data[currentIndex].color}]}>
-                   <Pressable onPress={handleSkip} style={styles.skipButton}>
+              <BasePageWrapper wrapperStyle={[styles.safeArea,{backgroundColor:data[currentIndex].color}]}>
+                   <Pressable onPress={handleSkip} style={[styles.skipButton,topButtonPositionElements]}>
                      <Text style={styles.skipText}>Skip</Text>
                    </Pressable>   
                    <ScrollView 
@@ -55,7 +57,7 @@ export default function App() {
                      })}
                    </ScrollView>
                    <DoteSlider doteSize={data.length} currentIndex={currentIndex}  />
-              </SafeAreaView>
+              </BasePageWrapper>
          </>
 }
 
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
      },                   
      skipButton:{
         width:50,height:50,borderRadius:borderRadius.circleRadius(60),backgroundColor:colors.background,
-        alignItems:"center",justifyContent:"center",position:"absolute",right:spaces.middle,top:spaces.middle,zIndex:4
+        alignItems:"center",justifyContent:"center",position:"absolute",zIndex:4
      },
      skipText:{
         fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight

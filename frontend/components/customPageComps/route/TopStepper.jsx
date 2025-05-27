@@ -6,7 +6,7 @@ import { borderRadius, colors, elevation } from '../../../constands'
 const TopStepper = ({activeIndex=0}) => {
   
   const Circle = ({text,isActive=false}) => {
-     const activeStyle = {borderColor:colors.primary,elevation:elevation.middleShhadow}
+     const activeStyle = {borderColor:colors.primary,elevation:elevation.middleShadow}
      let circleStyle = {...styles.circle}
      if(isActive)
      {
@@ -18,7 +18,7 @@ const TopStepper = ({activeIndex=0}) => {
   }  
 
   const Line = ({isActive = false}) => {
-    const activeStyle = {borderColor:colors.primary,elevation:elevation.middleShhadow}
+    const activeStyle = {borderColor:colors.primary,elevation:elevation.middleShadow}
     let lineStyle = {...styles.line}
     if(isActive)
     {

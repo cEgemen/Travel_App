@@ -4,6 +4,7 @@ const useRouteStore = create((set) => ({
          routeDatas : null,
          selectRoute : null,
          selectPlace: null,
+         selectMapRoute:null,
          setRouteDatas : (routes) => {
               set(state => ({
                   routeDatas : routes
@@ -18,6 +19,11 @@ const useRouteStore = create((set) => ({
               set(state => ({
                     selectPlace : place
               }))
+         },
+         setSelectMapRoute : (selectMapRoute) => {
+               set(state => ({
+                  selectMapRoute : selectMapRoute   
+               }))
          }
 }))
 

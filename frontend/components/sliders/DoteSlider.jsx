@@ -2,12 +2,12 @@
 import { FlatList, StyleSheet, View } from 'react-native'
 import React from 'react'
 import { borderRadius, colors, spaces } from '../../constands';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const DoteSlider = ({doteSize=0,currentIndex=0}) => {
-     
+  const insets = useSafeAreaInsets()  
   const dotes = new Array(doteSize < 5 ? doteSize : 5 );
-
-
+  const positionElements = {bottom:(0+insets.bottom),right:(0+insets.right)}
   const Dote = ({index}) => {
    const isActive = (currentIndex % 5) ===index
    return  <>
@@ -17,7 +17,7 @@ const DoteSlider = ({doteSize=0,currentIndex=0}) => {
   }
     
   return (
-    <View style={styles.doteSliderWrapper}>
+    <View style={[styles.doteSliderWrapper,positionElements]}>
       <FlatList
          data={dotes}
          horizontal={true}
@@ -33,7 +33,7 @@ export default DoteSlider
 
 const styles = StyleSheet.create({
     doteSliderWrapper : {
-        position:"absolute",bottom:0,left:0, justifyContent:"space-between",flexDirection:"row",gap:spaces.small
+        position:"absolute",justifyContent:"space-between",flexDirection:"row",gap:spaces.small
     },
     doteButton : {
          width:60,height:30,borderRadius:borderRadius.middleRadius,justifyContent:"center",alignItems:"center",backgroundColor:colors.lightGray,borderWidth:1

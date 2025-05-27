@@ -114,6 +114,6 @@ const styles = StyleSheet.create({
            width:20,height:20,backgroundColor:colors.lightGray,justifyContent:"center",alignItems:"center",borderRadius:borderRadius.circleRadius(20)
       },
       activeDayStyle : {
-        width:35,height:35,backgroundColor:colors.lightGray,borderRadius:borderRadius.circleRadius(35),elevation:elevation.middleShhadow,justifyContent:"center",alignItems:"center"
+        width:35,height:35,backgroundColor:colors.lightGray,borderRadius:borderRadius.circleRadius(35),elevation:elevation.middleShadow,justifyContent:"center",alignItems:"center"
       }
 })

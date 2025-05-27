@@ -1,14 +1,13 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import { Image,StyleSheet, Text, View } from 'react-native'
+import { useCallback, useState } from 'react'
 import { router, useFocusEffect } from 'expo-router'
 import { colors, fonts, spaces } from '../../../constands'
 import {AutoCompletSearchInput, CircleTouchableIcon} from '../../../components'
 import {useLocationStore} from '../../../managments'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { dottedWayIcon,rightShortArrowIcon} from '../../../assets'
+import BaseKeyboardWrapper from '../../../components/baseWrappers/BaseKeyboardWrapper'
 
 const LocStart = () => {
-  
   const {setStartDetails,setEndDetails,locationDetails : {endDetails,startDetails}} = useLocationStore(state => state)
   const initialValue = startDetails || {locationName:null,lat:null,lon:null}
   const [startData,setStartData] = useState(initialValue)
@@ -44,7 +43,8 @@ const LocStart = () => {
 
   return (
      <>
-       <SafeAreaView style={styles.container}>
+       <View
+         style={styles.container}>
             <View style={styles.locDetailWrapper}>
               <View style={styles.locDetailContainer}>
                <Text style={{...locTextStyle}} numberOfLines={1} >{(startDataReady) ? "📍"+(startData.locationName) : "❌ Your Start Location"}</Text>
@@ -57,9 +57,9 @@ const LocStart = () => {
              <View style={{marginVertical:"auto"}}>
               <Text style={styles.autoSearchLabel}>Search Start Location</Text>
               <AutoCompletSearchInput onPress={handlePress} focusColor={colors.primary} infoCount={2} placeholder='İstanbul,London,Milano,Madrid,...' />
-             </View>
+             </View>  
             </View>
-       </SafeAreaView> 
+       </View> 
      </>
   )
 }
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         flex:1,paddingVertical:spaces.small,paddingHorizontal:spaces.middle
     },
     locDetailWrapper : {
-        flexDirection:"row",alignItems:"center",marginBottom:spaces.middle
+        flexDirection:"row",alignItems:"center"
                        },
     locDetailContainer : {
        flex:1

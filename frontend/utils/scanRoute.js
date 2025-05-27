@@ -72,6 +72,16 @@ const fetchPOIData = async (query) => {
     }
 };
 
+export const fetchLocationImg = async (name) => {
+             const wikimediaImage = await searchImageFromWikimedia(name);
+             const openverseImage = wikimediaImage ? null : await searchImageFromOpenverse(name);
+             const fallbackImage = (!wikimediaImage && !openverseImage)
+                        ? getFallbackImageForCategory(type.toLowerCase())
+                        : null;
+            
+             return wikimediaImage || openverseImage || fallbackImage            
+}
+
 // 📍 Ana POI toplama fonksiyonu
 export const fetchPOIs = async ({route, selectedCategories=[]}) => {
     const searchRadius = 5000;
@@ -107,10 +117,10 @@ export const fetchPOIs = async ({route, selectedCategories=[]}) => {
 
             const pois = await Promise.all(
                 data.elements.map(async item => {
-                    const name = item.tags?.name;
+                    let name = item.tags?.name;
                     if (!name) {
                         console.log("⚠️ İsimsiz POI atlandı.");
-                        return null;
+                        name = null
                     }
 
                     const type =
@@ -118,18 +128,11 @@ export const fetchPOIs = async ({route, selectedCategories=[]}) => {
                         item.tags?.amenity || item.tags?.leisure || item.tags?.man_made ||
                         item.tags?.landuse || "Bilinmeyen";
 
-                    const wikimediaImage = await searchImageFromWikimedia(name);
-                    const openverseImage = wikimediaImage ? null : await searchImageFromOpenverse(name);
-                    const fallbackImage = (!wikimediaImage && !openverseImage)
-                        ? getFallbackImageForCategory(type.toLowerCase())
-                        : null;
-
-                    const imageUrl = wikimediaImage || openverseImage || fallbackImage;
-
-                    // Puanlama burası biraz uydurma burayı revize etmem lazım ama karışık diye şuanlık gerek yok işimizi biraz uzatır araştırdım unescoda olanlara ekstra puan verme falan yapabiliriz
+               
                     let score = 0;
-                    if (name) score += 2;
-                    if (wikimediaImage || openverseImage) score += 3;
+                    if (name) {
+                        score += 2
+                     };
                     if (type && type !== "Bilinmeyen") score += 1;
 
                     console.log(`📍 POI eklendi: ${name} (Type: ${type}, Score: ${score})`);
@@ -140,7 +143,6 @@ export const fetchPOIs = async ({route, selectedCategories=[]}) => {
                         type,
                         lat: item.lat,
                         lon: item.lon,
-                        imageUrl,
                         score
                     };
                 })

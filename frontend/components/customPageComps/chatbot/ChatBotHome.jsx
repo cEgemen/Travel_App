@@ -74,7 +74,7 @@ export default ChatBotHome
 const styles = StyleSheet.create({
           chatIconWrapper : {
               width:50,aspectRatio:1,borderRadius:borderRadius.circleRadius(60),
-              backgroundColor:colors.primary,elevation:elevation.middleShhadow,position:"absolute",zIndex:2,bottom:spaces.high,right:spaces.middle
+              backgroundColor:colors.primary,elevation:elevation.middleShadow,position:"absolute",zIndex:2,bottom:spaces.high,right:spaces.middle
            },
            chatIcon : {
               tintColor:colors.background

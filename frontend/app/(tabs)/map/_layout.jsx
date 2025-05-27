@@ -1,18 +1,19 @@
 
-import { StyleSheet, View, Keyboard} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, Keyboard, KeyboardAvoidingView, Platform, ScrollView} from 'react-native'
+import { useEffect, useState } from 'react'
 import { router, Stack, usePathname } from 'expo-router'
-import {SelecterMap, TouchableIcon} from '../../../components'
-import { borderRadius, colors, spaces } from '../../../constands'
+import {BasePageWrapper, SelecterMap} from '../../../components'
+import { colors, spaces } from '../../../constands'
 import { leftShortArrowIcon } from '../../../assets'
 import {useLocationStore} from '../../../managments'
 import {CircleTouchableIcon} from '../../../components'
+import BaseKeyboardWrapper from '../../../components/baseWrappers/BaseKeyboardWrapper'
 
 const MapLayout = () => {
-  const [keyboardIsShow , setKeyboardIsShow] = useState(false)
   const setEndData = useLocationStore(state => state.setEndData)
   const setStartData = useLocationStore(state => state.setStartData)
   const path = usePathname()
+  
   const onBack = () => {
      if(path === "/map/locDes")
      {
@@ -25,64 +26,49 @@ const MapLayout = () => {
      router.back()    
   }
 
-  let topWrapperHeight = "60%"
-  let bottomWrapperHeight = "40%"
-  
-  if(keyboardIsShow)
-  {
-    topWrapperHeight = "52%"
-    bottomWrapperHeight = "48%"
-  }
-
-  useEffect(()=> {
-         const showDidKeyboard = Keyboard.addListener("keyboardDidShow",() => {
-             setKeyboardIsShow(true)
-         })
-         const hiddenDidKeyboard = Keyboard.addListener("keyboardDidHide",() => {
-             setKeyboardIsShow(false)
-         })
-
-         return () => {
-             showDidKeyboard.remove()
-             hiddenDidKeyboard.remove()
-         }
-  },[])
-
   return (
     <>
        <Stack.Screen 
-            options={{
-                headerShown:false
-            }} 
+          options={{
+              headerShown:false
+          }}
        />
-       <CircleTouchableIcon onPress={onBack} iconWrapperStyle={styles.iconWrapper} icon={leftShortArrowIcon} iconWidth={styles.icon.width} />
-       <View style={styles.container}>
-        <View style={{...styles.topWrapper,...{height:topWrapperHeight}}}>
-          <SelecterMap />
-        </View>
-        <View style={{...styles.bottomWrapper,...{height:bottomWrapperHeight}}}>
-               <Stack>
-                 <Stack.Screen 
+       <BasePageWrapper wrapperStyle={styles.container}>
+          {({top,left,right,bottom}) => (
+              <BaseKeyboardWrapper>
+                {({keyboardHeight,keyboardIsShow}) => (
+                     <>
+                 <CircleTouchableIcon icon={leftShortArrowIcon} iconWrapperStyle={{...styles.iconWrapper,...{top:(spaces.small + top),left:(spaces.small + left)}}} onPress={onBack} />
+                 <View style={{height:keyboardIsShow ? "35%" : "60%"}}>
+                    <SelecterMap />
+                 </View>
+                 <View style={{flex:1,paddingBottom:keyboardHeight}}>
+                  <Stack>
+                   <Stack.Screen 
                     name='locStart'
                     options={{
                          headerShown:false
                     }}
-                 />
-                 <Stack.Screen
+                   />
+                   <Stack.Screen
                     name='locDest'
                     options={{
                         headerShown:false
                     }}
-                 />
-                 <Stack.Screen
+                    />
+                    <Stack.Screen
                     name="selectFilter"
                     options={{
                         headerShown:false
                     }}
-                 />
-               </Stack>
-        </View>
-    </View> 
+                    />
+                  </Stack>
+                 </View>
+                     </>
+                )}
+              </BaseKeyboardWrapper>
+          )}
+       </BasePageWrapper>
     </>
     
   )
@@ -92,10 +78,10 @@ export default MapLayout
 
 const styles = StyleSheet.create({
     container : {
-         flex:1
+         flex:1,backgroundColor:colors.background
     },
     iconWrapper:{
-        position:"absolute",zIndex:5,top:spaces.middle,left:spaces.middle,opacity:0.9
+        position:"absolute",zIndex:5,opacity:0.9
     },
     icon : {
         width:30

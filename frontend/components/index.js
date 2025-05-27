@@ -26,6 +26,10 @@ import PriceFilter from "./customPageComps/route/PriceFilter";
 import RouteDetailCard  from "./customPageComps/route/RouteDetailCard";
 import TopStepper from "./customPageComps/route/TopStepper";
 import VehicleFilter from "./customPageComps/route/VehicleFilter";
+import PlaceDetailDataCard from "./customPageComps/route/PlaceDetailDataCard";
+import StackHeader from "./navigations/StackHeader";
+import SelectItem from "./customPageComps/route/SelectItem";
+import BasePageWrapper from "./baseWrappers/BasePageWrapper";
 
 export {
     DoteSlider , 
@@ -56,4 +60,8 @@ export {
     RouteDetailCard,
     TopStepper ,
     VehicleFilter  ,
+    PlaceDetailDataCard,
+    StackHeader,
+    SelectItem,
+    BasePageWrapper
        }

@@ -8,10 +8,7 @@ const RouteDetailMainCard = ({routeData}) => {
   const {cost , duration , distance , startLocName , destinationLocName , optionRoute } = routeData;  
   return (
     <View style={styles.cardWrapper}>
-      <Text style={{position:"absolute",top:-16,right:-12,fontSize:fonts.smallMidFontSize}}>📌</Text>
-      <View style={styles.headerWrapper}>
-       <Text style={styles.cardTitle}>{optionRoute}</Text> 
-      </View>
+      <Text style={{position:"absolute",top:-16,right:-12,fontSize:fonts.smallMidFontSize}}>📌</Text> 
       <View style= {styles.contentWrapper}>
         <Text style={[styles.cardSubTitle,{fontSize:fonts.smallMidFontSize,fontWeight:fonts.smallFontWeight,marginBottom:spaces.middle}]}>📍 {startLocName}</Text>
         <View style={{flexDirection:"row"}}>

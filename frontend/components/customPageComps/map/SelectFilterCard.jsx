@@ -20,7 +20,7 @@ const SelectFilterCard = ({title="",isCustom=false,onPress=() => {},isActive=fal
 
   if(isActive)
   {
-     wrapperStyle = {borderColor:colors.darkGray,borderWidth:2,elevation:elevation.middleShhadow,opacity:1}
+     wrapperStyle = {borderColor:colors.darkGray,borderWidth:2,elevation:elevation.middleShadow,opacity:1}
   }
 
   return (

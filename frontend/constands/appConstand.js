@@ -30,7 +30,7 @@ export const fonts = {
 
 export const elevation = {
        smallShadow : 2,
-       middleShhadow:4,
+       middleShadow:4,
        highShadow: 8
 }
 

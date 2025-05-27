@@ -14,6 +14,7 @@ const RootLayout = () => {
              <Stack.Screen name="guide"  options={options} />
              <Stack.Screen name="chat"   options={options} />
              <Stack.Screen name="route"  options={options} />
+             <Stack.Screen name="[placeId]" options={options}/>
          </Stack>
        </QueryClientProvider>
   )

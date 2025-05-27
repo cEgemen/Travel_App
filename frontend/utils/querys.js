@@ -16,23 +16,44 @@ async function baseQuery({path,method="GET",body=null,isHaveBody=false,token,url
 }
 
 export async function saveFavGuide(guide,token){
-        const result = await  baseQuery({path:"save",method:"POST",isHaveBody:true,body:guide,token,url:favUrl})     
+        const result = await baseQuery({path:"save/guide",method:"POST",isHaveBody:true,body:guide,token,url:favUrl})     
         return result.json();
 }
 
 export async function getOwnerFavGuides(id,mod,token){
-      const result = await baseQuery({path:"user/"+id+"?mod="+mod,token,url:favUrl})
+      const result = await baseQuery({path:"user/guide/"+id+"?mod="+mod,token,url:favUrl})
       return result.json()
 }
 
 export async function getFavGuide(id,token){
-      const result = await baseQuery({path:id,token,url:favUrl})
+      const result = await baseQuery({path:"guide/"+id,token,url:favUrl})
       return result.json()
 }
 
 export async function deleteFavGuide(id,token){
-      const result = await baseQuery({path:"delete/"+id,method:"DELETE",isHaveBody:false,token,url:favUrl})
+      const result = await baseQuery({path:"delete/guide/"+id,method:"DELETE",isHaveBody:false,token,url:favUrl})
       return result.json()
+}
+
+
+export async function saveFavPlace(place,token){
+      const result = await baseQuery({path:"save/place",method:"POST",isHaveBody:true,token,body:place,url:favUrl}) 
+      return result.json();
+}
+
+export async function deleteFavPlace(id,token){
+      const result = await baseQuery({path:"delete/place/"+id,method:"DELETE",isHaveBody:false,token,url:favUrl})
+      return result.json();
+}
+
+export async function getFavPlace(id,token){
+      const result = await baseQuery({path:"place/"+id,token,url:favUrl,isHaveBody:false,method:"GET"})
+      return result.json()
+}
+
+export async function getOwnerFavPlace(id,token,mod){
+       const result = await baseQuery({path:"user/place/"+id+"?mod="+mod,token,url:favUrl,isHaveBody:false,method:"GET"})
+       return result.json()
 }
 
 export async function updateProfile(id,token,newUserData) {

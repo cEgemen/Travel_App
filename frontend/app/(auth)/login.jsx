@@ -1,5 +1,5 @@
 
-import { View, Text, StyleSheet, ToastAndroid, Image, TouchableOpacity, ScrollView, Keyboard } from 'react-native'
+import { View, Text, StyleSheet, ToastAndroid, Image, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router } from 'expo-router'
 import { colors, fonts, spaces } from '../../constands'
@@ -11,6 +11,7 @@ import authBack2 from "../../assets/images/authBack2.png"
 import emailIcon from "../../assets/icons/email.png"
 import {InputWithLabel,CustomTouchableButton,PasswordInputLabel} from '../../components'
 import { emailValid, passwordValid } from '../../utils/validations' 
+import { ScrollView } from 'react-native'
 
 const Login = () => {
  const [isLoading,setLoading] = useState(false)
@@ -98,9 +99,9 @@ const Login = () => {
                    })
           }  
  }
-
+  
   return (
-   <ScrollView style={styles.safeArea} contentContainerStyle={{flex:1}}>
+   <ScrollView  style={styles.safeArea} contentContainerStyle={{flex:1}}>
    <Image style={[styles.topBackImg,{height:!keyboardState ? "85%" : "55%"}]} source={authBack1}/>
  { !keyboardState ? <View style={styles.topBack2ImgWrapper}>
      <Animated.Image
@@ -158,7 +159,7 @@ const Login = () => {
    </View>
  </ScrollView>
   )
-}
+}    
 
 const styles = StyleSheet.create({
         safeArea : {

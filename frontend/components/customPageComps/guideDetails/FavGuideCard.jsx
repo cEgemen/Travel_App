@@ -14,7 +14,8 @@ const FavGuideCard = ({guide}) => {
            return newDate;
                                }
   const handlePress = () => {
-      router.push("/"+id)
+      const guideId = id;
+      router.push("/guide/"+guideId)
   }                            
   return (
    <View style={{justifyContent:"flex-end",height:80,paddingHorizontal:spaces.small}}> 
@@ -37,7 +38,7 @@ export default FavGuideCard
 
 const styles = StyleSheet.create({
         wrapper : {
-            width:"100%",borderRadius:borderRadius.middleRadius,borderColor:colors.gray,borderWidth:2,gap:spaces.small,elevation:elevation.middleShhadow,backgroundColor:colors.background,padding:spaces.small,paddingVertical:spaces.middle
+            width:"100%",borderRadius:borderRadius.middleRadius,borderColor:colors.gray,borderWidth:2,gap:spaces.small,elevation:elevation.middleShadow,backgroundColor:colors.background,padding:spaces.small,paddingVertical:spaces.middle
         },
         topDetailWrapper:{
             flexDirection:"row",justifyContent:"space-between",alignItems:"center"

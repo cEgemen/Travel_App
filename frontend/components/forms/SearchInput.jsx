@@ -49,7 +49,7 @@ const style = StyleSheet.create({
            borderRadius:borderRadius.middleRadius,
            borderWidth:2,
            backgroundColor:colors.background,
-           elevation:elevation.middleShhadow
+           elevation:elevation.middleShadow
                 },
        iconWrapperStyle:{
              position:"absolute",

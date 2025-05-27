@@ -1,25 +1,24 @@
+import { useQueryClient } from "@tanstack/react-query"
+import { useUserStore } from "../../managments"
+import { Stack, useLocalSearchParams } from "expo-router"
+import { useEffect, useState } from "react"
+import { useDeleteFavGuide, useGetFavGuide, useSaveFavGuide } from "../../hooks/query/queryHook"
+import { ActivityIndicator, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, View } from "react-native"
+import { colors, fonts, spaces } from "../../constands"
+import { bookMarkIcon, fillBookMarkIcon } from "../../assets"
+import { DaysScroll, GuideCard } from "../../components"
 
-import { ActivityIndicator, FlatList, Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Stack, useLocalSearchParams } from 'expo-router'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts, spaces } from '../constands'
-import { useDeleteFavGuide, useGetFavGuide, useSaveFavGuide } from '../hooks/query/queryHook'
-import {useUserStore} from '../managments'
-import { DaysScroll,GuideCard } from '../components'
-import bookmarkIcon from "../assets/icons/bookmark.png"
-import bookmark2Icon from "../assets/icons/bookmark2.png"
-import { useQueryClient } from '@tanstack/react-query'
+
 
 const DynamicGuide = () => {
   const client = useQueryClient() 
   const {token} = useUserStore(state => state.user)
-  const {id} = useLocalSearchParams()
+  const {guideId} = useLocalSearchParams()
   const [currentDay , setCurrentDay] = useState(0)
   const [isSaved,setIsSaved] = useState(true)
   const [guide , setGuide] = useState(null)
 
-  const {data,isError,isLoading,refetch} = useGetFavGuide(id,token,false)
+  const {data,isError,isLoading,refetch} = useGetFavGuide(guideId,token,false)
   useEffect(() => {
     const getData = async () => {
        refetch().then(data => {
@@ -49,10 +48,10 @@ const DynamicGuide = () => {
             <Stack.Screen options={{
                   headerShadowVisible:false,
                   headerTitleAlign:"center",
-                  title:"guide ID #"+id.substring(0,7),
+                  title:"Guide ID #"+id.substring(0,7),
                   headerRight:() => {
                     return <Pressable onPress={handleSave} >
-                           {(deletePending || savePending || isLoading || guide === null)  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSaved ? colors.primary : colors.backgroundDark}} source={isSaved ? bookmark2Icon : bookmarkIcon} />} 
+                           {(deletePending || savePending || isLoading || guide === null)  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSaved ? colors.primary : colors.backgroundDark}} source={isSaved ? fillBookMarkIcon : bookMarkIcon} />} 
                             </Pressable>
                                        }
             }}/>

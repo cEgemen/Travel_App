@@ -1,22 +1,22 @@
-import React from 'react'
 import { Stack } from 'expo-router'
 
+
 const RouteLayout = () => {
+  const baseOption = {headerShown:false}    
   return (
-     <Stack>
+      <Stack>
         <Stack.Screen name='customFilter'/>
-        <Stack.Screen name='generate' options={{
-            headerShown:false
+        <Stack.Screen name='generate' options={{...baseOption}} />
+        <Stack.Screen name='main' options={{...baseOption}} />
+        <Stack.Screen name='routeDetail' options={{...baseOption}}/>
+        <Stack.Screen name='placeDetail' options={{
+            ...baseOption
         }} />
-        <Stack.Screen name='main' options={{
-              headerShown:false
-        }} />
-        <Stack.Screen name='routeDetail'/>
-        <Stack.Screen name='placeDetail' />
         <Stack.Screen name='selectedRoute' options={{
-              headerShown:false
+             ...baseOption
         }} />
-     </Stack>
+      </Stack>    
+
   )
 }
 

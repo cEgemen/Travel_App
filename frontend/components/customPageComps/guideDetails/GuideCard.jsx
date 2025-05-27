@@ -48,7 +48,7 @@ export default GuideCard
 
 const styles = StyleSheet.create({
      wrapper : {
-     borderColor:colors.gray,borderWidth:2,backgroundColor:colors.background,elevation:elevation.middleShhadow,
+     borderColor:colors.gray,borderWidth:2,backgroundColor:colors.background,elevation:elevation.middleShadow,
      borderRadius:borderRadius.middleRadius,padding:spaces.middle
      },
      headerStyle:{

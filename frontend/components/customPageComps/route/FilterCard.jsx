@@ -7,7 +7,7 @@ const FilterCard = ({icon=null,text="",isActive=false,onPress = (key,value) =>{}
     let activePressableCircle = {}
     if(isActive)
     {
-         activeCard = {opacity:1,borderColor:colors.darkGray,elevation:elevation.middleShhadow}
+         activeCard = {opacity:1,borderColor:colors.darkGray,elevation:elevation.middleShadow}
          activePressableCircle = {backgroundColor:colors.primary}
     }
 
