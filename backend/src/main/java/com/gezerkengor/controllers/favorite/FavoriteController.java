@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.gezerkengor.base.baseController.BaseController;
-import com.gezerkengor.models.favorite.entity.Favorite;
+import com.gezerkengor.models.favorite.entity.guide.FavoriteGuide;
+import com.gezerkengor.models.favorite.entity.place.FavoritePlace;
 import com.gezerkengor.services.favorite.FavoriteService;
 
 import jakarta.validation.Valid;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
-@Log4j2
 @RequestMapping("/api/favorite")
 public class FavoriteController extends BaseController<Map<String,?>> implements IFavoriteController {
 
@@ -28,24 +28,22 @@ public class FavoriteController extends BaseController<Map<String,?>> implements
     private FavoriteService service;
 
     @Override
-    @PostMapping("/save")
-    public ResponseEntity<?> saveFavoriteGuide(@Valid @RequestBody Favorite favorite) {
-        log.info("favorite  : "+favorite.toString());
-        System.out.println("favorite : "+favorite);
-        Map<String,?> result = service.saveFavoriteGuide(favorite);
+    @PostMapping("/save/guide")
+    public ResponseEntity<?> saveFavoriteGuide(@Valid @RequestBody FavoriteGuide favoriteGuide) {
+        System.out.println("favorite : "+favoriteGuide);
+        Map<String,?> result = service.saveFavoriteGuide(favoriteGuide);
         return okResponse(result);
     }
 
     @Override
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/guide/{id}")
     public ResponseEntity<?> deleteFavoriteGuide(@PathVariable String id) {
-       log.info("deleting guide id : "+id);
        Map<String , ?> result = service.deleteFavoriteGuide(id);
        return okResponse(result);
     }
 
     @Override
-    @GetMapping("/user/{id}")
+    @GetMapping("/user/guide/{id}")
     public ResponseEntity<?> getOwnerFavoriteGuide(@PathVariable String id,@RequestParam int mod) {
         System.out.println("favOwner id : "+id+" --- mod : "+mod);
         Map<String,?> result = service.getOwnerFavoriteGuide(id,mod);
@@ -53,12 +51,40 @@ public class FavoriteController extends BaseController<Map<String,?>> implements
     }
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping("/guide/{id}")
     public ResponseEntity<?> getFavoriteGuide(@PathVariable String id) {
         Map<String,?> result = service.getFavoriteGuide(id);
         return okResponse(result);
     }
-    
-    
 
+    @Override
+    @PostMapping("/save/place")
+    public ResponseEntity<?> saveFavoritePlace(@RequestBody FavoritePlace favoritePlace) {
+        System.out.println("favoritePlace : "+favoritePlace);
+        Map<String,?> result = service.saveFavoritePlace(favoritePlace);
+        return okResponse(result);
+    }
+
+    @Override
+    @DeleteMapping("/delete/place/{id}")
+    public ResponseEntity<?> deleteFavoritePlace(@PathVariable String id) {
+        Map<String,?> result = service.deleteFavoritePlace(id);
+        return okResponse(result);
+    }
+
+    @Override
+    @GetMapping("/user/place/{id}")
+public ResponseEntity<?> getOwnerFavoritePlace(@PathVariable String id,@RequestParam int mod) {
+        System.out.println("owner id : "+id+" and mod : "+mod);
+        Map<String,?> result = service.getOwnerFavoritePlace(id,mod);
+        return okResponse(result);
+    }
+
+    @Override
+    @GetMapping("/place/{id}")
+    public ResponseEntity<?> getFavoritePlace(@PathVariable String id) {
+        Map<String,?> result = service.getFavoritePlace(id);
+        return okResponse(result);
+    }
+    
 }

@@ -1,4 +1,4 @@
-package com.gezerkengor.models.favorite.entity;
+package com.gezerkengor.models.favorite.entity.guide;
 
 import java.util.List;
 

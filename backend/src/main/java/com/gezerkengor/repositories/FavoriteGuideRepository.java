@@ -7,18 +7,18 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.gezerkengor.models.favorite.dto.DTOOwnerFavorite;
-import com.gezerkengor.models.favorite.entity.Favorite;
+import com.gezerkengor.models.favorite.dto.guide.DTOOwnerFavoriteGuide;
+import com.gezerkengor.models.favorite.entity.guide.FavoriteGuide;
 
 @Repository
-public interface FavoriteRepository extends MongoRepository<Favorite,String> {
+public interface FavoriteGuideRepository extends MongoRepository<FavoriteGuide,String> {
     
-     List<Favorite> findByFavOwner(String id);
+     List<FavoriteGuide> findByFavOwner(String id);
 
      @Query(value = "{'favOwner':?0 }", fields = "{ 'id': 1, 'metadata': 1, 'createDate': 1 , 'updateDate': 1}")
-     List<DTOOwnerFavorite> findAllUserGuides(String id);
+     List<DTOOwnerFavoriteGuide> findAllUserGuides(String id);
 
      @Query(value = "{'favOwner':?0 }", fields = "{ 'id': 1, 'metadata': 1, 'createDate': 1 , 'updateDate': 1}")
-     List<DTOOwnerFavorite> findAllUserGuides(String id ,Sort sort);
+     List<DTOOwnerFavoriteGuide> findAllUserGuides(String id ,Sort sort);
 
 }

@@ -1,9 +1,8 @@
-package com.gezerkengor.models.favorite.dto;
+package com.gezerkengor.models.favorite.dto.guide;
 
 import java.time.Instant;
-import java.util.List;
-import com.gezerkengor.models.favorite.entity.Itinerary;
-import com.gezerkengor.models.favorite.entity.MetaData;
+
+import com.gezerkengor.models.favorite.entity.guide.MetaData;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +13,14 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class DTOFavorite {
+public class DTOOwnerFavoriteGuide {
+    
     private  String id;
-    private  String favOwner;
+
     private  MetaData metadata;
-    private  List<Itinerary> itinerary;
+
     private Instant createDate;
+
     private Instant updateDate;
+
 }
