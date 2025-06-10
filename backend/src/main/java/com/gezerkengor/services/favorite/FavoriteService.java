@@ -118,10 +118,7 @@ public class FavoriteService implements IFavoriteService{
                                                                     .setImgUrl(place.getImgUrl())
                                                                     .setLat(place.getLat())
                                                                     .setLon(place.getLon())
-                                                                    .setActivities(place.getActivities())
-                                                                    .setBestTimeToVisit(place.getBestTimeToVisit())
-                                                                    .setLocalTips(place.getLocalTips())
-                                                                    .setEstimatedCost(place.getEstimatedCost())
+                                                                    .setFilterType(place.getFilterType())
                                                                     .setCreatedDate(place.getCreatedDate())
                                                                     .setUpdatedDate(place.getUpdatedDate());
         return Map.of("message","place("+id+") is fetched.","data",dTOFavoritePlace);                                                            

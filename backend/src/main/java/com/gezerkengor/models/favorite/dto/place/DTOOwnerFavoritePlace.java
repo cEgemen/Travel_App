@@ -18,7 +18,9 @@ public class DTOOwnerFavoritePlace {
    private String id;
    private String imgUrl;
    private String name;
+   private String summary;
    private String location;
+   private String filterType;
    private Instant updatedDate;
 
 }

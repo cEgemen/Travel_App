@@ -1,7 +1,6 @@
 package com.gezerkengor.models.favorite.dto.place;
 
 import java.time.Instant;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,10 +19,6 @@ public class DTOFavoritePlaces {
 
     private String favOwner;
 
-    private List<String> activities;
-
-    private String estimatedCost;
-
     private String location;
 
     private String name;
@@ -32,13 +27,11 @@ public class DTOFavoritePlaces {
 
     private String imgUrl;
 
+    private String filterType;
+
     private double lat;
 
     private double lon;
-
-    private List<String> bestTimeToVisit;
-
-    private List<String> localTips;
 
     private Instant createdDate;
 

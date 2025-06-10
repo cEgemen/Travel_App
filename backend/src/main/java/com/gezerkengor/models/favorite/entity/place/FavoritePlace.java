@@ -1,7 +1,6 @@
 package com.gezerkengor.models.favorite.entity.place;
 
 import java.time.Instant;
-import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,10 +25,6 @@ public class FavoritePlace {
 
     private String favOwner;
 
-    private List<String> activities;
-
-    private String estimatedCost;
-
     private String location;
 
     private String name;
@@ -38,13 +33,11 @@ public class FavoritePlace {
 
     private String imgUrl;
 
+    private String filterType;
+
     private double lat;
 
     private double lon;
-
-    private List<String> bestTimeToVisit;
-
-    private List<String> localTips;
 
     @CreatedDate
     private Instant createdDate;
