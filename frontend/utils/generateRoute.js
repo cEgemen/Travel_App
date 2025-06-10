@@ -13,7 +13,7 @@ export const generateRoute = async (
         Math.max(startCoord[1], destCoord[1]),
         Math.max(startCoord[0], destCoord[0])
       ].join(",");
-
+ 
       const url = `https://api.tomtom.com/routing/1/calculateRoute/${startCoord.join(",")}:${destCoord.join(",")}/json?key=${TOMTOM_API_KEY}&traffic=true&maxAlternatives=2&routeType=fastest&travelMode=${TravelMode}&computeTravelTimeFor=all&routeRepresentation=polyline&instructionsType=tagged&language=tr-TR${routePreference === "free" ? "&avoid=tollRoads" : "" 
       }`
       const response = await fetch(url)
@@ -59,3 +59,44 @@ export const generateRoute = async (
       throw error;
     }
   };
+
+
+  export const getBestRouteSteps = async (startCoord, destCoord) => {
+  try {
+    const url = `https://api.tomtom.com/routing/1/calculateRoute/${startCoord.join(",")}:${destCoord.join(",")}/json?` +
+      new URLSearchParams({
+        key: TOMTOM_API_KEY,
+        travelMode: "car",
+        routeType: "fastest",
+        instructionsType: "tagged",
+        language: "tr-TR",
+        traffic: "false"
+      });
+
+    const response = await fetch(url);
+    const text = await response.text();
+
+    if (!response.ok) {
+      console.error("Rota alma hatası:", text);
+      throw new Error("API başarısız");
+    }
+
+    const data = JSON.parse(text);
+    const route = data.routes?.[0];
+
+    if (!route) throw new Error("Rota bulunamadı");
+
+    const steps = route.guidance?.instructions?.map((step) => ({
+      instruction: step.message || "Talimat yok",
+      distance: `${(step.routeOffsetInMeters / 1000).toFixed(1)} km`,
+      duration: `${Math.round(step.travelTimeInSeconds / 60)} dk`,
+      location: [step.point.latitude, step.point.longitude]
+    })) || [];
+
+    return steps;
+
+  } catch (err) {
+    console.error("Rota steps alınamadı:", err);
+    throw err;
+  }
+};

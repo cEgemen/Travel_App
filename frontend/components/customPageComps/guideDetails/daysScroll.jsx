@@ -1,7 +1,6 @@
 
 
 import {StyleSheet,View,Pressable, Image, Text} from 'react-native'
-import React from 'react'
 import { borderRadius, colors, elevation, spaces } from '../../../constands'
 import {rightShortArrowIcon,leftShortArrowIcon} from "../../../assets"
 

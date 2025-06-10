@@ -1,6 +1,5 @@
 
 import { Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
-import React from 'react'
 
 const CustomTouchableButton = (
       {

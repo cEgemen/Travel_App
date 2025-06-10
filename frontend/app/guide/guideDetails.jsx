@@ -1,7 +1,7 @@
 import { ScrollView,FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts, spaces } from '../../constands'
+import { colors, fonts, spaces, title } from '../../constands'
 import {useGuideStore,useUserStore} from '../../managments'
 import { router, Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
@@ -62,7 +62,7 @@ const GuideDetails = () => {
             />
             <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={false}>
               <View style={styles.headerContainer}>  
-                 <Text numberOfLines={1} style={styles.headerTitle}>📍{guide.metadata.city},{guide.metadata.country}</Text>
+                 <Text numberOfLines={1} style={{...title,color : colors.text,marginBottom:spaces.small,flex:1}}>📍{guide.metadata.city},{guide.metadata.country}</Text>
                  <Text style={{color:colors.gray,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight}}>🌞 {guide.metadata.totalDays} 🌚 {guide.metadata.totalNights}</Text>
               </View>
               <DaysScroll currentDay={currentDay + 1} totalDays={guide.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />
@@ -106,8 +106,5 @@ const styles = StyleSheet.create({
       },
       headerContainer:{
          marginBottom:spaces.high,flexDirection:"row",alignItems:"center"
-      },
-      headerTitle : {
-          fontSize : fonts.smallMidFontSize , fontWeight : fonts.highFontWeight,color : colors.text,marginBottom:spaces.small,flex:1
-      },
+      }
 })

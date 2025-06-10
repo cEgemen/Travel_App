@@ -1,9 +1,9 @@
 
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import {StyleSheet} from 'react-native'
+import {useState} from 'react'
 import InputWithLabel from './InputWithLabel'
-import closeEyeIcon from "../../assets/icons/closeEye.png"
-import openEyeIcon from "../../assets/icons/openEye.png"
+import { closeEyeIcon, openEyeIcon } from '../../assets'
+
 
 const PasswordInputLabel = ({value="",label="",placeholder="",onChange=(text)=> {},onEndEditing=()=>{},errors=[],inputContainerStyle={},editable=true}) => {
     const [isVisible , setIsVisible] = useState(true)

@@ -1,23 +1,19 @@
 
-import { View, Text, StyleSheet, ToastAndroid, Image, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, ToastAndroid, Image, TouchableOpacity} from 'react-native'
+import {useState } from 'react'
 import { router } from 'expo-router'
 import { colors, fonts, spaces } from '../../constands'
 import { BASE_URL } from '../../secret'
 import {useUserStore} from '../../managments'
 import Animated, {FadeInDown,FadeInUp,} from "react-native-reanimated";
-import authBack1 from "../../assets/images/authBack1.png"
-import authBack2 from "../../assets/images/authBack2.png"
-import emailIcon from "../../assets/icons/email.png"
-import {InputWithLabel,CustomTouchableButton,PasswordInputLabel} from '../../components'
+import {InputWithLabel,CustomTouchableButton,PasswordInputLabel, BaseKeyboardWrapper, BasePageWrapper} from '../../components'
 import { emailValid, passwordValid } from '../../utils/validations' 
-import { ScrollView } from 'react-native'
+import { authBack1Img, authBack2Img, emailIcon } from '../../assets'
 
 const Login = () => {
  const [isLoading,setLoading] = useState(false)
  const [formState , setFormState ] = useState({email:"",password:""});
  const [errorState,setErrorState] = useState({email:[],password:[],isReady:false})
- const [keyboardState,setKeyboardState] = useState(false)
  const setUser = useUserStore(state => state.setUser)
 
  const goToRegister = () => {
@@ -26,22 +22,6 @@ const Login = () => {
       router.push("/register")
      }
  }
-
- useEffect(() => {
-   const open =  Keyboard.addListener("keyboardDidShow",() => {
-      setKeyboardState(true)
-   })
-   
-   const close = Keyboard.addListener("keyboardDidHide",() => {
-       setKeyboardState(false)
-   })
-
-   return () => {
-       open.remove()
-       close.remove()
-   }
-
- })
  
  const onSubmit = () => {
   if(errorState.isReady)
@@ -101,18 +81,22 @@ const Login = () => {
  }
   
   return (
-   <ScrollView  style={styles.safeArea} contentContainerStyle={{flex:1}}>
-   <Image style={[styles.topBackImg,{height:!keyboardState ? "85%" : "55%"}]} source={authBack1}/>
- { !keyboardState ? <View style={styles.topBack2ImgWrapper}>
+       
+      <BasePageWrapper  wrapperStyle={styles.container}>
+              <BaseKeyboardWrapper>
+                {({keyboardIsShow,keyboardHeight}) => {
+                return  <View style={{marginBottom:keyboardHeight}}>
+                      <Image style={[styles.topBackImg,{height:!keyboardIsShow ? "85%" : "55%"}]} source={authBack1Img}/>
+    {!keyboardIsShow ? <View style={styles.topBack2ImgWrapper}>
      <Animated.Image
         entering={FadeInUp.delay(200).duration(1000).springify()}
        style={{width:90,height:220}}
-       source={authBack2}
+       source={authBack2Img}
      />
      <Animated.Image
        entering={FadeInUp.delay(400).duration(1000).springify()}
        style={{width:65,height:160}}
-       source={authBack2}
+       source={authBack2Img}
      />
    </View> :  null 
    }
@@ -156,13 +140,16 @@ const Login = () => {
          </TouchableOpacity>
        </Animated.View>
      </View>
-   </View>
- </ScrollView>
-  )
+    </View> 
+                  </View>
+                }}
+              </BaseKeyboardWrapper>
+            </BasePageWrapper>
+          )
 }    
 
 const styles = StyleSheet.create({
-        safeArea : {
+        container : {
             flex:1,backgroundColor:colors.background
         },
         topBackImg:{

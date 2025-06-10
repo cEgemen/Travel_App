@@ -1,6 +1,6 @@
 
 import { FlatList, StyleSheet, View } from 'react-native'
-import React from 'react'
+import uuid from "react-native-uuid"
 import { borderRadius, colors, spaces } from '../../constands';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -11,7 +11,7 @@ const DoteSlider = ({doteSize=0,currentIndex=0}) => {
   const Dote = ({index}) => {
    const isActive = (currentIndex % 5) ===index
    return  <>
-         <View style={{width: isActive ? 55 : 25,height:25,backgroundColor:isActive ? colors.gray : colors.lightGray ,borderRadius:borderRadius.circleRadius(25)}} key={index}>
+         <View style={{width: isActive ? 55 : 25,height:25,backgroundColor:isActive ? colors.gray : colors.lightGray ,borderRadius:borderRadius.circleRadius(25)}} key={uuid.v4()}>
          </View>
    </>
   }

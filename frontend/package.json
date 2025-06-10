@@ -16,9 +16,10 @@
     "expo": "~53.0.8",
     "expo-constants": "~17.1.6",
     "expo-linking": "~7.1.4",
-    "expo-location": "^18.1.4",
+    "expo-location": "~18.1.5",
     "expo-router": "~5.0.6",
     "expo-status-bar": "~2.2.3",
+    "geolib": "^3.3.4",
     "gezerken-gor": "file:",
     "groq-sdk": "^0.21.0",
     "lottie-react-native": "^7.2.2",
@@ -29,6 +30,7 @@
     "react-native-reanimated": "^3.17.5",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
+    "react-native-uuid": "^2.0.3",
     "zustand": "^5.0.4"
   },
   "devDependencies": {

@@ -3,9 +3,10 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
 import dayjs from 'dayjs'
 import { router } from 'expo-router'
+import { getFallbackImageForCategory } from '../../../utils/scanRoute'
 
 const FavPlaceCard = ({placeData}) => {
-  const {imgUrl,name,location,id:placeId,updateDate} = placeData
+  const {imgUrl,name,location,id:placeId,updateDate,filterType} = placeData
   console.log("placeId : ",placeId)
     const format =  'DD/MM/YYYY'
     const dateFormat = (date) => {
@@ -22,7 +23,7 @@ const FavPlaceCard = ({placeData}) => {
     <Text style={{position:"absolute",top:0,right:0,fontSize:fonts.smallFontSize,zIndex:5}}>📌</Text>
     <Pressable style={styles.cardWrapper} onPress={handlePressCard}>
       <View style={styles.imgContainer} >
-         <Image source={{uri:imgUrl}} style={styles.imgStyle} />
+         <Image source={parseInt(imgUrl) === -1 ? getFallbackImageForCategory(filterType) : {uri:imgUrl}} style={styles.imgStyle} />
       </View>
       <View style={styles.detailContainer} >
          <View style={styles.upDetailContainer}>

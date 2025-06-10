@@ -1,9 +1,8 @@
 
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import CustomModal from './CustomModal'
 import CustomTouchableButton from '../customButtons/CustomTouchableButton'
-import { colors } from '../../constands/appConstand'
+import { colors } from '../../constands'
 
 const ModalWithButtons = ({title="",desc="",confirm=()=>{},cancel=()=>{},isVisible=false,closeVisible=()=>{}}) => {
 

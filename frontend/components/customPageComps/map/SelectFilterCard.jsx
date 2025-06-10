@@ -1,20 +1,17 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
-import checkIcon from "../../../assets/icons/check.png"
-import closeIcon from "../../../assets/icons/close.png"
-import {rightShortArrowIcon} from "../../../assets"
+import {checkIcon, closeIcon, rightShortArrowIcon} from "../../../assets"
 
 const SelectFilterCard = ({title="",isCustom=false,onPress=() => {},isActive=false}) => {
-  
-  const TypeWrapper = ({text="",custom=false}) => {
+
+   const TypeWrapper = ({text="",custom=false}) => {
       return  <View style={styles.typeWrapper}>
                <Text style={{flex:1}}>{text}</Text> 
                <View style={{...styles.iconWrapper,...{backgroundColor:custom ? "rgb(208, 81, 81)" : "rgb(118, 210, 121)"}}}>
                 <Image style={styles.icon} source={custom ? closeIcon : checkIcon }/> 
                </View>
               </View>
-  }
+  } 
 
   let wrapperStyle = {borderColor:colors.gray,borderWidth:1,elevation:elevation.smallShadow,opacity:0.5}
 

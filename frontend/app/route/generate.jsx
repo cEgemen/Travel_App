@@ -1,11 +1,12 @@
-import { BackHandler, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { BackHandler, StyleSheet, Text, View } from 'react-native'
+import { useEffect } from 'react'
 import route2Lottie from "../../assets/lottie/route2.json"
 import LottieView from 'lottie-react-native'
 import { colors, fonts } from '../../constands'
 import { router } from 'expo-router'
 import {useLocationStore,useRouteStore} from '../../managments'
 import { generateRoute } from '../../utils/generateRoute'
+import { BasePageWrapper } from '../../components'
 
 const Generate = () => {
 
@@ -25,6 +26,7 @@ const Generate = () => {
   useEffect(() => {
            const startLoc = [startDetails.lat,startDetails.lon]
            const endLoc  =   [endDetails.lat,endDetails.lon]
+           console.log("filters : ",filters)
            const generate = async () => {
               const result = await generateRoute(startLoc,endLoc,filters.price,filters.vehicle)
               setRouteDatas(result)
@@ -34,13 +36,13 @@ const Generate = () => {
   },[])
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <BasePageWrapper wrapperStyle={styles.wrapper}>
         <LottieView source={route2Lottie} autoPlay style={styles.lottie} />
         <View style={styles.header}>
                   <Text style={styles.headerTitle}>Please Wait ...</Text>
                   <Text style={styles.headerSubTitle}>We are working to draw your routes.</Text>
         </View>
-    </SafeAreaView>
+    </BasePageWrapper>
   )
 }
 

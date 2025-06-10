@@ -1,5 +1,5 @@
 import { StyleSheet,View,Text,FlatList, Image, Pressable, SafeAreaView } from 'react-native'
-import { borderRadius, colors, fonts, spaces } from '../../constands';
+import { borderRadius, colors, fonts, spaces, subTitle, title } from '../../constands';
 import { useState } from 'react';
 import {CustomTouchableButton,TouchableIcon} from '../../components';
 import { router, Stack } from 'expo-router';
@@ -72,13 +72,13 @@ const SelectTravelPrice = () => {
     }} />
     <View style={styles.container}>
        <View style={styles.headerContainer}>
-              <Text style={styles.headerTitle}>
+              <Text style={{...title,color:colors.text,paddingLeft:spaces.middle}}>
               Select Price Type 💲
               </Text>
-              <Text style={styles.headerSubTitle}>
+              <Text style={{...subTitle,color:colors.text,color:colors.gray,paddingLeft:spaces.high}}>
               📌 Select the trip price is {prices[priceState.selectIndex].type.substring(2)}.
               </Text>
-              <Text style={styles.headerSubTitle}>
+              <Text style={{...subTitle,color:colors.text,color:colors.gray,paddingLeft:spaces.high}}>
               📌 Average daily spending is {prices[priceState.selectIndex].price}.
               </Text>
        </View>
@@ -113,12 +113,6 @@ const styles = StyleSheet.create({
          headerContainer :{
               marginTop:spaces.highx2,
               marginBottom:spaces.high,gap:spaces.small
-         },
-         headerTitle : {
-              color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight,paddingLeft:spaces.middle
-         },
-         headerSubTitle : {
-               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.gray,paddingLeft:spaces.high
          },
          btnStyle : {
              backgroundColor:colors.primary,marginVertical:"auto"

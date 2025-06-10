@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useUserStore } from '../../../managments'
 import { useGetOwnerFavGuides } from '../../../hooks/query/queryHook'
 import FavGuideCard from './FavGuideCard'
+import dayjs from 'dayjs'
 
 const FavGuide = () => {
   const [currentOrder,setCurrentOrder] = useState(1)
@@ -13,6 +14,12 @@ const FavGuide = () => {
   const {data,isLoading} = useGetOwnerFavGuides(id,currentOrder,token)
   const guides = isLoading ? ["null"] : data.ok_data.data
  
+  const format =  'DD/MM/YYYY'
+  const dateFormat = (date) => {
+           const newDate = dayjs(date).format(format)
+           return newDate;
+  }
+
   const handleSort = (mod) => {
       setCurrentOrder(oldState => mod)
   }
@@ -64,13 +71,8 @@ const FavGuide = () => {
  }   
 
   return (
-    <FlatList 
-           showsVerticalScrollIndicator={false}
-           contentContainerStyle={[styles.flatContentStyle,{height:guides.length === 0 ? "100%" : "auto"}]}
-           keyExtractor={(item,index) => index}
-           data={guides}
-           ListHeaderComponent={() => {
-                 return  <View style={{paddingTop:spaces.high}}>
+    <>
+           <View style={{paddingTop:spaces.high}}>
                           <Image source={notesIcon} style={{width:30,height:30,tintColor:colors.darkGray,position:"absolute",left:"45%",zIndex:2}} />
                           <View style={styles.flatHeaderWrapper}>
                              <View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -93,9 +95,12 @@ const FavGuide = () => {
                                   </Pressable>
                             </View>
                           </View>  
-                        </View>}
-           }
-           
+           </View> 
+           <FlatList 
+           showsVerticalScrollIndicator={false}
+           contentContainerStyle={styles.flatContentStyle}
+           keyExtractor={(item,index) => index}
+           data={guides}           
            ListEmptyComponent={() => {
                return <View style={styles.flatEmptyWrapper}>
                              <Image style={styles.emptyImage} source={favImg} />
@@ -108,6 +113,8 @@ const FavGuide = () => {
                           return content;         
            }}
          /> 
+    </>
+   
   )
 }
 
@@ -115,7 +122,7 @@ export default FavGuide
 
 const styles = StyleSheet.create({ 
      flatContentStyle : {
-       padding:spaces.middle
+      flexGrow:1
     },
     flatHeaderWrapper : {
             borderColor:colors.gray,borderWidth:2,width:"100%",borderRadius:borderRadius.middleRadius,elevation:elevation.middleShadow,backgroundColor:colors.background,padding:spaces.high,gap:spaces.high

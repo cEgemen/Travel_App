@@ -1,9 +1,7 @@
 
 import { Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { borderRadius, colors, fonts, spaces } from '../../constands/appConstand'
-import closeIcon from "../../assets/icons/close.png"
-import { auto } from 'groq-sdk/_shims/registry.mjs'
+import { borderRadius, colors, fonts, spaces } from '../../constands'
+import { closeIcon } from '../../assets'
 
 const CustomModal = ({isVisible=false,closeVisible=()=>{},title="",CenterContent=null,centerContentWrapper={},
                       BottomContent=null,bottomContentWrapper={}}) => {

@@ -1,3 +1,4 @@
+import { amenityImg, historicImg, naturalImg, tourismImg } from "../assets";
 
 const fetchWithTimeout = async (url, options = {}, timeout = 3000) => {
     const controller = new AbortController();
@@ -12,53 +13,47 @@ const fetchWithTimeout = async (url, options = {}, timeout = 3000) => {
     }
 };
 
-
-const searchImageFromWikimedia = async (query) => {
-    try {
-        console.log(`🔍 Wikimedia'da '${query}' için görsel aranıyor...`);
-        const res = await fetchWithTimeout(`https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=${encodeURIComponent(query)}&origin=*`);
-        const data = await res.json();
-        const pages = data.query.pages;
-        const firstPage = Object.values(pages)[0];
-        const result = firstPage?.original?.source || null;
-        console.log(`✅ Wikimedia sonucu:`, result);
-        return result;
-    } catch (err) {
-        console.error("❌ Wikimedia görsel hatası (timeout olabilir):", err.name === 'AbortError' ? 'İstek zaman aşımına uğradı' : err);
-        return null;
-    }
-};
-
-const searchImageFromOpenverse = async (query) => {
-    try {
-        console.log(`🔍 Openverse'de '${query}' için görsel aranıyor...`);
-        const res = await fetchWithTimeout(`https://api.openverse.engineering/v1/images?q=${encodeURIComponent(query)}&page_size=1`);
-        const data = await res.json();
-        const result = data?.results?.[0]?.url || null;
-        console.log(`✅ Openverse sonucu:`, result);
-        return result;
-    } catch (err) {
-        console.error("❌ Openverse görsel hatası (timeout olabilir):", err.name === 'AbortError' ? 'İstek zaman aşımına uğradı' : err);
-        return null;
-    }
-};
-// görsel bulmayı direkt çıkara da bilirsin çalışıyo denedim
-//Yedek ikon belirleyici
-const getFallbackImageForCategory = (category) => {
-    const iconMap = {
-        //buraya sana attığım defaultların pathini eklicez
-        "natural": "https://example.com/icons/library.png",
-        "historic": "https://example.com/icons/cinema.png",
-        "cultural": "https://example.com/icons/religion.png",
-        "tourism": "https://example.com/icons/theatre.png",
+export const getFallbackImageForCategory = (category) => {
+    const defaultImg = {
+        "natural": naturalImg,
+        "historic": historicImg,
+        "amenity": amenityImg,
+        "tourism": tourismImg,
     };
 
-    const fallback = iconMap[category] || iconMap["default"];
-    console.log(`🖼️ Yedek ikon kullanıldı: [${category}] ->`, fallback);
+    const fallback = defaultImg[category] || defaultImg["tourism"];
     return fallback;
 };
 
-// 🌍 Overpass API'den POI verisi çekme
+
+const searchImageFromOpenverse = async (name,type) => {
+    try {
+        const res = await fetchWithTimeout(`https://api.openverse.engineering/v1/images?q=${encodeURIComponent(name)}&page_size=1`);
+ 
+        if(res.status !== 200)
+        {
+           return -1
+        }
+        const data = await res.json();
+        let result = data?.results?.[0]?.url 
+        if(result !== null)
+        {
+           const res = await fetch(result)
+           if(res.status === 404)
+           {
+             result = -1
+           }
+        }
+        else
+        {
+            result = -1
+        }
+        return result;
+    } catch (err) {
+        return -1;
+    }
+};
+
 const fetchPOIData = async (query) => {
     try {
         const res = await fetchWithTimeout("https://overpass-api.de/api/interpreter", {
@@ -67,43 +62,47 @@ const fetchPOIData = async (query) => {
         });
         return await res.json();
     } catch (err) {
-        console.error("❌ Overpass POI arama hatası (timeout olabilir):", err.name === 'AbortError' ? 'İstek zaman aşımına uğradı' : err);
+        console.log("❌ Overpass POI arama hatası (timeout olabilir):", err.name === 'AbortError' ? 'İstek zaman aşımına uğradı' : err);
         return null;
     }
 };
 
-export const fetchLocationImg = async (name) => {
-             const wikimediaImage = await searchImageFromWikimedia(name);
-             const openverseImage = wikimediaImage ? null : await searchImageFromOpenverse(name);
-             const fallbackImage = (!wikimediaImage && !openverseImage)
-                        ? getFallbackImageForCategory(type.toLowerCase())
-                        : null;
-            
-             return wikimediaImage || openverseImage || fallbackImage            
+export const fetchLocationImg = async (name,type) => {
+         
+             const placeImg =  await searchImageFromOpenverse(name,type);
+             return placeImg         
 }
 
-// 📍 Ana POI toplama fonksiyonu
+const dummyPOICategories = {
+  tourism: [
+    "tourism=museum",
+    "tourism=artwork",
+    "tourism=gallery",
+    "tourism=viewpoint",
+    "tourism=zoo"
+  ],
+  historic: [
+    "historic",
+  ],
+  amenity: [
+    "amenity=library",
+    "amenity=theatre",
+    "amenity=cinema",
+  ]
+};
+
 export const fetchPOIs = async ({route, selectedCategories=[]}) => {
     const searchRadius = 5000;
-    const defaultCultural = [
-        "amenity=place_of_worship",
-        "amenity=library",
-        "amenity=theatre",
-        "amenity=cinema"
-                            ];
+    const defaultCultural = dummyPOICategories["amenity"]
                             
-    const activeCategories = selectedCategories.length > 0 ? selectedCategories : defaultCultural;
+    const activeCategories = selectedCategories.length > 0 ? selectedCategories.flatMap((value,index) => dummyPOICategories[value]) : defaultCultural;
     const poiData = [];
-
-    console.log("📍 POI araması başlatıldı. Kategoriler : ", activeCategories);
 
     for (let i = 0; i < route.coordinates.length - 1;) {
         const [lat1, lon1] = route.coordinates[i];
         const [lat2, lon2] = route.coordinates[i + 1];
         const midpointLat = (lat1 + lat2) / 2;
         const midpointLon = (lon1 + lon2) / 2;
-
-        console.log(`📌 ${i}. segmentin orta noktası: (${midpointLat}, ${midpointLon})`);
 
         const filters = activeCategories.map(
             cat => `node[${cat}](around:${searchRadius},${midpointLat},${midpointLon});`
@@ -113,29 +112,23 @@ export const fetchPOIs = async ({route, selectedCategories=[]}) => {
         const data = await fetchPOIData(query);
 
         if (data && Array.isArray(data.elements)) {
-            console.log(`✅ ${data.elements.length} POI bulundu.`);
 
             const pois = await Promise.all(
                 data.elements.map(async item => {
                     let name = item.tags?.name;
                     if (!name) {
-                        console.log("⚠️ İsimsiz POI atlandı.");
                         name = null
                     }
 
                     const type =
                         item.tags?.tourism || item.tags?.historic || item.tags?.natural ||
-                        item.tags?.amenity || item.tags?.leisure || item.tags?.man_made ||
-                        item.tags?.landuse || "Bilinmeyen";
-
+                        item.tags?.amenity || "UnKnown"
                
                     let score = 0;
                     if (name) {
                         score += 2
                      };
-                    if (type && type !== "Bilinmeyen") score += 1;
-
-                    console.log(`📍 POI eklendi: ${name} (Type: ${type}, Score: ${score})`);
+                    if (type && type !== "UnKnown") score += 1;
 
                     return {
                         id: item.id,
@@ -164,11 +157,11 @@ export const fetchPOIs = async ({route, selectedCategories=[]}) => {
             uniquePOIs.push(poi);
         }
     }
-    console.log("total: "+uniquePOIs.length)
+ 
     const sortedPOIs = uniquePOIs
         .sort((a, b) => b.score - a.score)
         .slice(0, 10);
 
-    console.log("🏆 En yüksek puanlı 10 POI:", sortedPOIs);
-    return sortedPOIs;
+        return sortedPOIs;
 };
+

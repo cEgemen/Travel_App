@@ -19,8 +19,8 @@ export const colors = {
 export const fonts = {
      
      smallFontSize : 15,
-     smallMidFontSize:20,
-     middleFontSize: 25,
+     smallMidFontSize:18,
+     middleFontSize: 24,
      middleHighFontSize:30,
      highFontSize : 35,
      smallFontWeight:400,
@@ -48,6 +48,21 @@ export const spaces = {
      middle:10,
      high : 20,
      highx2 : 40
+}
+
+export const title = {
+   fontSize : fonts.middleFontSize,
+   fontWeight : fonts.middleFontWeight
+}
+
+export const subTitle = {
+    fontSize : fonts.smallMidFontSize,
+    fontWeight : fonts.middleFontWeight
+}
+
+export const detailText = {
+    fontSize : fonts.smallFontSize,
+    fontWeight : fonts.middleFontWeight
 }
 
 

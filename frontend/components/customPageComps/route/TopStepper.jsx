@@ -1,6 +1,5 @@
 
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import { borderRadius, colors, elevation } from '../../../constands'
 
 const TopStepper = ({activeIndex=0}) => {

@@ -1,30 +1,26 @@
 
-import { StyleSheet, View, Keyboard, KeyboardAvoidingView, Platform, ScrollView} from 'react-native'
-import { useEffect, useState } from 'react'
+import { StyleSheet} from 'react-native'
 import { router, Stack, usePathname } from 'expo-router'
-import {BasePageWrapper, SelecterMap} from '../../../components'
-import { colors, spaces } from '../../../constands'
-import { leftShortArrowIcon } from '../../../assets'
+import {BasePageWrapper} from '../../../components'
+import { colors } from '../../../constands'
 import {useLocationStore} from '../../../managments'
-import {CircleTouchableIcon} from '../../../components'
-import BaseKeyboardWrapper from '../../../components/baseWrappers/BaseKeyboardWrapper'
 
 const MapLayout = () => {
-  const setEndData = useLocationStore(state => state.setEndData)
-  const setStartData = useLocationStore(state => state.setStartData)
+  const {setEndDetails,setStartDetails} = useLocationStore(state => state)
   const path = usePathname()
   
   const onBack = () => {
      if(path === "/map/locDes")
      {
-        setEndData(null)
+        setEndDetails(null)
      }
      else if(path === "/map/locStart")
      {
-        setStartData(null)
+        setStartDetails(null)
      }
      router.back()    
   }
+
 
   return (
     <>
@@ -33,40 +29,18 @@ const MapLayout = () => {
               headerShown:false
           }}
        />
-       <BasePageWrapper wrapperStyle={styles.container}>
+       <BasePageWrapper wrapperStyle={styles.container} paddingBottom={"0"}>
           {({top,left,right,bottom}) => (
-              <BaseKeyboardWrapper>
-                {({keyboardHeight,keyboardIsShow}) => (
+             
                      <>
-                 <CircleTouchableIcon icon={leftShortArrowIcon} iconWrapperStyle={{...styles.iconWrapper,...{top:(spaces.small + top),left:(spaces.small + left)}}} onPress={onBack} />
-                 <View style={{height:keyboardIsShow ? "35%" : "60%"}}>
-                    <SelecterMap />
-                 </View>
-                 <View style={{flex:1,paddingBottom:keyboardHeight}}>
-                  <Stack>
-                   <Stack.Screen 
-                    name='locStart'
-                    options={{
-                         headerShown:false
-                    }}
-                   />
-                   <Stack.Screen
-                    name='locDest'
-                    options={{
-                        headerShown:false
-                    }}
-                    />
-                    <Stack.Screen
-                    name="selectFilter"
-                    options={{
-                        headerShown:false
-                    }}
-                    />
-                  </Stack>
-                 </View>
+                         <Stack>
+                           <Stack.Screen 
+                              name='locsDetail'
+                              options={{headerShown:false}}
+                            />
+                         </Stack>
                      </>
-                )}
-              </BaseKeyboardWrapper>
+
           )}
        </BasePageWrapper>
     </>
@@ -80,17 +54,4 @@ const styles = StyleSheet.create({
     container : {
          flex:1,backgroundColor:colors.background
     },
-    iconWrapper:{
-        position:"absolute",zIndex:5,opacity:0.9
-    },
-    icon : {
-        width:30
-    },
-    topWrapper:{
-         width:"100%",
-         justifyContent:"center",alignItems:"center"
-    },
-    bottomWrapper:{
-         width:"100%",
-    }
 })

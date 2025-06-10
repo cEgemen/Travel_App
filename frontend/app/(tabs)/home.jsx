@@ -1,16 +1,17 @@
-import {SafeAreaView, ScrollView, StyleSheet,View,Text, KeyboardAvoidingView, Platform} from 'react-native'
-import React, { useCallback, useState } from 'react'
+import {StyleSheet,View,Text} from 'react-native'
+import {useEffect, useState } from 'react'
 import { colors, fonts, spaces } from '../../constands'
-import { router, Stack, useFocusEffect } from 'expo-router'
-import {TouchableIcon,SuggesContainer,AutoCompletSearchInput,ChatBotHome,ModalWithButtons} from '../../components'
-import logOutIcon from "../../assets/icons/logout.png"
+import { router, Stack } from 'expo-router'
+import {SuggesContainer,AutoCompletSearchInput,ChatBotHome,ModalWithButtons, BaseKeyboardWrapper, BasePageWrapper, StackHeader, SquareButton} from '../../components'
 import {useUserStore,useGuideStore, useLocationStore} from '../../managments'
+import { logoutIcon } from '../../assets'
+import * as Location from 'expo-location';
 
 
 const Home = () => {
   const {username} = useUserStore(state => state.user)
   const setGuideInfo = useGuideStore(state => state.setGuideInfo )
-  const {setStartDetails,locationDetails:{startDetails,endDetails}} = useLocationStore(state => state)
+  const setStartDetails = useLocationStore(state => state.setStartDetails)
   const [isVisible,setIsVisible] = useState(false)
 
   const logOut = () => {
@@ -30,48 +31,59 @@ const Home = () => {
       router.push("/chat")
   }
 
+  useEffect(() => {
+
+        const getUserLocation = async () => {
+              const {status} = await Location.requestForegroundPermissionsAsync()
+              if(status === "granted")
+              { 
+                 const {coords} = await Location.getCurrentPositionAsync()
+                 const {latitude,longitude} = coords
+                 const res = await Location.reverseGeocodeAsync({latitude,longitude}) 
+                 const {region,country} = res[0]
+                 setStartDetails({lat:latitude,lon:longitude,locationName:region+","+country})
+              }
+        }
+
+        getUserLocation()
+
+  },[])
+
   return (
-     <SafeAreaView style={styles.safeArea}>
-     <ModalWithButtons isVisible={isVisible} closeVisible={() => {setModal(2)}} cancel={() => {setModal(2)}} confirm={logOut} title='Log Out Info' desc='Are you sure you want to log out?' />
-     <KeyboardAvoidingView
-     behavior={Platform.OS === "ios" ? "padding" : "height"}
-     style={{ flex: 1 }}>
-     <ScrollView 
-         showsVerticalScrollIndicator={false}
-         keyboardShouldPersistTaps="handled"
-         contentContainerStyle={styles.scrollContent}>
-         <Stack.Screen options={{headerShadowVisible:false,headerTitle:"",
-        headerLeft:()=>{
-          return <>
+     <BasePageWrapper wrapperStyle={styles.container}>
+       <Stack.Screen options={{headerShown:false}} />
+       <StackHeader headerWrapperStyle={{paddingHorizontal : spaces.middle}} LeftComp={() => <>
          <View style={styles.header}>
-            <Text style={styles.headerText}>Hello {username}</Text>
+            <Text numberOfLines={1} style={styles.headerText}>Hello {username}</Text>
          </View>
-                 </>           
-       },
-       headerRight:() => {
-            return <>
-                      <TouchableIcon icon={logOutIcon} iconStyle={{tintColor:colors.gray}} onPress={() => {setModal(1)}} />
-                   </>
-       }}}  />
-           <ChatBotHome onClick={selectChatBot} />
-           <View style={styles.contentHeader}>
-           <Text style={styles.contentHeaderTopText}>Let the Adventure Begin! 🌍</Text>
-           <Text style={styles.contentHeaderBottomText}>Discover new places, plan your trips, and create unforgettable memories!</Text>
-          </View>
-          <AutoCompletSearchInput onPress={selectLocation} focusColor={colors.primary} placeholder='Enter Location ...' searchWrapperStyle={{marginBottom:spaces.small}} />
-          <SuggesContainer containerStyle = {{marginVertical:"auto"}}  />
-       </ScrollView> 
-     </KeyboardAvoidingView>  
-     </SafeAreaView>
+                 </>} RightComp={() => <>
+        <SquareButton icon={logoutIcon} contentStyle={{tintColor:colors.darkGray}} onClick={() => {setModal(1)}} />
+                   </> } />
+       <BaseKeyboardWrapper >
+         {(keyboardHeight,keyboardIsShow) => (
+        <View style={{flex:1,padding:spaces.middle}}>
+             <ModalWithButtons isVisible={isVisible} closeVisible={() => {setModal(2)}} cancel={() => {setModal(2)}} 
+             confirm={logOut} title='Log Out Info' desc='Are you sure you want to log out?' />
+             <ChatBotHome onClick={selectChatBot} />
+             <View style={styles.contentHeader}>
+             <Text style={styles.contentHeaderTopText}>Let the Adventure Begin! 🌍</Text>
+             <Text style={styles.contentHeaderBottomText}>Discover new places, plan your trips, and create unforgettable memories!</Text>
+             </View>
+             <AutoCompletSearchInput onPress={selectLocation} focusColor={colors.primary} placeholder='Enter Location ...' infoCount={2}/>
+            <SuggesContainer containerStyle = {{marginVertical:"auto"}}  />
+       </View>      
+         )}
+       </BaseKeyboardWrapper>
+     </BasePageWrapper>
   )
 }
 
 const styles = StyleSheet.create({
-       safeArea : {
-           flex:1
+       container : {
+           flex:1,backgroundColor:colors.background
        },
-       scrollContent:{
-          padding:spaces.middle,backgroundColor:colors.background,flexGrow:1
+       detailWrapper : {
+             flex:1,padding:spaces.middle,backgroundColor:"red"
        },
        header:{
          gap:spaces.small,marginLeft:spaces.middle

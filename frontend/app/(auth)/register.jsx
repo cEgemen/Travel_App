@@ -1,21 +1,17 @@
-import { View, Text, StyleSheet, ToastAndroid, Image, ScrollView, TouchableOpacity, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, ToastAndroid, Image,TouchableOpacity} from 'react-native'
+import {useState } from 'react'
 import { router } from 'expo-router'
 import { colors, fonts, spaces } from '../../constands'
 import { BASE_URL } from '../../secret'
 import Animated, {FadeInDown,FadeInUp,} from "react-native-reanimated";
-import authBack1 from "../../assets/images/authBack1.png"
-import authBack2 from "../../assets/images/authBack2.png"
-import userIcon from "../../assets/icons/user.png"
-import emailIcon from "../../assets/icons/email.png"
-import {InputWithLabel,CustomTouchableButton,PasswordInputLabel} from '../../components'
+import {InputWithLabel,CustomTouchableButton,PasswordInputLabel, BaseKeyboardWrapper, BasePageWrapper} from '../../components'
 import { emailValid, passwordValid, userNameValid } from '../../utils/validations'
+import { authBack1Img, authBack2Img, emailIcon, userIcon } from '../../assets'
 
 const Register = () => {
 const [isLoading,setLoading] = useState(false)  
 const [formState , setFormState ] = useState({username:"",email:"",password:""});
 const [errorState,setErrorState] = useState({username:[],email:[],password:[],isReady:false})
-const [keyboardState,setKeyboardState] = useState(false)
 
 const goToRegister = () => {
   if(!isLoading)
@@ -58,21 +54,6 @@ const goToRegister = () => {
         }
  } 
 
-  useEffect(() => {
-    const open =  Keyboard.addListener("keyboardDidShow",() => {
-       setKeyboardState(true)
-    })
-    
-    const close = Keyboard.addListener("keyboardDidHide",() => {
-        setKeyboardState(false)
-    })
- 
-    return () => {
-        open.remove()
-        close.remove()
-    }
- 
-  })
 
  const inputValidate = (mod,value) => {
           if(mod === 1)
@@ -105,18 +86,21 @@ const goToRegister = () => {
   }
 
   return (
-    <ScrollView style={styles.safeArea} contentContainerStyle={{flex:1}}>
-   <Image style={[styles.topBackImg,{height:!keyboardState ? "70%" : "54%"}]} source={authBack1}/>
- { !keyboardState ? <View style={styles.topBack2ImgWrapper}>
+    <BasePageWrapper wrapperStyle={styles.container} >
+     <BaseKeyboardWrapper >
+        {({keyboardHeight,keyboardIsShow})  => (
+            <View style={{marginBottom:keyboardHeight}}>
+    <Image style={[styles.topBackImg,{height:!keyboardIsShow ? "70%" : "54%"}]} source={authBack1Img}/>
+     { !keyboardIsShow ? <View style={styles.topBack2ImgWrapper}>
      <Animated.Image
         entering={FadeInUp.delay(200).duration(1000).springify()}
        style={{width:90,height:220}}
-       source={authBack2}
+       source={authBack2Img}
      />
      <Animated.Image
        entering={FadeInUp.delay(400).duration(1000).springify()}
        style={{width:65,height:160}}
-       source={authBack2}
+       source={authBack2Img}
      />
    </View> :  null 
    }
@@ -136,26 +120,26 @@ const goToRegister = () => {
          entering={FadeInDown.duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <InputWithLabel  label='UserName' placeholder='Your User Name ...' onChange={(text) => setFormState(oldState => ({...oldState,username:text}))} value={formState.username} errors={errorState.username} onEndEditing={() => {inputValidate(1,formState.username)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}} icon={userIcon} editable={!isLoading}/>
+        <InputWithLabel  label='UserName' placeholder='Your User Name ...' onChange={(text) => setFormState(oldState => ({...oldState,username:text}))} value={formState.username} errors={errorState.username} onEndEditing={() => {inputValidate(1,formState.username)}} inputContainerStyle={{marginBottom:!keyboardIsShow? spaces.middle :  spaces.small}} icon={userIcon} editable={!isLoading}/>
        </Animated.View>
        <Animated.View
          entering={FadeInDown.duration(1000).springify()}
          style={{width:"100%"}}
        >
-        <InputWithLabel keyboardType='email-address' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(2,formState.email)}} inputContainerStyle={{marginBottom:!keyboardState? spaces.middle :  spaces.small}} icon={emailIcon} editable={!isLoading} />
+        <InputWithLabel keyboardType='email-address' label='Email' placeholder='Your Email Address ...' onChange={(text) => setFormState(oldState => ({...oldState,email:text}))} value={formState.email} errors={errorState.email} onEndEditing={() => {inputValidate(2,formState.email)}} inputContainerStyle={{marginBottom:!keyboardIsShow? spaces.middle :  spaces.small}} icon={emailIcon} editable={!isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(200).duration(1000).springify()}
          style={{width:"100%"}}
        >
-         <PasswordInputLabel  label='Password' placeholder='Your Password ...' onChange={(text) => setFormState(oldState => ({...oldState,password:text}))} value={formState.password} errors={errorState.password} onEndEditing={() => {inputValidate(3,formState.password)}} inputContainerStyle={{marginTop:!keyboardState? spaces.middle :  spaces.small}} editable={!isLoading} />
+         <PasswordInputLabel  label='Password' placeholder='Your Password ...' onChange={(text) => setFormState(oldState => ({...oldState,password:text}))} value={formState.password} errors={errorState.password} onEndEditing={() => {inputValidate(3,formState.password)}} inputContainerStyle={{marginTop:!keyboardIsShow? spaces.middle :  spaces.small}} editable={!isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(400).duration(1000).springify()}
          style={{width:"100%"}}
        >
         <CustomTouchableButton disabled={!errorState.isReady || isLoading} text={"Register"} onPress={onSubmit} 
-        buttonStyle={{...styles.btnStyle,...{marginTop:keyboardState ? spaces.high : spaces.highx2,marginBottom:!keyboardState ? spaces.high :  spaces.middle}}} isLoading={isLoading} />
+        buttonStyle={{...styles.btnStyle,...{marginTop:keyboardIsShow ? spaces.high : spaces.highx2,marginBottom:!keyboardIsShow ? spaces.high :  spaces.middle}}} isLoading={isLoading} />
        </Animated.View>
        <Animated.View
          entering={FadeInDown.delay(600).duration(1000).springify()}
@@ -168,12 +152,15 @@ const goToRegister = () => {
        </Animated.View>
      </View>
    </View>
- </ScrollView>
+            </View>
+        )}
+     </BaseKeyboardWrapper>
+    </BasePageWrapper>
   )
 }
 
 const styles = StyleSheet.create({
-  safeArea : {
+  container : {
     flex:1,backgroundColor:colors.background
 },
 topBackImg:{

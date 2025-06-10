@@ -1,142 +1,130 @@
-import { Image,Text, Pressable, SafeAreaView, StyleSheet,View,FlatList, FlatListComponent} from 'react-native'
-import { useEffect, useRef, useState } from 'react'
-import { borderRadius, colors, elevation, fonts, spaces } from '../../constands'
+import {Dimensions, StyleSheet, Text, View} from 'react-native'
+import  uuid from "react-native-uuid"
+import { useState } from 'react'
+import { borderRadius, colors, detailText, elevation, fonts, spaces, subTitle } from '../../constands'
 import {useRouteStore,useLocationStore} from '../../managments'
-import leftArrowIcon from "../../assets/icons/left_arrow_short.png"
-import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps'
 import { router } from 'expo-router'
-import { CustomTouchableButton, SelectItem, StackHeader } from '../../components'
-import { restartIcon } from '../../assets'
+import { BasePageWrapper, SquareButton, StackHeader } from '../../components'
+import { carIcon, checkIcon, closeIcon, distanceIcon, fingerIcon, leftShortArrowIcon } from '../../assets'
 
+const windowWidth = Dimensions.get("window").width
+ 
 const SelectedRoute = () => {
-  const mapRef = useRef(null)
-  const [selectLocation , setSelectLocation] = useState({index:0,isStart:false})
-  
-   const locationDetails = useLocationStore(state => state.locationDetails)
-  const {startDetails,endDetails} = locationDetails
-  const selectMapRoute = useRouteStore(state => state.selectMapRoute)
+  const [selectedStations,setSelectedStations] = useState([0,1,2])
+  const {startDetails,endDetails} = useLocationStore(state => state.locationDetails)
+  const {selectMapRoute,setStationsRoutes} = useRouteStore(state => state)
   const {cost,distance,duration,locationsData} = selectMapRoute
-
-
-  useEffect(() => {
-        mapRef.current.fitToCoordinates(
-         [
-           { latitude: parseFloat(startDetails.lat), longitude: parseFloat(startDetails.lon) },
-           { latitude: parseFloat(endDetails.lat), longitude: parseFloat(endDetails.lon) }
-         ], {
-        edgePadding: {
-          top: 200,
-          right: 50,
-          bottom: 200,
-          left: 50,
-        },
-        animated: true,
-      });
-  },[])
-
-  useEffect(() => {
-     if(selectLocation.isStart && mapRef.current !== null)
-     {
-       mapRef.current.animateToRegion({
-           latitude: locationsData[selectLocation.index].lat,
-           longitude: locationsData[selectLocation.index].lon,
-           latitudeDelta: 0.01,
-           longitudeDelta: 0.01,
-                                      }, 800);
-
-     }
-  },[selectLocation])
-
-  const handleChangeLocation = (index) => {
-      if(selectLocation.index !== index)
-      {
-          setSelectLocation(oldState => {
-             return {isStart:true,index:index}
-          })
-      }
-  }
-
-  const handleMapRestart = () => {
-          mapRef.current.fitToCoordinates(
-         [
-           { latitude: parseFloat(startDetails.lat), longitude: parseFloat(startDetails.lon) },
-           { latitude: parseFloat(endDetails.lat), longitude: parseFloat(endDetails.lon) }
-         ], {
-        edgePadding: {
-          top: 200,
-          right: 50,
-          bottom: 200,
-          left: 50,
-        },
-        animated: true,
-      });
-  }
+  
 
   const handleStart = () => {
-     
+       const stations = selectedStations.map((value,index) => {
+            const tmp = locationsData[value] 
+            return {stationNo:(value+1),...tmp}   
+       }).sort((a,b) => a.stationNo - b.stationNo) 
+       setStationsRoutes(
+         {
+         stations:[
+         {stationNo:0,lat:startDetails.lat,lon:startDetails.lon,name:startDetails.locationName},
+         ...stations,
+         {stationNo:11,lat:endDetails.lat,lon:endDetails.lon,name:endDetails.locationName} 
+         ],
+         stationsNumbers : selectedStations  
+         }
+                        ) 
+       router.push("route/liveRoute")                 
+  }
+
+  const handleSelectStation = (index) => { 
+       const isExist = selectedStations.find(value => value === index)
+       let newSelectedStations = []
+       if(isExist === undefined)
+       {
+           newSelectedStations = [...selectedStations,index]
+       }
+       else
+       {
+          newSelectedStations = selectedStations.filter((value) => value !== index)
+       }
+       setSelectedStations(oldState => newSelectedStations.sort((a,b) => a-b))
   }
 
   return (
-     <SafeAreaView style={styles.safeArea} >
-        <StackHeader headerWrapperStyle={{position:"absolute",top:0,zIndex:2,opacity:.8}} title={locationsData[selectLocation.index].name} rightIcon={restartIcon} rightIconOnPress={handleMapRestart} />
-        <MapView
-         ref={mapRef}
-         style={{flex:1}}
-         provider={PROVIDER_GOOGLE}
-         initialRegion={{
-            latitude: parseFloat(startDetails.lat),
-            longitude:parseFloat(startDetails.lon),
-            latitudeDelta: 0.25,
-            longitudeDelta: 0.25,
-                       }}
-        >
-          <Marker title={startDetails.locationName} description='Start Location' coordinate={{latitude:parseFloat(startDetails.lat),longitude:parseFloat(startDetails.lon)}} />
-          <Marker title={endDetails.locationName} description='Destination Location' coordinate={{longitude:parseFloat(endDetails.lon),latitude:parseFloat(endDetails.lat)}} />  
-          {locationsData.map((loc,index) => {
-                 return <Marker key={index} title={loc.name} description={`${loc.name} Location`} coordinate={{longitude:parseFloat(loc.lon) , latitude : parseFloat(loc.lat)}} />
-          })}
-          <Polyline   
-                    coordinates={locationsData.map(loc => ({
-                                         latitude:  parseFloat(loc.lat),
-                                         longitude: parseFloat(loc.lon)
-                                                                }))}
-                     strokeColor={colors.primary}
-                     strokeWidth={2}     
-                            />
-        </MapView>
-        <View style={styles.flatWrapper}>
-             <View style={{height:"70%"}}>
-             <FlatList
-             data={[{},...locationsData,{}]}
-             style={{flexGrow:1}}
-             onScroll={(event) => {
-                  const index = Math.floor(event.nativeEvent.contentOffset.y / 46)
-                  if(index !== -1 && index <= locationsData.length -1)
+     <BasePageWrapper wrapperStyle={styles.container} >
+       
+             <StackHeader 
+             headerWrapperStyle={{paddingHorizontal:spaces.middle}}
+             backIconWrapperStyle={{}} 
+             LeftComp={() => {
+                 return <SquareButton icon={leftShortArrowIcon} contentStyle={{tintColor:colors.backgroundDark}} onClick={() => router.back() } />
+             }}
+             title={"STATIONS"}
+             RightComp={() => {
+                return <SquareButton icon={fingerIcon} contentStyle={{tintColor:colors.backgroundDark}} onClick={handleStart} />
+             }}
+             />
+            <View style={{width:"100%",flexDirection:"row",alignItems:"center",height:50,paddingHorizontal:50}}>
+             {selectedStations.map((value,index) => {
+                  const middleOfArr = Math.ceil(selectedStations.length / 2)
+                  const middleIndex = middleOfArr - 1
+                  const leftArr = selectedStations.filter((value , valueIndex) => valueIndex < middleIndex)
+                  const rightArr = selectedStations.filter((value , valueIndex) => valueIndex > middleIndex)
+                  const isLeft=(index+1) < middleOfArr
+                  const isRight = (index+1) > middleOfArr
+                  let calculatePosition =  ((windowWidth/2)-20)
+                  if(isLeft)
                   {
-                     handleChangeLocation(index)
+                    const leftIndex = leftArr.indexOf(value) 
+                    calculatePosition = calculatePosition + ((leftArr.length -leftIndex)*30)
                   }
-                 
-             }}
-             scrollEventThrottle={16}
-             keyExtractor={(item,index) => item.id || index}
-             showsVerticalScrollIndicator={false}
-             contentContainerStyle={styles.flatContainerWrapper}
-             renderItem={({item,index}) => {
-                 
-                 return <SelectItem item={item}  isActive={index === selectLocation.index + 1}  />
-             }}
-          />
-          </View>         
-          <CustomTouchableButton buttonStyle={styles.bottomBtnStyl} text={"Let's Gooo"} onPress={handleStart} />
-        </View> 
-     </SafeAreaView>
+                  else if(isRight)
+                  {
+                    const rightIndex = rightArr.indexOf(value)
+                    calculatePosition = calculatePosition - ((rightIndex+1)*26)
+                  }
+                  return <SquareButton label={value+1} iconWrapperStyle={{position:"absolute",right:calculatePosition,elevation:elevation.middleShadow,borderWidth:.5,borderColor:colors.darkGray}} key={uuid.v4()} />
+             })}
+            </View>
+            <View style={{flex:1,padding:spaces.middle}}>
+               <View style={{flexDirection:"row",alignItems:"center"}}>
+                  <SquareButton icon={carIcon} contentStyle={{tintColor:colors.darkGray}} />
+                  <View style={{marginLeft:spaces.middle}}>
+                     <Text style={subTitle}>Start Station</Text>
+                     <Text style={[detailText,{color:colors.darkGray}]}>{startDetails.locationName}</Text> 
+                  </View>  
+                  </View>
+               <View style={{width:"100%",flexDirection:"row",paddingLeft:(40/2)-1,marginVertical:spaces.middle}}>
+                 <View style={{width:1,height:"auto",borderLeftWidth:2,borderStyle:"dotted",borderLeftColor:colors.darkGray}}></View>
+                 <View style={{flex:1,marginLeft:(40/2)-1+10,rowGap:spaces.high}}>
+                     {locationsData.map((location , index) => {
+                        const isSelect = selectedStations.find(value => index === value) !== undefined 
+                        return  <View style={{flexDirection:"row",alignItems:"center"}} key={uuid.v4()} >
+                                 <SquareButton icon={distanceIcon}  contentStyle={{tintColor:isSelect ? colors.primary : colors.darkGray}} /> 
+                                 <View style={{flex:1,marginHorizontal:spaces.middle}}>
+                                    <Text style={detailText}>{index+1}. Station</Text>
+                                    <Text numberOfLines={1} style={[detailText-3,{color:isSelect ? colors.primary : colors.darkGray}]}>{location.name}</Text>
+                                 </View>
+                                 <SquareButton icon={isSelect ? checkIcon : closeIcon} iconWrapperStyle={{marginLeft:"auto"}} contentStyle={{tintColor:isSelect ? colors.primary : colors.darkGray}} onClick={() => handleSelectStation(index)}  /> 
+                                </View>
+                     })}
+                 </View>
+               </View>
+               <View style={{flexDirection:"row",alignItems:"center"}}>
+                  <SquareButton icon={carIcon} contentStyle={{tintColor:colors.darkGray}} />
+                  <View style={{marginLeft:spaces.middle}}>
+                     <Text style={subTitle}>Destination Station</Text>
+                     <Text style={[detailText,{color:colors.darkGray}]}>{endDetails.locationName}</Text>
+                  </View>       
+               </View>
+            </View>
+
+     </BasePageWrapper>
   )
 }
 
 export default SelectedRoute
 
 const styles = StyleSheet.create({
-      safeArea : {
+      container : {
          flex:1,backgroundColor:colors.background,position:"relative"
       },
       backBtnWrapper : {

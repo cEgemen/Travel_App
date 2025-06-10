@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, View,FlatList } from 'react-native'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import SearchInput from '../../forms/SearchInput'
 import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
 

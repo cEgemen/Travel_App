@@ -1,33 +1,32 @@
-import { Image, Pressable, SafeAreaView, StyleSheet, View } from 'react-native'
+import {BackHandler, StyleSheet, View } from 'react-native'
 import MapView, {Marker, Polyline} from 'react-native-maps'
-import { borderRadius, colors, elevation, spaces } from '../../constands'
-import leftIcon from "../../assets/icons/left_arrow_short.png"
+import { borderRadius, colors, elevation, spaces} from '../../constands'
 import {useRouteStore,useLocationStore} from '../../managments'
 import { useEffect, useRef, useState } from 'react'
-import { MainCard } from '../../components'
+import { BasePageWrapper,MainCard, SquareButton, StackHeader } from '../../components'
+import { homeIcon } from '../../assets'
+import { router } from 'expo-router'
 
 const Main = () => {
-  const routeDatas = useRouteStore(state => state.routeDatas)
-  const locationDetails = useLocationStore(state => state.locationDetails)
+  
+  const {routeDatas ,resetRoutes} = useRouteStore(state => state)
+  const {locationDetails,resetLocationAndFilter} = useLocationStore(state => state)
   const {startDetails,endDetails} = locationDetails
-  
- /*  const  startDetails =  {"lat": "51.5080490", "locationName": "London Bridge, United Kingdom", "lon": "-0.0876715"}
-  const  endDetails   =  {"lat": "51.5074456", "locationName": "London, United Kingdom", "lon": "-0.1277653"} */
-
   const {routes} = routeDatas 
-  
   const [currentIndex , setCurrentIndex] = useState(0)
   const mapRef = useRef(null)
   const routeColors  =  ["rgb(33, 211, 74)","rgb(36, 26, 187)","rgb(201, 76, 118)"]
 
   useEffect(() => {
-        mapRef.current?.fitToCoordinates(
-        [{latitude : parseFloat(startDetails.lat),longitude : parseFloat(startDetails.lon)},{latitude:parseFloat(endDetails.lat),longitude:parseFloat(endDetails.lon)}],
-        {
-         edgePadding : {top:100,right:20,bottom:200,left:20}, 
-         animated : true
-        }
-                                     )
+
+       const handleBackPress = () => true
+    
+       const backHndl = BackHandler.addEventListener("hardwareBackPress",handleBackPress)
+       
+       return () => {
+           backHndl.remove()
+       } 
+
   },[])
 
   useEffect(() => {
@@ -35,18 +34,38 @@ const Main = () => {
         latitude: coord[0],
         longitude: coord[1]
       })), {
-      edgePadding: { top: 100, right: 20, bottom: 300, left: 20},
+      edgePadding: { top: 100, right: 50, bottom: 300, left: 50},
       animated: true,
     });   
   },[currentIndex])
 
+  const handleGoBack = () => {
+    resetLocationAndFilter()
+    resetRoutes()  
+    router.replace("/home")
+  }
+
   return (
-     <SafeAreaView style={styles.safeArea}>
-          <Pressable style={styles.iconWrapper}>
-            <Image source={leftIcon} style={styles.icon} />
-          </Pressable>
+     <BasePageWrapper wrapperStyle={styles.container}>
+         {({top,left,right,bottom}) => (
+              <>
+          <StackHeader 
+             headerWrapperStyle={{position:"absolute",top:(0+top),zIndex:2,paddingHorizontal:spaces.middle,backgroundColor:"transparent",elevation:elevation.middleShadow}}
+             LeftComp={() => {
+                  return <SquareButton icon={homeIcon}  contentStyle={{tintColor:colors.darkGray}} onClick={handleGoBack} />
+             }}
+           />
           <MapView 
-            ref={mapRef}
+            ref = {mapRef}
+            onMapReady={() => {
+                  mapRef.current?.fitToCoordinates(
+        [{latitude : parseFloat(startDetails.lat),longitude : parseFloat(startDetails.lon)},{latitude:parseFloat(endDetails.lat),longitude:parseFloat(endDetails.lon)}],
+        {
+         edgePadding : {top:100,right:20,bottom:200,left:20}, 
+         animated : true
+        }
+                                                  )
+            }}
             style = {styles.map}
             initialRegion={
                 {
@@ -71,29 +90,32 @@ const Main = () => {
                             />
             })}
           </MapView>
-          <View style={styles.cardWrapper}>
+          <View style={[styles.cardWrapper,{bottom:(0 + bottom) , left:(0 + left)}]}>
               <MainCard routesData={routes.slice(0,3)} currentIndex={currentIndex} onChangeIndex={setCurrentIndex}  />
           </View>
-     </SafeAreaView>
+              </>
+         )}
+     </BasePageWrapper>
   )
 }
 
 export default Main
 
 const styles = StyleSheet.create({
-    safeArea : {
+    container : {
        flex:1     
     },
     map : {
        flex:1  
     },
-    iconWrapper : {
-      width:50,height:50,position:"absolute",left:spaces.small,top:spaces.small,backgroundColor:colors.primary,zIndex:2, borderRadius:borderRadius.circleRadius(50),justifyContent:"center",alignItems:"center",elevation:elevation.smallShadow,  opacity:.8
-    },
-    icon : {
-      width:40,height:40
-    },
+     iconStyl : {
+                       width:35,height:35,tintColor:colors.darkGray
+                   } ,             
+                  iconWrapper : {
+                    width:40,height:40,justifyContent:"center",alignItems:"center",
+                    borderRadius:borderRadius.middleRadius,backgroundColor:colors.lightGray
+                             },
     cardWrapper : {
-       position:"absolute",bottom:0,left:0,width:"100%",height:"auto",backgroundColor:"rgba(255,255,255,.6)"
+       position:"absolute",width:"100%",height:"auto",backgroundColor:colors.background
     }
 })

@@ -6,7 +6,7 @@ import sendIcon from "../assets/icons/send.png"
 import mapIcon from "../assets/icons/map.png"
 import warningIcon from "../assets/icons/warning.png"
 import { borderRadius, colors, elevation, fonts, spaces } from '../constands';
-import { CustomModal } from '../components';
+import { BaseKeyboardWrapper, BasePageWrapper, CustomModal } from '../components';
 import { router } from 'expo-router';
 import { chatResult } from '../confs/groqChatConf';
 import chatRobotIcon from "../assets/icons/chatRobot.png"
@@ -62,7 +62,7 @@ const Chat = () => {
 
 
     return (
-        <SafeAreaView style={styles.container}>
+        <BasePageWrapper wrapperStyle={styles.container}>
           <CustomModal title='Asistan Information' isVisible={isVisible} closeVisible={() => setModal(2)} CenterContent={CenterContent} />
           <View style={styles.headerWrapper}>
             <TouchableOpacity
@@ -124,7 +124,7 @@ const Chat = () => {
               </TouchableOpacity>
 
           </View>
-        </SafeAreaView>
+        </BasePageWrapper>
       );
 }
 

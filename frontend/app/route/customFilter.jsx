@@ -1,14 +1,14 @@
-import { SafeAreaView, StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { useState } from 'react'
 import { colors, spaces } from '../../constands'
-import { router, Stack } from 'expo-router'
-import {TouchableIcon,TopStepper,CustomTouchableButton,VehicleFilter,PriceFilter,PlaceFilter} from '../../components'
+import { router } from 'expo-router'
+import {TopStepper,CustomTouchableButton,VehicleFilter,PriceFilter,PlaceFilter, BasePageWrapper, StackHeader, SquareButton} from '../../components'
 import {leftShortArrowIcon} from "../../assets"
 import {useLocationStore} from '../../managments'
 
 const CustomFilter = () => {
   const stepperTitles = ["Vehicle Type","Price Type","Place Types"]
-  const defaultValues = ["car","free",["tourism"]]
+  const defaultValues = ["car","free",["amenity"]]
   const setFilters = useLocationStore(state => state.setFilters)
   const [stepperState,setStepperState] = useState({title:stepperTitles[0],index:0})
   const [filterState,setFilterState] = useState({vehicle:defaultValues[0],price:defaultValues[1],places:defaultValues[2],scan:5000})
@@ -17,6 +17,7 @@ const CustomFilter = () => {
       {
           const isExist = filterState.places.find(place => place === value)
           let newPlaceFilter = []
+          console.log("isExist && filterState.places.length > 1 : ",(isExist && filterState.places.length > 1))
           if(isExist && filterState.places.length > 1)
           {
             newPlaceFilter = filterState.places.filter(place => place !== value )
@@ -76,16 +77,15 @@ const CustomFilter = () => {
   }
   return (
      <>
-        <Stack.Screen options={{
-               headerTransparent:false,
-               headerShadowVisible:false,
-               headerTitleAlign:"center",
-               title:stepperState.title,
-               headerLeft:() => {
-                  return <TouchableIcon icon={leftShortArrowIcon} iconStyle={styles.headerIcon} onPress={handleBackBtn} />
-               }
-        }} />
-        <SafeAreaView style={styles.wrapper}> 
+        <BasePageWrapper wrapperStyle={styles.wrapper}> 
+          <StackHeader  
+          title={stepperState.title} 
+          LeftComp={() => {
+              return <SquareButton icon={leftShortArrowIcon} contentStyle={{tintColor:colors.backgroundDark}} onClick={handleBackBtn} />
+          }} 
+          headerWrapperStyle={{marginBottom:spaces.middle,paddingLeft:spaces.middle+5}} 
+          />
+          <View style={{flex:1,paddingHorizontal:spaces.high}}>
            <TopStepper activeIndex={stepperState.index} />
            <View style={styles.content}>
              { 
@@ -94,14 +94,16 @@ const CustomFilter = () => {
               
            </View>
            <CustomTouchableButton text={stepperState.index !== 2 ? "Next" : "Draw Route"} buttonStyle={styles.btnStyle} onPress={handleBtnPress}/>
-        </SafeAreaView>
+          </View>
+          
+        </BasePageWrapper>
      </>
         )
 }
 
 const styles = StyleSheet.create({
      wrapper : {
-         backgroundColor:colors.background,height:"100%",paddingVertical:spaces.small,paddingHorizontal:spaces.high
+         backgroundColor:colors.background,height:"100%"
      },
      headerIcon : {
          tintColor:colors.backgroundDark

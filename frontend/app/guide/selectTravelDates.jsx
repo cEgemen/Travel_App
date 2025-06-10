@@ -2,7 +2,7 @@
 import {StyleSheet,View,Text} from 'react-native'
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, fonts, spaces } from '../../constands';
+import { colors, fonts, spaces, subTitle, title } from '../../constands';
 import {CustomCalenderPicker,CustomTouchableButton,TouchableIcon} from '../../components';
 import { router, Stack } from 'expo-router';
 import {useGuideStore} from '../../managments';
@@ -72,13 +72,13 @@ const SelectTravelDates = () => {
      }} />
      <View style={styles.container}>
         <View style={styles.headerContainer}>
-               <Text style={styles.headerTitle}>
+               <Text style={{...title,color:colors.text,paddingLeft:spaces.middle}}>
                Select Date 📅 
                </Text>
-               <Text style={styles.headerSubTitle}>
+               <Text style={{...subTitle,color:colors.text,color:colors.gray,paddingLeft:spaces.high}}>
                📌 Select start date is {dateState.startDate !== null ? dateFormat(dateState.startDate) : "../../...."}
                </Text>
-               <Text style={styles.headerSubTitle}>
+               <Text style={{...subTitle, color:colors.text,color:colors.gray,paddingLeft:spaces.high}}>
                📌 Select end date is {dateState.endDate !== null ? dateFormat(dateState.endDate) : (dateState.startDate === null ? "../../...." : dateFormat(dateState.startDate))}
                </Text>
         </View>
@@ -102,12 +102,6 @@ const styles = StyleSheet.create({
           marginTop:spaces.highx2,
           marginBottom:spaces.high,gap:spaces.small
      },
-     headerTitle : {
-              color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight,paddingLeft:spaces.middle
-         },
-     headerSubTitle : {
-               color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.gray,paddingLeft:spaces.high
-         },
      btnStyle : {
          backgroundColor:colors.primary,marginVertical:"auto"
      },

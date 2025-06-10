@@ -6,7 +6,7 @@ import Animated, { FadeInUp, FadeInDown } from "react-native-reanimated";
 import { borderRadius, colors, spaces } from "../../constands";
 import { Stack } from "expo-router";
 import {useUserStore} from "../../managments";
-import {PasswordInputLabel,InputWithLabel,TouchableIcon,CustomTouchableButton,ModalWithButtons} from "../../components";
+import {PasswordInputLabel,InputWithLabel,SquareButton,CustomTouchableButton,ModalWithButtons, StackHeader} from "../../components";
 import emailIcon from "../../assets/icons/email.png"
 import userIcon from "../../assets/icons/user.png"
 import restartIcon from "../../assets/icons/restart.png"
@@ -90,17 +90,9 @@ export default function Profile() {
        <>
         <ModalWithButtons isVisible={state} title={title} desc={desc} confirm={confirm} cancel={cancel} closeVisible={() => {setModal(2)}}/>
         <ScrollView style={styles.container}>
-        <Stack.Screen
-            options={{
-                headerShown:true,
-                headerShadowVisible:false,
-                headerTitleAlign:"center",
-                title:"Profile",
-                headerRight:() => {
-                   return <TouchableIcon onPress={() => {setModal(1,{title:"Data Reset Info",desc:"Are you sure to take back the changes?",confirm:handleRes,cancel:()=>{setModal(2)}})}} icon={restartIcon} iconStyle={{marginRight:spaces.middle}}  />
-                }
-
-            }}
+        <Stack.Screen options={{headerShown:false}}/>
+        <StackHeader
+            title={"Profile"}
          />
         <Animated.View
           entering={FadeInUp.duration(1000).springify()}

@@ -35,7 +35,7 @@ const FavPlace = () => {
   return (
     <>
        <View style={styles.headerWrapper}>
-            <View style={styles.headerTextContainer}>
+            <View>
                 <Text>Places Count : {isLoading ? <ActivityIndicator /> : favPlaces.length}</Text>
              </View>
              <View style={styles.headerBtnsContainer}>
@@ -45,7 +45,8 @@ const FavPlace = () => {
       </View>   
       <FlatList 
         data={favPlaces}
-        contentContainerStyle={{paddingHorizontal:spaces.middle,flexGrow:1}}
+        contentContainerStyle={{flexGrow:1}}
+        showsVerticalScrollIndicator={false}
         renderItem= {({item,index}) => (
              isLoading ? <View style={{flex:1,justifyContent:"center",alignContent:"center"}}><ActivityIndicator size={"large"} color={colors.primary} /></View> : <FavPlaceCard key={index} placeData={item} />
                                 )}                        
@@ -67,9 +68,6 @@ const styles = StyleSheet.create({
 
     headerWrapper : {
       flexDirection:"row",alignItems:"center",justifyContent:"space-around",marginBottom:spaces.high,marginTop:spaces.middle
-    },
-    headerTextContainer : {
-        
     },
     headerBtnsContainer : {
        flexDirection:"row",columnGap:spaces.high

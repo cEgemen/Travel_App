@@ -4,7 +4,7 @@ import React, {useEffect} from 'react'
 import LottieView from 'lottie-react-native'
 import {generate} from "../../assets"
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors, fonts,getGuidePromt } from '../../constands'
+import { colors, fonts,getGuidePromt, title } from '../../constands'
 import {useGuideStore} from '../../managments'
 import { router } from 'expo-router'
 import { getTripGuide } from '../../confs/groqAlConf'
@@ -53,7 +53,7 @@ const Generate = () => {
     <SafeAreaView style={styles.safeArea}>
        <LottieView style={styles.lottiStyle} autoPlay source={generate} loop />
        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Please Wait ...</Text>
+          <Text style={title}>Please Wait ...</Text>
           <Text style={styles.headerSubTitle}>We are working to generate your guide.</Text>
        </View>
     </SafeAreaView>
@@ -69,9 +69,6 @@ const styles = StyleSheet.create({
     },
     header: {
        justifyContent:"center",alignItems:"center",marginVertical:"auto"
-    },
-    headerTitle : {
-        fontSize:fonts.middleHighFontSize,fontWeight:fonts.middleFontWeight
     },
     headerSubTitle : {
         fontSize:fonts.smallMidFontSize,fontWeight:fonts.smallFontWeight,color:colors.gray

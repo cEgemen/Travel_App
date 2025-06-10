@@ -1,19 +1,21 @@
 
 import { useEffect, useState } from 'react'
-import { Keyboard,StyleSheet} from 'react-native'
+import { Keyboard,StyleSheet, View} from 'react-native'
 
-const BaseKeyboardWrapper = ({children}) => {
+const BaseKeyboardWrapper = ({children,wrapperStyle={},onChangeCallback = (keyboardHeight) => {}}) => {
   const [keyboardIsShow,setKeyboardIsShow] = useState(false)
   const [keyboardHeight,setKeyboardHeight] = useState(0)
 
    useEffect(()=> {
            const showDidKeyboard = Keyboard.addListener("keyboardDidShow",(event) => {
-               setKeyboardHeight(event.endCoordinates.height)
-               setKeyboardIsShow(true)
+               setKeyboardHeight(oldState => event.endCoordinates.height)
+               onChangeCallback(oldState =>  event.endCoordinates.height)
+               setKeyboardIsShow(oldState => true)
            })
            const hiddenDidKeyboard = Keyboard.addListener("keyboardDidHide",(event) => {
-               setKeyboardHeight(event.endCoordinates.height)
-               setKeyboardIsShow(false)
+               setKeyboardHeight(oldState =>  event.endCoordinates.height)
+               onChangeCallback(oldState =>  event.endCoordinates.height)
+               setKeyboardIsShow(oldState =>  false)
            })
   
            return () => {
@@ -23,10 +25,10 @@ const BaseKeyboardWrapper = ({children}) => {
     },[])
 
   return (
-     <>
-      {typeof children === 'function' ? children({keyboardIsShow,keyboardHeight}) : children}
-     </>
-  )
+        <View style={{flex:1,...wrapperStyle}}>
+         {typeof children === 'function' ? children({keyboardIsShow,keyboardHeight}) : children}
+        </View>
+        )
 }
 
 export default BaseKeyboardWrapper

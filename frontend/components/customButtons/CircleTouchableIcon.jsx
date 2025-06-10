@@ -1,5 +1,4 @@
 import { Image, Pressable, StyleSheet } from 'react-native'
-import React from 'react'
 import { borderRadius, colors } from '../../constands'
 
 const CircleTouchableIcon = ({icon=null,iconWidth=25,iconWrapperWidth=40,iconStyle={},iconWrapperStyle={},onPress=() => {},isDisable = false}) => {
@@ -17,6 +16,6 @@ const styles = StyleSheet.create({
          backgroundColor:colors.primary,justifyContent:"center",alignItems:"center"
      },
      iconStyl : {
-         tintColor:colors.background
+        width:5,height:5, tintColor:colors.background
      }
 })

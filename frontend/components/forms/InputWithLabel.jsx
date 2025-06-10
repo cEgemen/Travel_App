@@ -1,6 +1,5 @@
 
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
 import { borderRadius, colors, fonts, spaces } from '../../constands'
 
 const InputWithLabel = ({label="",value="",placeholder="",keyboardType="default",secureTextEntry=false,editable=true,

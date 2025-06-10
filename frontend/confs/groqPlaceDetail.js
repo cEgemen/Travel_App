@@ -15,20 +15,12 @@ const groq = new Groq({ apiKey:GROQ_API_KEY});
       {
   "name": string,
   "location": string,
-  "summary": string,
-  "bestTimeToVisit": [string],
-  "activities": [string],
-  "localTips": [string],
-  "estimatedCost": string
+  "historical_summary": string,
       }
 
     Instructions:
   - Provide accurate and informative data.
-  - "summary" should include cultural or historical significance if available.
-  - "bestTimeToVisit" should be based on weather, festivals, tourist seasons,e.g.(max 4 and min 1)
-  - "activities" should be unique or popular things to do in that location.(min 1)
-  - "localTips" should include useful advice like avoiding crowds, local behavior, or lesser-known spots.(min 1)
-  - "estimatedCost" should give only a rough cost range in USD for a typical day (e.g., "50-100 USD").
+  - "historical_summary" should include cultural or historical significance if available(A post of short length).
 
     DO NOT include any extra explanation outside the JSON object.
         `.trim()

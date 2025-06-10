@@ -1,6 +1,5 @@
 
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import { borderRadius, colors, elevation, fonts, spaces } from '../../../constands'
 import dayjs from 'dayjs';
 import { router } from 'expo-router';

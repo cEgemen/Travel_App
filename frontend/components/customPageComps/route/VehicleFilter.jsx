@@ -1,10 +1,8 @@
 
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import { View,StyleSheet } from 'react-native'
 import FilterCard from './FilterCard'
-import carIcon from "../../../assets/icons/car.png"
-import walkerIcon from "../../../assets/icons/walker.png"
-import bikeIcon from "../../../assets/icons/bike.png"
+import { bikeIcon, carIcon, walkerIcon } from '../../../assets'
+
 
 const VehicleFilter = ({activeValue="car",onPress = (key,value) => {}}) => {
 

@@ -1,7 +1,6 @@
 import { StyleSheet,View } from 'react-native'
-import paidIcon from "../../../assets/icons/paid.png"
-import freeIcon from "../../../assets/icons/free.png"
 import FilterCard from './FilterCard'
+import { freeIcon, paidIcon } from '../../../assets'
 
 const PriceFilter = ({activeValue="free",onPress = (key,value) => {}}) => {
 

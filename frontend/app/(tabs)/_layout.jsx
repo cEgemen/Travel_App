@@ -55,7 +55,6 @@ const TabLayout = () => {
                tabBarIcon : ({focused,color}) => ( <CustomTab  focused={focused} icon={userIcon} text={"Profile"} /> )
            }}
             />
-             
        </Tabs>   
     </>
   )

@@ -1,23 +1,41 @@
 
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import { leftShortArrowIcon } from '../../assets'
 import { colors, fonts, spaces } from '../../constands'
 import { router } from 'expo-router'
+import { useEffect, useState } from 'react'
 
-const StackHeader = ({title=null,leftIcon=null,rightIcon=null,leftIconOnPress=null,rightIconOnPress=() => {},headerWrapperStyle = {}}) => {
+const StackHeader = ({title=null,isBack=false,LeftComp=() => <></>,backOnClick=null,RightComp=() => <></>,headerWrapperStyle = {},backIconStyle={},backIconWrapperStyle={}}) => {
+
+  const [isCanBack,setIsCanBack] = useState(false)
+ 
+  const handleBack = () => {
+      router.back()  
+  }
   
-  const handleBack = () => router.back()  
+  useEffect(() => {
+        if(router.canGoBack())
+        {
+           setIsCanBack(true)
+        }
+        else
+        {
+           setIsCanBack(false)
+        }
+  },[])
+
 
   return (
     <View style={[styles.headerWrapper,headerWrapperStyle]}>
-      <Pressable onPress={leftIconOnPress || handleBack}>
-        <Image style={styles.iconStyl} source={leftIcon || leftShortArrowIcon} />
-      </Pressable>
-      {<Text numberOfLines={1} style={styles.textStyl} >{title}</Text>}
-      <Pressable onPress={rightIconOnPress}>
-        <Image style={styles.iconStyl} source={rightIcon} />
-      </Pressable>
+      <View style={[styles.sideWrapper,{alignItems:"flex-start"}]}>
+        {(isCanBack && isBack) ? (<Pressable onPress={backOnClick || handleBack} style={backIconWrapperStyle}>
+        <Image style={{...styles.iconStyl,...backIconStyle}} source={leftShortArrowIcon} />
+        </Pressable>) : <LeftComp />}
+      </View>
+      {<Text numberOfLines ={1} style={styles.textStyl} >{title}</Text>}
+      <View style={[styles.sideWrapper,{alignItems:"flex-end"}]}>
+          <RightComp />
+      </View>
     </View>
   )
 }
@@ -35,9 +53,15 @@ const styles = StyleSheet.create({
          paddingVertical:spaces.small,
          marginBottom:spaces.small
     },
+
+    sideWrapper : {
+       width:100,height:"100%",overflow:"hidden",justifyContent:"center"
+    },
+
     iconStyl : {
       width:30,height:30,resizeMode:"contain",tintColor:colors.backgroundDark
     },
+
     textStyl :  {
       fontSize:fonts.smallMidFontSize,fontWeight:fonts.middleFontWeight
     },

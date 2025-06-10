@@ -1,5 +1,5 @@
 import { StyleSheet,View,Text,FlatList, Image, Pressable, SafeAreaView } from 'react-native'
-import { borderRadius, colors, fonts, spaces } from '../../constands';
+import { borderRadius, colors, fonts, spaces, subTitle, title } from '../../constands';
 import { useState } from 'react';
 import {CustomTouchableButton,TouchableIcon} from '../../components';
 import { router, Stack } from 'expo-router';
@@ -71,10 +71,10 @@ const SelectTravelType = () => {
     }} />
     <View style={styles.container}>
        <View style={styles.headerContainer}>
-              <Text style={styles.headerTitle}>
+              <Text style={{...title,color:colors.text,paddingLeft:spaces.middle}}>
               Select Type 🏕️ 
               </Text>
-              <Text style={styles.headerSubTitle}>
+              <Text style={{...subTitle,color:colors.text,color:colors.gray,paddingLeft:spaces.high}}>
               📌 Select the trip type is {types[typeState.selectIndex].substring(2)}.
               </Text>
        </View>
@@ -110,12 +110,6 @@ const styles = StyleSheet.create({
               marginTop:spaces.highx2,
               marginBottom:spaces.high,gap:spaces.small
          },
-         headerTitle : {
-            color:colors.text,fontSize:fonts.middleFontSize,fontWeight:fonts.highFontWeight,paddingLeft:spaces.middle
-       },
-         headerSubTitle : {
-             color:colors.text,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontSize,color:colors.gray,paddingLeft:spaces.high
-       },
          btnStyle : {
              backgroundColor:colors.primary,marginVertical:"auto"
          },

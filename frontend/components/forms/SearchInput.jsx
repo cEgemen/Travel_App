@@ -1,7 +1,7 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import search from "../../assets/icons/search.png"
+import { View,TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { useEffect, useState } from 'react'
 import { borderRadius, colors, elevation, spaces } from '../../constands'
+import { searchIcon } from '../../assets'
 
 
 const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onClick=(value) => {},onChangeCallback=(text)=>{},onEndEditing=(value)=>{},inputStyle={},isVisibleClickableIcon=true,clearText=false}) => {
@@ -36,7 +36,7 @@ const SearchInput = ({initialValue="",focusColor=colors.gray,placeholder="",onCl
        />
 
       {isVisibleClickableIcon && <TouchableOpacity style={style.iconWrapperStyle} onPress={onSearch}>
-        <Image style={style.iconStyle} source={search} />
+        <Image style={style.iconStyle} source={searchIcon} />
       </TouchableOpacity> }  
     </View> 
   )

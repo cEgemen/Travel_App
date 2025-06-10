@@ -3,8 +3,8 @@ import { useUserStore } from "../../managments"
 import { Stack, useLocalSearchParams } from "expo-router"
 import { useEffect, useState } from "react"
 import { useDeleteFavGuide, useGetFavGuide, useSaveFavGuide } from "../../hooks/query/queryHook"
-import { ActivityIndicator, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, View } from "react-native"
-import { colors, fonts, spaces } from "../../constands"
+import { ActivityIndicator, FlatList, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, View } from "react-native"
+import { colors, fonts, spaces, title } from "../../constands"
 import { bookMarkIcon, fillBookMarkIcon } from "../../assets"
 import { DaysScroll, GuideCard } from "../../components"
 
@@ -14,6 +14,7 @@ const DynamicGuide = () => {
   const client = useQueryClient() 
   const {token} = useUserStore(state => state.user)
   const {guideId} = useLocalSearchParams()
+  console.log("guideId : ",guideId)
   const [currentDay , setCurrentDay] = useState(0)
   const [isSaved,setIsSaved] = useState(true)
   const [guide , setGuide] = useState(null)
@@ -35,7 +36,7 @@ const DynamicGuide = () => {
       setIsSaved(isSavedSuccess)
   }
   
-  const {mutate:deleteMutate,isError:isDeleteMutateError,isPending:deletePending} = useDeleteFavGuide(id,client,token,()=>{succesCallBack(2)},errorCallBack)
+  const {mutate:deleteMutate,isError:isDeleteMutateError,isPending:deletePending} = useDeleteFavGuide(guideId,client,token,()=>{succesCallBack(2)},errorCallBack)
   
   const {mutate:saveMutate,isError:isSaveMutateError,isPending:savePending} = useSaveFavGuide(guide,client,token,()=>{succesCallBack(1)},errorCallBack)
   
@@ -48,7 +49,7 @@ const DynamicGuide = () => {
             <Stack.Screen options={{
                   headerShadowVisible:false,
                   headerTitleAlign:"center",
-                  title:"Guide ID #"+id.substring(0,7),
+                  title:"Guide ID #"+guideId.substring(0,7),
                   headerRight:() => {
                     return <Pressable onPress={handleSave} >
                            {(deletePending || savePending || isLoading || guide === null)  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSaved ? colors.primary : colors.backgroundDark}} source={isSaved ? fillBookMarkIcon : bookMarkIcon} />} 
@@ -62,7 +63,7 @@ const DynamicGuide = () => {
                           </View>  : 
                           <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={false}>
                           <View style={styles.headerContainer}>  
-                             <Text numberOfLines={1} style={styles.headerTitle}>📍{guide.metadata.city},{guide.metadata.country}</Text>
+                             <Text numberOfLines={1} style={{...title,color : colors.text,marginBottom:spaces.small,flex:1}}>📍{guide.metadata.city},{guide.metadata.country}</Text>
                              <Text style={{color:colors.lightGray,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight}}>🌞 {guide.metadata.totalDays} 🌚 {guide.metadata.totalNights}</Text>
                           </View>
                           <DaysScroll currentDay={currentDay + 1} totalDays={guide.itinerary.length} onPress={handleDay} wrapperStyle={{marginBottom:spaces.high}} />
@@ -107,8 +108,5 @@ const styles = StyleSheet.create({
            },
            headerContainer:{
               marginBottom:spaces.high,flexDirection:"row",alignItems:"center"
-           },
-           headerTitle : {
-               fontSize : fonts.smallMidFontSize , fontWeight : fonts.highFontWeight,color : colors.text,marginBottom:spaces.small,flex:1
-           },
+           }
 })
