@@ -37,7 +37,7 @@ Bu proje, modern gezginlerin seyahat deneyimlerini kökten değiştirmeyi, yolcu
 - **Backend:** Spring Boot, REST API, MongoDB
 - **Veri Katmanı:** OpenStreetMap, TomTom, Groq API (LLM), Openverse API
 
-## 🚀 Kurulum (Kısa)
+## 🚀 Kurulum 
 
 1. `git clone ...`
 2. `npm install` ve `expo start`
