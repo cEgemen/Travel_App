@@ -46,9 +46,9 @@ Bu proje, modern gezginlerin seyahat deneyimlerini kökten değiştirmeyi, yolcu
 
 ## 📄 Kullanım Akışları
 
-1. Rota planlama: POI'ler, Openverse ve LLM ile zenginleştirilir.
-2. LLM destekli sohbet: Doğal dilde rota planı.
-3. Canlı navigasyon: Gerçek zamanlı konum takibi.
+1. Rota Planlama: POI'ler, Openverse ve LLM ile zenginleştirilir.
+2. LLM Destekli Sohbet: Doğal dilde rota planı.
+3. Canlı Navigasyon: Gerçek zamanlı konum takibi.
 
 ## 🤝 Katkı
 
