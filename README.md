@@ -43,7 +43,6 @@ Bu proje, modern gezginlerin seyahat deneyimlerini kökten değiştirmeyi, yolcu
 2. `npm install` ve `expo start`
 3. `mvn spring-boot:run`
 
-(Detaylı adımlar ileriki sürümlerde güncellenecektir.)
 
 ## 📄 Kullanım Akışları
 
