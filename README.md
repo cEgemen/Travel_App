@@ -4,6 +4,8 @@
 
 Bu proje, modern gezginlerin seyahat deneyimlerini kökten değiştirmeyi, yolculuklarını daha anlamlı, keşif dolu ve kişisel bir maceraya dönüştürmeyi amaçlamaktadır. Popüler turistik hedeflerin yanı sıra, özellikle keşfedilmeyi bekleyen, otantik ve çoğu zaman göz ardı edilen yerleri akıllıca önererek, her anınızı bir keşif fırsatına çevirmenize olanak tanır.
 
+https://drive.google.com/file/d/14jfHD3uJFPe-ueCtcttiflPPKDY6aqwP/view?usp=drivesdk
+
 ## 🎯 Projenin Temel Hedefleri
 
 - **Keşif Odaklı Seyahat Deneyimi Sunmak:** Geleneksel navigasyonun "en kısa/hızlı yol" mantığının ötesine geçerek, yolculuğun kendisini bir keşif macerasına dönüştürmek.
