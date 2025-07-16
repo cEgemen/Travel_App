@@ -3,7 +3,7 @@ import {StyleSheet,View,Text} from 'react-native'
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, fonts, spaces, subTitle, title } from '../../constands';
-import {CustomCalenderPicker,CustomTouchableButton,TouchableIcon} from '../../components';
+import {CustomCalenderPicker,CustomTouchableButton, SquareButton, StackHeader} from '../../components';
 import { router, Stack } from 'expo-router';
 import {useGuideStore} from '../../managments';
 import dayjs from 'dayjs';
@@ -60,17 +60,18 @@ const SelectTravelDates = () => {
 
   const handleBack = () => {
        resDayData()
-       router.back()
+       router.replace("/home")
   } 
  
     return (
     <SafeAreaView style={styles.safeAreaStyle} >
-     <Stack.Screen options={{
+    {/*  <Stack.Screen options={{
           headerLeft : () => {
-          return <TouchableIcon icon={leftArrowIcon} iconWrapperStyle={{}} iconStyle={{tintColor:colors.backgroundDark}} onPress={handleBack} />
+          return <SquareButton icon={leftArrowIcon} iconWrapperStyle={{}} contentStyle={{tintColor:colors.backgroundDark}}  onClick={handleBack} />
      }
-     }} />
+     }} /> */}
      <View style={styles.container}>
+        <StackHeader LeftComp={() => <SquareButton icon={leftArrowIcon} contentStyle={{tintColor:colors.backgroundDark}} onClick={handleBack} />} /> 
         <View style={styles.headerContainer}>
                <Text style={{...title,color:colors.text,paddingLeft:spaces.middle}}>
                Select Date 📅 

@@ -2,13 +2,14 @@
 import { BackHandler, StyleSheet, Text, View } from 'react-native'
 import React, {useEffect} from 'react'
 import LottieView from 'lottie-react-native'
-import {generate} from "../../assets"
+import {generate, generateLottie} from "../../assets"
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors, fonts,getGuidePromt, title } from '../../constands'
 import {useGuideStore} from '../../managments'
 import { router } from 'expo-router'
 import { getTripGuide } from '../../confs/groqAlConf'
 import dayjs from 'dayjs'
+import { BasePageWrapper } from '../../components'
 
 const Generate = () => {
   const {guideInfo,setGuide} = useGuideStore(state => state)
@@ -29,7 +30,7 @@ const Generate = () => {
           })
 
           return () => {
-              BackHandler.removeEventListener(listener)
+              listener.remove(listener)
           }
   },[])
 
@@ -50,13 +51,13 @@ const Generate = () => {
   },[])
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-       <LottieView style={styles.lottiStyle} autoPlay source={generate} loop />
+    <BasePageWrapper wrapperStyle={styles.safeArea}>
+       <LottieView style={styles.lottiStyle} autoPlay source={generateLottie} loop />
        <View style={styles.header}>
           <Text style={title}>Please Wait ...</Text>
           <Text style={styles.headerSubTitle}>We are working to generate your guide.</Text>
        </View>
-    </SafeAreaView>
+    </BasePageWrapper>
   )
 }
 

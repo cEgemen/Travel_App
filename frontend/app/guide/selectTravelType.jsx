@@ -1,7 +1,7 @@
 import { StyleSheet,View,Text,FlatList, Image, Pressable, SafeAreaView } from 'react-native'
 import { borderRadius, colors, fonts, spaces, subTitle, title } from '../../constands';
 import { useState } from 'react';
-import {CustomTouchableButton,TouchableIcon} from '../../components';
+import {BasePageWrapper, CustomTouchableButton, SquareButton, StackHeader} from '../../components';
 import { router, Stack } from 'expo-router';
 import {useGuideStore} from '../../managments';
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
@@ -62,14 +62,10 @@ const SelectTravelType = () => {
   } 
 
   return (
-    <SafeAreaView
-     style={styles.safeAreaStyle} >
-    <Stack.Screen options={{
-         headerLeft : () => {
-         return <TouchableIcon icon={leftArrowIcon} iconWrapperStyle={{}} iconStyle={{tintColor:colors.backgroundDark}} onPress={handleBack} />
-    }
-    }} />
+    <BasePageWrapper wrapperStyle ={styles.safeAreaStyle} >
+    
     <View style={styles.container}>
+      <StackHeader LeftComp={() => <SquareButton icon={leftArrowIcon} contentStyle={{tintColor:colors.backgroundDark}} onClick={handleBack} /> } />
        <View style={styles.headerContainer}>
               <Text style={{...title,color:colors.text,paddingLeft:spaces.middle}}>
               Select Type 🏕️ 
@@ -93,7 +89,7 @@ const SelectTravelType = () => {
         />
        <CustomTouchableButton  text={"Continue"} onPress={onClick} textStyle={styles.btnTextStyle} buttonStyle={{...styles.btnStyle}} />
     </View>
-   </SafeAreaView>
+   </BasePageWrapper>
   )
 }
 

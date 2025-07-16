@@ -5,7 +5,7 @@ import { colors, fonts, spaces, title } from '../../constands'
 import {useGuideStore,useUserStore} from '../../managments'
 import { router, Stack } from 'expo-router'
 import leftArrowIcon from "../../assets/icons/left_arrow.png"
-import {TouchableIcon,DaysScroll,GuideCard} from '../../components'
+import {DaysScroll,GuideCard, SquareButton, StackHeader} from '../../components'
 import bookmarkIcon from "../../assets/icons/bookmark.png"
 import bookmark2Icon from "../../assets/icons/bookmark2.png"
 import { useDeleteFavGuide, useSaveFavGuide } from '../../hooks/query/queryHook'
@@ -43,24 +43,11 @@ const GuideDetails = () => {
 
     return (
       <SafeAreaView style={styles.safeView}>
-           <Stack.Screen
-                options={{
-                     headerTransparent:false,
-                     headerShown:true,
-                     headerShadowVisible:false,
-                     title:guide.metadata.travelType,
-                     headerTitleAlign:"center",
-                     headerLeft:() => {
-                          return <TouchableIcon onPress={handleBackPress} icon={leftArrowIcon} iconStyle={styles.headerIconStyle} />
-                     },
-                     headerRight:() => {
-                          return <Pressable onPress={handleSave} >
-                                  {(savePending || deletePending)  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSaved ? colors.primary : colors.backgroundDark}} source={isSaved ? bookmark2Icon : bookmarkIcon} />} 
-                                </Pressable>
-                     }
-                }}
-            />
+          
             <ScrollView style={styles.scrollStyle} showsVerticalScrollIndicator={false}>
+               <StackHeader LeftComp={() =>  <SquareButton onClick={handleBackPress} icon={leftArrowIcon} contentStyle={styles.headerIconStyle} /> } RightComp={() => <Pressable onPress={handleSave} >
+                                  {(savePending || deletePending)  ? <ActivityIndicator size={"small"} color={colors.primary} />  :  <Image style={{...styles.markIconStyle,tintColor:isSaved ? colors.primary : colors.backgroundDark}} source={isSaved ? bookmark2Icon : bookmarkIcon} />} 
+                                </Pressable> } title={guide.metadata.travelType}  />
               <View style={styles.headerContainer}>  
                  <Text numberOfLines={1} style={{...title,color : colors.text,marginBottom:spaces.small,flex:1}}>📍{guide.metadata.city},{guide.metadata.country}</Text>
                  <Text style={{color:colors.gray,fontSize:fonts.smallFontSize,fontWeight:fonts.middleFontWeight}}>🌞 {guide.metadata.totalDays} 🌚 {guide.metadata.totalNights}</Text>
